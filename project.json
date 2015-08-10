@@ -12,6 +12,18 @@
 
     "jsList" : [
         "src/resource.js",
+
+        "src/utils/md5.js",
+        "src/utils/map.js",
+        "src/utils/util.js",
+
+        "src/common/Const.js",
+        "src/common/AudioManager.js",
+        "src/common/GameState.js",
+        "src/common/GameEvent.js",
+        "src/common/GameManager.js",
+
+
         "src/app.js"
     ]
 }
