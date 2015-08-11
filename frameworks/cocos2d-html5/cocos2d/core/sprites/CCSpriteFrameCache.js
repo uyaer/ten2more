@@ -35,7 +35,7 @@
  * @class
  * @name cc.spriteFrameCache
  */
-cc.spriteFrameCache = /** @lends cc.spriteFrameCache# */{
+cc.spriteFrameCache ={
     _CCNS_REG1 : /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/,
     _CCNS_REG2 : /^\s*\{\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*,\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*\}\s*$/,
 

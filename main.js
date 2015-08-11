@@ -77,19 +77,22 @@
  *
  */
 
-cc.game.onStart = function(){
+cc.game.onStart = function () {
     cc.view.adjustViewPort(true);
     cc.view.enableRetina(true);
-    if(cc.sys.isMobile){
+    if (cc.sys.isMobile) {
         cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.FIXED_HEIGHT);
-    }else{
+    } else {
 
         cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.SHOW_ALL);
     }
     cc.view.resizeWithBrowserSize(true);
     //load resources
     cc.LoaderScene.preload(g_resources, function () {
-        cc.director.runScene(new HelloWorldScene());
+
+        cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
+
+        cc.director.runScene(new GameScene());
     }, this);
 };
 cc.game.run();

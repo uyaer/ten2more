@@ -1,0 +1,95 @@
+var Box = cc.Node.extend({
+    /**
+     * 行
+     */
+    row: 0,
+    /**
+     * 列
+     */
+    col: 0,
+    /**
+     * 原始位置x
+     */
+    baseX: 0,
+    /**
+     * 原始位置y
+     */
+    baseY: 0,
+    /**
+     * 原始碰撞区域
+     * @type cc.Rect
+     */
+    baseBoundingBox: null,
+    /**
+     * @type cc.Sprite
+     */
+    bg: null,
+    /**
+     * @type cc.TextFieldTTF
+     */
+    numTF: null,
+    /**
+     * 代表数字
+     * @type number
+     */
+    num: 1,
+    ctor: function (row, col) {
+        this._super();
+
+        this.row = row;
+        this.col = col;
+
+        this.calBasePos();
+
+        this.bg = new cc.Sprite("#cir.png");
+        this.addChild(this.bg);
+
+        this.numTF = new cc.TextFieldTTF("1", cc.size(100, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+        this.numTF.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        this.addChild(this.numTF, 1);
+    },
+
+    updateNum: function (num) {
+        this.num = num;
+        this.numTF.setString(num + "");
+    },
+    /**
+     * 重新设置其行列
+     * @param row
+     * @param col
+     */
+    updateRowCol: function (row, col) {
+        this.row = row;
+        this.col = col;
+
+        this.calBasePos();
+    },
+
+    /**
+     * 计算原始位置
+     */
+    calBasePos: function () {
+        this.baseX = Const.LEFT + Const.BOX_HALF + this.col * Const.BOX_PADDING;
+        this.baseY = Const.WIN_H - Const.TOP_HEIGHT - Const.BOX_HALF - this.row * Const.BOX_PADDING;
+        this.baseBoundingBox = cc.rect(
+            this.baseX - Const.BOX_HALF,
+            this.baseY - Const.BOX_HALF,
+            Const.BOX_SIZE,
+            Const.BOX_SIZE
+        );
+    },
+
+    /**
+     * 设置被选中情况
+     * @param val {boolean}
+     */
+    setSelected: function (val) {
+        if (val) {
+            this.bg.color = cc.color.RED;
+            this.runAction(cc.moveBy(0.15, 0, 5));
+        } else {
+            this.bg.color = cc.color.WHITE;
+            this.y = this.baseY;
+        }
+    }
+})
