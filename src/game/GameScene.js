@@ -100,13 +100,11 @@ var GameScene = cc.Scene.extend({
      * @param event {cc.Event}
      */
     onTouchEndedHandler: function (touch, event) {
-        this.matchFailUnSelected();
-        //this.lightLine.drawSelectingLine(null);
-        //for (var i = 0; i < this.selectBoxArr.length; i++) {
-        //    /**@type Box*/
-        //    var box = this.selectBoxArr[i];
-        //    box.setSelected(false);
-        //}
+        if (this.selectBoxArr.length > 1) { //个以上才进行检查
+            this.checkNumIsMatchTen();
+        } else {
+            this.matchFailUnSelected();
+        }
     },
 
     /**
@@ -150,6 +148,116 @@ var GameScene = cc.Scene.extend({
         return false;
     },
 
+    checkNumIsMatchTen: function () {
+        var num = 0;
+        for (var i = 0; i < this.selectBoxArr.length; i++) {
+            /**@type Box*/
+            var box = this.selectBoxArr[i];
+            num += box.num;
+        }
+        if (num % 10 == 0) { //匹配成功
+            var surroundBoxArr = this.checkNumIsSurround();
+            if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
+                //TODO 隔离消除
+            } else { //普通消除
+                this.matchSuccessUnSelected();
+            }
+        } else { //匹配失败
+            this.matchFailUnSelected();
+        }
+    },
+
+    /**
+     * 判断数字是否形成了一个围墙
+     * @returns {Array}
+     */
+    checkNumIsSurround: function () {
+        //选中项形成的包围圈，圈中的box无论怎么走周围都是选中项的墙，就代表围墙成功,如果检查到边界，代表判断失败
+        var surroundArr = [];
+        for (var i = 1; i < Const.ROW - 1; i++) {
+            for (var j = 1; j < Const.COL - 1; j++) {
+                /**@type Box */
+                var box = this.boxArr[i][j];
+                if (!isElinArray(box, surroundArr)) { //box不在孤岛数据中
+                    var result = this.checkBoxIsBeSurround(box);
+                    if (result) {
+                        surroundArr = surroundArr.concat(result);
+                    }
+                }
+            }
+        }
+        return surroundArr;
+    },
+
+    /**
+     * 广度优先查找某个box以及周围是否被围住了
+     * @param oneBox
+     * @returns {Array | null}
+     */
+    checkBoxIsBeSurround: function (oneBox) {
+        var result = [oneBox];
+        var needCheckArr = [oneBox];
+        while (needCheckArr.length > 0) {
+            /**@type Box */
+            var box = needCheckArr.pop();
+            //这里判断围墙数据是因为第一个数据没有判断是否是围墙数据
+            if (!isElinArray(box, this.selectBoxArr) && !box.boxIsBorder()) {
+                for (var i = -1; i <= 1; i++) {
+                    for (var j = -1; j <= 1; j++) {
+                        if (!(i == 0 && j == 0)) { //8方向
+                            var row = box.row + i;
+                            var col = box.col + j;
+                            if (row >= 0 && row < Const.ROW && col >= 0 && col < Const.COL) {
+                                var temp = this.boxArr[row][col];
+                                //没有存入进过临时孤岛数据，也不是围墙数据
+                                if (!isElinArray(temp, result) && !isElinArray(temp, this.selectBoxArr)) {
+                                    needCheckArr.push(temp);
+                                    result.push(temp);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                return null;
+            }
+        }
+
+        return result;
+    },
+
+    /**
+     * @type cc.ParticleSystem
+     */
+    removeEff: null,
+    /**
+     * 匹配成功，播放动画
+     */
+    matchSuccessUnSelected: function () {
+        this.removeEff = new cc.ParticleSystem(res.eff_remove);
+        this.addChild(this.removeEff, 3);
+        this.__removeStartSelectBox();
+    },
+
+    /**
+     * 移除第一个
+     * @private
+     */
+    __removeStartSelectBox: function () {
+        /**@type Box*/
+        var box = this.selectBoxArr.shift();
+        box.setSelected(false);
+        this.removeEff.runAction(cc.moveTo(0.05, box.x, box.y));
+        this.lightLine.drawSelectingLine(this.selectBoxArr);
+        if (this.selectBoxArr.length > 0) {
+            setTimeout(this.__removeStartSelectBox.bind(this), 100);
+        } else {
+            setTimeout(this.removeEff.removeFromParent.bind(this.removeEff), 300);
+            //TODO remove start ^_^ end
+            trace("remove start ^_^ end");
+        }
+    },
+
     /**
      * 匹配失败，不选中
      */
@@ -167,12 +275,13 @@ var GameScene = cc.Scene.extend({
         /**@type Box*/
         var box = this.selectBoxArr.pop();
         box.setSelected(false);
+
         this.lightLine.drawSelectingLine(this.selectBoxArr);
         if (this.selectBoxArr.length > 0) {
             setTimeout(this.__removeEndSelectBox.bind(this), 50);
         } else {
             //TODO remove end
-            trace("remove end!!")
+            trace("remove end!!");
         }
     }
 })

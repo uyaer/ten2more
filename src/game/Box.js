@@ -33,6 +33,10 @@ var Box = cc.Node.extend({
      * @type number
      */
     num: 1,
+    /**
+     * 是否检查过了
+     */
+    isChecked: false,
     ctor: function (row, col) {
         this._super();
 
@@ -91,5 +95,16 @@ var Box = cc.Node.extend({
             this.bg.color = cc.color.WHITE;
             this.y = this.baseY;
         }
+    },
+
+    /**
+     * 判断是否是边界
+     * @returns {boolean}
+     */
+    boxIsBorder: function () {
+        if (this.row == 0 || this.col == 0 || this.row == Const.ROW - 1 || this.col == Const.COL - 1) {
+            return true;
+        }
+        return false;
     }
 })
