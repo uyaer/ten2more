@@ -145,7 +145,7 @@ var TopLayer = cc.Layer.extend({
      * 产生帮助信息
      */
     makeHelp: function () {
-        var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字只能相加组合成10,围成圆圈可以产生超级炸弹";
+        var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字只能相加组合成10,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
         var tf = new cc.TextFieldTTF(txt, cc.size(Const.WIN_W - 20, 100), cc.TEXT_ALIGNMENT_LEFT, "Arial", 22);
         tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         tf.anchorX = 0;

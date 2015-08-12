@@ -132,6 +132,19 @@ var Box = cc.Node.extend({
     },
 
     /**
+     * 播放消除围墙动画
+     */
+    playSurroundAnimation: function () {
+        this.bg.runAction(cc.spawn(
+            cc.sequence(
+                cc.scaleTo(0.25, 1.15),
+                cc.scaleTo(0.25, 1)
+            ),
+            cc.tintTo(0.5, 255, 255, 0)
+        ));
+    },
+
+    /**
      * 移动到对应位置
      * @param row
      * @param col

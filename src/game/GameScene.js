@@ -218,21 +218,36 @@ var GameScene = cc.Scene.extend({
                 break;
             }
         }
-        if (isSameLen && num % 10 == 0) { //匹配成功
+        //if (isSameLen && num % 10 == 0) { //匹配成功
             this.selectLen = this.selectBoxArr.length;
             this.selectWillAddScore = num * this.selectLen;
             var surroundBoxArr = this.checkNumIsSurround();
             if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
-                //TODO 隔离消除
+                // 隔离消除
                 trace("隔离消除");
+                this.playSurroundAnimation(surroundBoxArr);
             } else { //普通消除
                 this.matchSuccessUnSelected();
             }
-        } else { //匹配失败
-            this.matchFailUnSelected();
-        }
+        //} else { //匹配失败
+        //    this.matchFailUnSelected();
+        //}
     },
 
+    /**
+     * 播放围墙动画
+     * @param beSurroundArr {Array} 被包围的box数组
+     */
+    playSurroundAnimation: function (beSurroundArr) {
+        var num = 0;
+        this.selectLen = this.selectBoxArr.length;
+        for (var i = 0; i < this.selectBoxArr.length; i++) {
+            /** @type Box*/
+            var box = this.selectBoxArr[i];
+            box.playSurroundAnimation();
+            num += box.length;
+        }
+    },
 
     /**
      * 判断数字是否形成了一个围墙
