@@ -56,6 +56,10 @@ var Box = cc.Node.extend({
     updateNum: function (num) {
         this.num = num;
         this.numTF.setString(num + "");
+        this.numTF.runAction(cc.sequence(
+            cc.blink(0.1, 1),
+            cc.show()
+        ));
     },
     /**
      * 重新设置其行列
@@ -95,6 +99,29 @@ var Box = cc.Node.extend({
             this.bg.color = cc.color.WHITE;
             this.y = this.baseY;
         }
+    },
+
+    /**
+     * 播放移除动画
+     *
+     */
+    playRemoveAnimation: function () {
+        var that = this;
+        this.runAction(cc.sequence(
+            cc.scaleTo(0.5, 0.01),
+            cc.removeSelf(false)
+        ));
+    },
+
+    /**
+     * 移动到对应位置
+     * @param row
+     * @param col
+     */
+    moveToPot: function (row, col) {
+        var time = limit((this.col - col) * 0.2, 0.2, 0.8);
+        this.updateRowCol(row, col);
+        this.runAction(cc.moveTo(time, this.baseX, this.baseY));
     },
 
     /**

@@ -17,6 +17,16 @@ var GameScene = cc.Scene.extend({
      * @type LightLine
      */
     lightLine: null,
+    /**
+     * 移除的box临时数组
+     * @type Array
+     */
+    removeBoxArr: null,
+    /**
+     * box根目录
+     * @type cc.Layer
+     */
+    boxRoot: null,
     ctor: function () {
         this._super();
 
@@ -47,9 +57,11 @@ var GameScene = cc.Scene.extend({
     },
 
     makeBox: function () {
+        this.removeBoxArr = [];
         this.boxArr = [];
         var box;
         var root = new cc.Layer();
+        this.boxRoot = root;
         this.addChild(root, 2);
         for (var i = 0; i < Const.ROW; i++) {
             var line = [];
@@ -100,7 +112,7 @@ var GameScene = cc.Scene.extend({
      * @param event {cc.Event}
      */
     onTouchEndedHandler: function (touch, event) {
-        if (this.selectBoxArr.length > 1) { //个以上才进行检查
+        if (this.selectBoxArr.length > 1) { //2个以上才进行检查
             this.checkNumIsMatchTen();
         } else {
             this.matchFailUnSelected();
@@ -155,16 +167,18 @@ var GameScene = cc.Scene.extend({
             var box = this.selectBoxArr[i];
             num += box.num;
         }
-        if (num % 10 == 0) { //匹配成功
-            var surroundBoxArr = this.checkNumIsSurround();
-            if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
-                //TODO 隔离消除
-            } else { //普通消除
-                this.matchSuccessUnSelected();
-            }
-        } else { //匹配失败
-            this.matchFailUnSelected();
-        }
+        //if (num % 10 == 0) { //匹配成功
+        //    var surroundBoxArr = this.checkNumIsSurround();
+        //    if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
+        //        //TODO 隔离消除
+        //    } else { //普通消除
+        //        this.matchSuccessUnSelected();
+        //    }
+        //} else { //匹配失败
+        //    this.matchFailUnSelected();
+        //}
+
+        this.matchSuccessUnSelected();
     },
 
     /**
@@ -246,16 +260,29 @@ var GameScene = cc.Scene.extend({
     __removeStartSelectBox: function () {
         /**@type Box*/
         var box = this.selectBoxArr.shift();
+        /**@type Box*/
+        var nextBox = this.selectBoxArr[0];
         box.setSelected(false);
+        this.cleanBoxPosition(box);
+        box.playRemoveAnimation();
+        nextBox.updateNum(nextBox.num + box.num);
         this.removeEff.runAction(cc.moveTo(0.05, box.x, box.y));
         this.lightLine.drawSelectingLine(this.selectBoxArr);
-        if (this.selectBoxArr.length > 0) {
-            setTimeout(this.__removeStartSelectBox.bind(this), 100);
+        if (this.selectBoxArr.length > 1) {
+            setTimeout(this.__removeStartSelectBox.bind(this), 150);
         } else {
-            setTimeout(this.removeEff.removeFromParent.bind(this.removeEff), 300);
-            //TODO remove start ^_^ end
-            trace("remove start ^_^ end");
+            // remove start ^_^ end
+            setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
         }
+    },
+
+    /**
+     * 从开头移除动画完成后的回调
+     * @private
+     */
+    __removeStartSelectBoxEndHandler: function () {
+        this.removeEff.removeFromParent();
+        this.boxDown();
     },
 
     /**
@@ -282,6 +309,82 @@ var GameScene = cc.Scene.extend({
         } else {
             //TODO remove end
             trace("remove end!!");
+        }
+    },
+
+    /**
+     * 旧box下落
+     */
+    boxDown: function () {
+        for (var i = Const.ROW - 1; i >= 0; i--) {
+            for (var j = 0; j < Const.COL; j++) {
+                var box = this.boxArr[i][j];
+                if (!box) {
+                    /**@type Box*/
+                    var upBox = this.getUpNotNullBox(i, j);
+                    if (upBox) {
+                        this.cleanBoxPosition(upBox, i, j);
+                        upBox.moveToPot(i, j);
+                    } else {
+                        //上面没有了box，0.5s后产生新的并且下落
+                        this.newBoxDown(i, j);
+                    }
+                }
+            }
+        }
+    },
+
+    /**
+     * 新box出现在上面并且掉落
+     */
+    newBoxDown: function (row, col) {
+        var that = this;
+        setTimeout(function () {
+            /**@type Box*/
+            var box = that.removeBoxArr.pop();
+            box.updateRowCol(-1, col);
+            box.updateNum(randomInt(1, 5));
+            box.x = box.baseX;
+            box.y = box.baseY;
+            box.scale = 1;
+            that.boxRoot.addChild(box);
+            box.moveToPot(row, col);
+            that.boxArr[row][col] = box;
+        }, 800);
+    },
+
+    /**
+     * 获取行列位置上部没有空的box
+     * @param row
+     * @param col
+     * @returns {Box}
+     */
+    getUpNotNullBox: function (row, col) {
+        var box = null;
+        row--;
+        while (row >= 0) {
+            box = this.boxArr[row][col];
+            if (box) {
+                break;
+            }
+            row--;
+        }
+        return box;
+    },
+
+    /**
+     * 清除box的位置信息
+     * @param box {Box}
+     * @param newRow
+     * @param newCol
+     */
+    cleanBoxPosition: function (box, newRow, newCol) {
+        this.boxArr[box.row][box.col] = null;
+        if (arguments.length == 3) { //如果有新的位置，就重设位置
+            this.boxArr[newRow][newCol] = box;
+        } else {//否则就将其放入临时移除数组
+            this.removeBoxArr.push(box);
+
         }
     }
 })
