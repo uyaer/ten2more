@@ -7,7 +7,7 @@
 			<key>cir.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{100,100}}</string>
+				<string>{{101,0},{100,100}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -21,7 +21,7 @@
 			<key>radius_box.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{155,33},{50,51}}</string>
+				<string>{{202,0},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -35,57 +35,57 @@
 			<key>switch-mask.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{101,0},{69,32}}</string>
+				<string>{{0,0},{100,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{69,32}}</string>
+				<string>{{0,0},{100,36}}</string>
 				<key>sourceSize</key>
-				<string>{69,32}</string>
+				<string>{100,36}</string>
 			</dict>
 
 			<key>switch-off.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{101,66},{53,32}}</string>
+				<string>{{0,74},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{53,32}}</string>
+				<string>{{0,0},{85,36}}</string>
 				<key>sourceSize</key>
-				<string>{53,32}</string>
+				<string>{85,36}</string>
 			</dict>
 
 			<key>switch-on.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{101,33},{53,32}}</string>
+				<string>{{0,37},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{53,32}}</string>
+				<string>{{0,0},{85,36}}</string>
 				<key>sourceSize</key>
-				<string>{53,32}</string>
+				<string>{85,36}</string>
 			</dict>
 
 			<key>switch-thumb.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{101,99},{28,28}}</string>
+				<string>{{202,52},{50,50}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{28,28}}</string>
+				<string>{{0,0},{50,50}}</string>
 				<key>sourceSize</key>
-				<string>{28,28}</string>
+				<string>{50,50}</string>
 			</dict>
 
 		</dict>
