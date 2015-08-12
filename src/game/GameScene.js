@@ -272,6 +272,8 @@ var GameScene = cc.Scene.extend({
             setTimeout(this.__removeStartSelectBox.bind(this), 150);
         } else {
             // remove start ^_^ end
+            nextBox.y = nextBox.baseY;
+            nextBox.tintColor();
             setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
         }
     },
@@ -343,10 +345,7 @@ var GameScene = cc.Scene.extend({
             /**@type Box*/
             var box = that.removeBoxArr.pop();
             box.updateRowCol(-1, col);
-            box.updateNum(randomInt(1, 5));
-            box.x = box.baseX;
-            box.y = box.baseY;
-            box.scale = 1;
+            box.resetBox();
             that.boxRoot.addChild(box);
             box.moveToPot(row, col);
             that.boxArr[row][col] = box;

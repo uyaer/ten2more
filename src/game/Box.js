@@ -16,6 +16,11 @@ var Box = cc.Node.extend({
      */
     baseY: 0,
     /**
+     * 原始颜色
+     * @type cc.Color
+     */
+    baseColor: null,
+    /**
      * 原始碰撞区域
      * @type cc.Rect
      */
@@ -43,6 +48,8 @@ var Box = cc.Node.extend({
         this.row = row;
         this.col = col;
 
+        this.baseColor = cc.color.WHITE;
+
         this.calBasePos();
 
         this.bg = new cc.Sprite("#cir.png");
@@ -51,6 +58,18 @@ var Box = cc.Node.extend({
         this.numTF = new cc.TextFieldTTF("1", cc.size(100, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
         this.numTF.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         this.addChild(this.numTF, 1);
+    },
+
+    /**
+     * 重置Box
+     */
+    resetBox: function () {
+        this.updateNum(randomInt(1, 5));
+        this.x = this.baseX;
+        this.y = this.baseY;
+        this.scale = 1;
+        this.baseColor = cc.color.WHITE;
+        this.bg.color = cc.color.WHITE;
     },
 
     updateNum: function (num) {
@@ -96,7 +115,7 @@ var Box = cc.Node.extend({
             this.bg.color = cc.color.RED;
             this.runAction(cc.moveBy(0.15, 0, 5));
         } else {
-            this.bg.color = cc.color.WHITE;
+            this.bg.color = this.baseColor;
             this.y = this.baseY;
         }
     },
@@ -106,7 +125,6 @@ var Box = cc.Node.extend({
      *
      */
     playRemoveAnimation: function () {
-        var that = this;
         this.runAction(cc.sequence(
             cc.scaleTo(0.5, 0.01),
             cc.removeSelf(false)
@@ -122,6 +140,27 @@ var Box = cc.Node.extend({
         var time = limit((this.col - col) * 0.2, 0.2, 0.8);
         this.updateRowCol(row, col);
         this.runAction(cc.moveTo(time, this.baseX, this.baseY));
+    },
+
+    /**
+     * 动画着色
+     */
+    tintColor: function () {
+        //计算颜色
+        var color = 0xffffff;
+        if (this.num < 10) {
+            color = 0xffffff;
+        } else if (this.num <= 100) {
+            color = int((10 - int(this.num / 10)) * (0xffffff - 0xffff00) / 10) + 0xffff00;
+        } else if (this.num <= 1000) {
+            color = int((10 - int(this.num / 100)) * (0xffffff - 0xff00ff) / 10) + 0xff00ff;
+        } else if (this.num <= 10000) {
+            color = int((10 - int(this.num / 1000)) * (0xffffff - 0xff0000) / 10) + 0xff0000;
+        } else {
+            color = 0xff0000;
+        }
+        this.baseColor = hex2Color(color);
+        this.bg.runAction(cc.tintTo(0.5, this.baseColor.r, this.baseColor.g, this.baseColor.b));
     },
 
     /**
