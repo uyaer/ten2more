@@ -16,12 +16,22 @@ var TopLayer = cc.Layer.extend({
      */
     musicSwitch: null,
 
+    /**
+     * @type cc.Scale9Sprite
+     */
+    addTipBox: null,
+    /**
+     * @type cc.TextFieldTTF
+     */
+    addTipTF: null,
+
     ctor: function () {
         this._super();
 
         this.makeMenu();
         this.makeInfo();
         this.makeHelp();
+        this.makeAddTip();
 
         this.scoreTF.setString("0");
         this.maxScoreTF.setString(GameManager.instance.maxScore + "");
@@ -65,6 +75,17 @@ var TopLayer = cc.Layer.extend({
         colorBg.addChild(this.musicSwitch);
         this.musicSwitch.addTargetWithActionForControlEvents(this, this.onMusicValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
         this.onMusicValueChanged(this.musicSwitch);
+
+        //version tf
+        //music txt
+        var tf = new cc.TextFieldTTF(Const.VERSION, cc.size(200, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 22);
+        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        tf.anchorX = 0.5;
+        tf.anchorY = 0;
+        tf.x = Const.WIN_W / 2;
+        tf.y = 0;
+        tf.color = hex2Color(0xffffff);
+        colorBg.addChild(tf);
     },
 
     onMusicValueChanged: function (sender, controlEvent) {
@@ -135,6 +156,31 @@ var TopLayer = cc.Layer.extend({
         this.addChild(tf);
     },
 
+    makeAddTip: function () {
+        var pos = cc.p(Const.WIN_W / 2, Const.WIN_H - Const.TOP_HEIGHT + 25);
+        var size = cc.size(200, 100);
+        //背景
+        var box = new cc.Scale9Sprite("radius_box.png", cc.rect(25, 25, 1, 1));
+        box.anchorX = 0.5;
+        box.anchorY = 0.5;
+        box.x = pos.x;
+        box.y = pos.y;
+        box.setContentSize(size);
+        box.color = hex2Color(0xffff00);
+        this.addChild(box);
+        //show num txt
+        var tf = new cc.TextFieldTTF("0", cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        tf.anchorX = 0;
+        tf.anchorY = 0;
+        tf.color = hex2Color(0xffffff);
+        box.addChild(tf);
+
+        this.addTipBox = box;
+        this.addTipTF = tf;
+        box.visible = false;
+    },
+
     updateScoreShow: function () {
         this._playScoreShow(this.scoreTF, GameManager.instance.score);
 
@@ -158,5 +204,22 @@ var TopLayer = cc.Layer.extend({
                 target.setString(score + "");
             }, this)
         ));
+    },
+
+    /**
+     * 显示临时相加的数字
+     * @param num
+     */
+    showAddTip: function (num) {
+        this.addTipTF.setString(num + "");
+        this.addTipBox.visible = true;
+        this.addTipBox.opacity = 255;
+    },
+
+    /**
+     * 隐藏临时相加的数字
+     */
+    hideAddTip: function () {
+        this.addTipBox.runAction(cc.fadeOut(0.35));
     }
 });

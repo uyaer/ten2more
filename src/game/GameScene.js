@@ -31,12 +31,23 @@ var GameScene = cc.Scene.extend({
      * @type TopLayer
      */
     topLayer: null,
+    /**
+     * 选择的会消除分数
+     */
+    selectWillAddScore: 0,
+    /**
+     * 选中合格的个数
+     */
+    selectLen: 0,
+
     ctor: function () {
         this._super();
 
         this.makeBackground();
         this.makeBox();
         this.makeTopLayer();
+
+        GameManager.instance.state = GameState.PLAYING;
     },
 
     onEnter: function () {
@@ -93,6 +104,9 @@ var GameScene = cc.Scene.extend({
      * @param event {cc.Event}
      */
     onTouchBeganHandler: function (touch, event) {
+        if (GameManager.instance.state != GameState.PLAYING) {
+            return false;
+        }
         var box = this.getBoxByPos(touch.getLocation());
         if (box) {
             box.setSelected(true);
@@ -114,6 +128,9 @@ var GameScene = cc.Scene.extend({
             this.selectBoxArr.push(box);
             this.lastSelectBox = box;
             this.lightLine.drawSelectingLine(this.selectBoxArr);
+
+            var num = this.calBoxAddResult(this.selectBoxArr);
+            this.topLayer.showAddTip(num);
         }
     },
     /**
@@ -127,6 +144,22 @@ var GameScene = cc.Scene.extend({
         } else {
             this.matchFailUnSelected();
         }
+
+        this.topLayer.hideAddTip();
+    },
+
+    /**
+     * 计算box相加的数字和
+     * @returns {number}
+     */
+    calBoxAddResult: function (boxArr) {
+        var num = 0;
+        for (var i = 0; i < boxArr.length; i++) {
+            /**@type Box*/
+            var box = boxArr[i];
+            num += box.num;
+        }
+        return num;
     },
 
     /**
@@ -171,24 +204,35 @@ var GameScene = cc.Scene.extend({
     },
 
     checkNumIsMatchTen: function () {
-        var num = 0;
-        for (var i = 0; i < this.selectBoxArr.length; i++) {
+        /**@type Box*/
+        var firstBox = this.selectBoxArr[0];
+        var num = firstBox.num;
+        var isSameLen = true;
+        for (var i = 1; i < this.selectBoxArr.length; i++) {
             /**@type Box*/
             var box = this.selectBoxArr[i];
             num += box.num;
+            //数字长度不统一，不能进行合并
+            if (firstBox.num.toString().length != box.num.toString().length) {
+                isSameLen = false;
+                break;
+            }
         }
-        //if (num % 10 == 0) { //匹配成功
-        var surroundBoxArr = this.checkNumIsSurround();
-        if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
-            //TODO 隔离消除
-        } else { //普通消除
-            this.matchSuccessUnSelected();
+        if (isSameLen && num % 10 == 0) { //匹配成功
+            this.selectLen = this.selectBoxArr.length;
+            this.selectWillAddScore = num * this.selectLen;
+            var surroundBoxArr = this.checkNumIsSurround();
+            if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
+                //TODO 隔离消除
+                trace("隔离消除");
+            } else { //普通消除
+                this.matchSuccessUnSelected();
+            }
+        } else { //匹配失败
+            this.matchFailUnSelected();
         }
-        //} else { //匹配失败
-        //    this.matchFailUnSelected();
-        //}
-
     },
+
 
     /**
      * 判断数字是否形成了一个围墙
@@ -283,7 +327,7 @@ var GameScene = cc.Scene.extend({
             // remove start ^_^ end
             nextBox.y = nextBox.baseY;
             nextBox.tintColor();
-            this.showAddTip(nextBox.num, nextBox.x, nextBox.y);
+            this.showAddTip(nextBox.num + "x" + this.selectLen, nextBox.x, nextBox.y);
             setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
         }
     },
@@ -319,8 +363,8 @@ var GameScene = cc.Scene.extend({
         if (this.selectBoxArr.length > 0) {
             setTimeout(this.__removeEndSelectBox.bind(this), 50);
         } else {
-            //TODO remove end
-            trace("remove end!!");
+            // remove end
+            GameManager.instance.state = GameState.PLAYING;
         }
     },
 
@@ -359,7 +403,10 @@ var GameScene = cc.Scene.extend({
             that.boxRoot.addChild(box);
             box.moveToPot(row, col);
             that.boxArr[row][col] = box;
-        }, 800);
+            setTimeout(function () {
+                GameManager.instance.state = GameState.PLAYING;
+            }, 1000);
+        }, 700);
     },
 
     /**
@@ -402,8 +449,8 @@ var GameScene = cc.Scene.extend({
      * @param box {Box}
      * @param nextBox {Box}
      */
-    showAddTip: function (num, x, y) {
-        var tf = new cc.TextFieldTTF(num + "", cc.size(Const.BOX_SIZE, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+    showAddTip: function (txt, x, y) {
+        var tf = new cc.TextFieldTTF(txt + "", cc.size(Const.BOX_SIZE, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
         tf.setTextColor(hex2Color(0xffff44));
         this.addChild(tf, 1000);
         tf.x = x;
@@ -414,7 +461,7 @@ var GameScene = cc.Scene.extend({
             cc.fadeOut(0.15),
             cc.removeSelf(),
             cc.callFunc(function () {
-                GameManager.instance.score += num;
+                GameManager.instance.score += this.selectWillAddScore;
                 this.topLayer.updateScoreShow();
             }, this)
         ));

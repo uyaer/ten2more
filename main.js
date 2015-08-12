@@ -81,12 +81,15 @@ cc.game.onStart = function () {
     cc.view.adjustViewPort(true);
     cc.view.enableRetina(true);
     if (cc.sys.isMobile) {
-        cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.FIXED_HEIGHT);
+        cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.FIXED_WIDTH);
     } else {
-
         cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.SHOW_ALL);
     }
     cc.view.resizeWithBrowserSize(true);
+
+    Const.WIN_W = cc.winSize.width;
+    Const.WIN_H = cc.winSize.height;
+
     //load resources
     cc.LoaderScene.preload(g_resources, function () {
 
