@@ -41,7 +41,7 @@ function getRectPercentY(rect, percent) {
 }
 
 function hex2Color(val) {
-    if (!val) return null;
+    if (!val && val != 0x0) return null;
     if (val instanceof cc.Color) {
         return val;
     }

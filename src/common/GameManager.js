@@ -3,53 +3,17 @@ GameManager.instance = {
 
     state: GameState.UN_START,
     /**
-     * 当前关卡获得的金币，最后按照比例汇总
+     * 当前进行的关卡的分数
      */
-    currLvGetGold: 0,
+    score: 0,
     /**
-     * 总金币
+     * 历史最高分数
      */
-    gold: 0,
+    maxScore: 0,
     /**
-     * 当前进行的关卡
+     * 历史玩耍次数
      */
-    level:1,
-
-    /**
-     * 各个关卡的星级数
-     * @type HashMap
-     */
-    levelStarMap:null,
-
-    /**
-     * 增加或者减少金币
-     * @param val {number}
-     */
-    changeGold: function (val) {
-        this.gold += val;
-        cc.eventManager.dispatchCustomEvent(GameEvent.EVENT_GOLD_CHANG);
-
-        this.saveData();
-    },
-
-    /**
-     * 已经开放的关卡Id
-     * @type Array
-     */
-    hasOpenLevelId: null,
-    /**
-     * 道具信息 (key ITEM ,id = GoodsVo:id)
-     * @type HashMap
-     */
-    itemMap: null,
-    /**
-     * 使用的人物皮肤 GoodVo:Id
-     */
-    useRoleSkinId: 1,
-    /**
-     * 使用的宠物皮肤 GoodVo:Id
-     */
-    usePetSkinId: -1,
+    playCount: 0,
 
     /**
      * init data
@@ -60,7 +24,7 @@ GameManager.instance = {
     },
 
     loadCfg: function () {
-        var str = cc.sys.localStorage.getItem("game04cityrunner-game-cfg");
+        var str = cc.sys.localStorage.getItem(Const.STORE_CFG_KEY);
         if (str) {
             var json = JSON.parse(str);
             AudioManager.instance.setIsAudio(json["isAudio"]);
@@ -70,12 +34,12 @@ GameManager.instance = {
         var data = {
             "isAudio": AudioManager.instance.getIsAudio()
         }
-        cc.sys.localStorage.setItem("game04cityrunner-game-cfg", JSON.stringify(data));
+        cc.sys.localStorage.setItem(Const.STORE_CFG_KEY, JSON.stringify(data));
     },
 
 
     loadData: function () {
-        var str = cc.sys.localStorage.getItem("game04cityrunner-game-data");
+        var str = cc.sys.localStorage.getItem(Const.STORE_KEY);
         if (str) {
             var json = JSON.parse(str);
             var vertify1 = json["vertify"];
@@ -83,12 +47,9 @@ GameManager.instance = {
             str = JSON.stringify(data);
             var vertify2 = md5(str, Const.VERTIFY_KEY);
             if (vertify1 == vertify2) {
-                this.gold = data["gold"] || 100000;
-                this.hasOpenLevelId = data["hasOpenLevelId"] || [1];
-                this.itemMap = new HashMap(data["itemMap"]);
-                this.levelStarMap = new HashMap(data["levelStarMap"]);
-                this.useRoleSkinId = data["useRoleSkinId"] || 1;
-                this.usePetSkinId = data["usePetSkinId"] || -1;
+                this.score = data["score"] || 0;
+                this.maxScore = data["maxScore"] || 0;
+                this.playCount = data["playCount"] || 0;
             } else {
                 this.useInitFullData();
             }
@@ -119,12 +80,9 @@ GameManager.instance = {
     _saveDataDelay: function () {
         this._saveCfgDelayCount = 0;
         var data = {
-            "gold": this.gold,
-            "hasOpenLevelId": this.hasOpenLevelId,
-            "itemMap": this.itemMap.toJSON(),
-            "levelStarMap": this.levelStarMap.toJSON(),
-            "useRoleSkinId": this.useRoleSkinId,
-            "usePetSkinId": this.usePetSkinId
+            "score": this.score,
+            "maxScore": this.maxScore,
+            "playCount": this.playCount
         };
         var dataStr = JSON.stringify(data);
         var vertify = md5(dataStr, Const.VERTIFY_KEY);
@@ -132,19 +90,16 @@ GameManager.instance = {
             "vertify": vertify,
             "data": data
         }
-        cc.sys.localStorage.setItem("game04cityrunner-game-data", JSON.stringify(game_data));
+        cc.sys.localStorage.setItem(Const.STORE_KEY, JSON.stringify(game_data));
     },
 
     /**
      * 默认值
      */
     useInitFullData: function () {
-        this.gold = 100000;
-        this.hasOpenLevelId = [1];
-        this.itemMap = new HashMap();
-        this.levelStarMap = new HashMap();
-        this.useRoleSkinId = 1;
-        this.usePetSkinId = -1;
+        this.score = 0;
+        this.maxScore = 0;
+        this.playCount = 0;
     }
 
 };

@@ -90,6 +90,8 @@ cc.game.onStart = function () {
     //load resources
     cc.LoaderScene.preload(g_resources, function () {
 
+        GameManager.instance.init();
+
         cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
 
         cc.director.runScene(new GameScene());

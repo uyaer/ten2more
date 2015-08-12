@@ -27,11 +27,16 @@ var GameScene = cc.Scene.extend({
      * @type cc.Layer
      */
     boxRoot: null,
+    /**
+     * @type TopLayer
+     */
+    topLayer: null,
     ctor: function () {
         this._super();
 
         this.makeBackground();
         this.makeBox();
+        this.makeTopLayer();
     },
 
     onEnter: function () {
@@ -75,6 +80,11 @@ var GameScene = cc.Scene.extend({
                 root.addChild(box);
             }
         }
+    },
+
+    makeTopLayer: function () {
+        this.topLayer = new TopLayer();
+        this.addChild(this.topLayer, 10);
     },
 
     /**
@@ -168,17 +178,16 @@ var GameScene = cc.Scene.extend({
             num += box.num;
         }
         //if (num % 10 == 0) { //匹配成功
-        //    var surroundBoxArr = this.checkNumIsSurround();
-        //    if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
-        //        //TODO 隔离消除
-        //    } else { //普通消除
-        //        this.matchSuccessUnSelected();
-        //    }
+        var surroundBoxArr = this.checkNumIsSurround();
+        if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
+            //TODO 隔离消除
+        } else { //普通消除
+            this.matchSuccessUnSelected();
+        }
         //} else { //匹配失败
         //    this.matchFailUnSelected();
         //}
 
-        this.matchSuccessUnSelected();
     },
 
     /**
@@ -274,6 +283,7 @@ var GameScene = cc.Scene.extend({
             // remove start ^_^ end
             nextBox.y = nextBox.baseY;
             nextBox.tintColor();
+            this.showAddTip(nextBox.num, nextBox.x, nextBox.y);
             setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
         }
     },
@@ -385,5 +395,28 @@ var GameScene = cc.Scene.extend({
             this.removeBoxArr.push(box);
 
         }
+    },
+
+    /**
+     * 显示增加的提示信息
+     * @param box {Box}
+     * @param nextBox {Box}
+     */
+    showAddTip: function (num, x, y) {
+        var tf = new cc.TextFieldTTF(num + "", cc.size(Const.BOX_SIZE, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+        tf.setTextColor(hex2Color(0xffff44));
+        this.addChild(tf, 1000);
+        tf.x = x;
+        tf.y = y;
+        tf.runAction(cc.sequence(
+            cc.delayTime(0.25),
+            cc.moveBy(0.25, 0, 35).easing(cc.easeSineOut()),
+            cc.fadeOut(0.15),
+            cc.removeSelf(),
+            cc.callFunc(function () {
+                GameManager.instance.score += num;
+                this.topLayer.updateScoreShow();
+            }, this)
+        ));
     }
 })
