@@ -52,12 +52,13 @@ var Box = cc.Node.extend({
 
         this.calBasePos();
 
-        this.bg = new cc.Sprite("#cir.png");
+        this.bg = new cc.Sprite("#game/cir.png");
         this.addChild(this.bg);
 
         this.numTF = new cc.TextFieldTTF("1", cc.size(100, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
         this.numTF.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         this.addChild(this.numTF, 1);
+
     },
 
     /**
@@ -70,6 +71,9 @@ var Box = cc.Node.extend({
         this.scale = 1;
         this.baseColor = cc.color.WHITE;
         this.bg.color = cc.color.WHITE;
+        this.opacity = 255;
+        this.scale = 1;
+        this.rotation = 0;
     },
 
     updateNum: function (num) {
@@ -128,6 +132,22 @@ var Box = cc.Node.extend({
         this.runAction(cc.sequence(
             cc.scaleTo(0.5, 0.01),
             cc.removeSelf(false)
+        ));
+    },
+
+    /**
+     * 播放爆炸动画
+     */
+    playExplodeAnimation: function () {
+        this.runAction(cc.sequence(
+            cc.delayTime(0.45),
+            cc.removeSelf(false)
+        ));
+        this.bg.runAction(cc.sequence(
+            cc.tintTo(0.125, 0, 0, 0),
+            cc.tintTo(0.125, 255, 255, 255),
+            cc.tintTo(0.125, 0, 0, 0),
+            cc.tintTo(0.125, 255, 255, 255)
         ));
     },
 

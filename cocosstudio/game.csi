@@ -1,0 +1,15 @@
+<PlistInfoProjectFile>
+  <PropertyGroup Type="Plist" Name="game" ID="e2fd7b52-8932-4384-b2a3-fc1b3a326b85" Version="2.3.1.2" />
+  <Content ExportType="Png" SortAlgorithm="MaxRects" PicturePadding="1" AllowRotation="False" AllowAnySize="True" AllowTrim="True" ctype="PlistInfoData">
+    <ImageFiles>
+      <FilePathData Path="game/cir.png" />
+      <FilePathData Path="game/radius_box.png" />
+      <FilePathData Path="game/switch-mask.png" />
+      <FilePathData Path="game/switch-off.png" />
+      <FilePathData Path="game/switch-on.png" />
+      <FilePathData Path="game/switch-thumb.png" />
+      <FilePathData Path="game/radius_box_yellow.png" />
+    </ImageFiles>
+    <MaxSize Width="1024" Height="1024" />
+  </Content>
+</PlistInfoProjectFile>

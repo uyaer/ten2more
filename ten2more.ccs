@@ -3,8 +3,16 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Project Name="MainScene.csd" Type="Scene" />
-        <Image Name="HelloWorld.png" />
+        <Folder Name="game">
+          <Image Name="cir.png" />
+          <Image Name="radius_box.png" />
+          <Image Name="switch-mask.png" />
+          <Image Name="switch-off.png" />
+          <Image Name="switch-on.png" />
+          <Image Name="switch-thumb.png" />
+          <Image Name="radius_box_yellow.png" />
+        </Folder>
+        <PlistInfo Name="game.csi" Type="Plist" />
       </RootFolder>
     </Group>
   </SolutionFolder>

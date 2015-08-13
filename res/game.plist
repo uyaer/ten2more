@@ -1,103 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>cir.png</key>
+			<key>game/cir.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{101,0},{100,100}}</string>
+				<string>{{1,1},{100,100}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{100,100}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{100,100}</string>
 			</dict>
-
-			<key>radius_box.png</key>
+			<key>game/radius_box.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{202,0},{50,51}}</string>
+				<string>{{379,1},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{50,51}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{50,51}</string>
 			</dict>
-
-			<key>switch-mask.png</key>
+			<key>game/switch-mask.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{100,36}}</string>
+				<string>{{103,1},{100,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{100,36}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{100,36}</string>
 			</dict>
-
-			<key>switch-off.png</key>
+			<key>game/switch-off.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,74},{85,36}}</string>
+				<string>{{205,1},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{85,36}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{85,36}</string>
 			</dict>
-
-			<key>switch-on.png</key>
+			<key>game/switch-on.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,37},{85,36}}</string>
+				<string>{{292,1},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{85,36}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{85,36}</string>
 			</dict>
-
-			<key>switch-thumb.png</key>
+			<key>game/switch-thumb.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{202,52},{50,50}}</string>
+				<string>{{155,39},{50,50}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{50,50}}</string>
+				<false />
 				<key>sourceSize</key>
 				<string>{50,50}</string>
 			</dict>
-
+			<key>game/radius_box_yellow.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{103,39},{50,51}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{50,51}</string>
+			</dict>
 		</dict>
-
 		<key>metadata</key>
 		<dict>
 			<key>format</key>
 			<integer>2</integer>
-			<key>size</key>
-			<string>{256,128}</string>
 			<key>textureFileName</key>
 			<string>game.png</string>
-			</dict>
+			<key>realTextureFileName</key>
+			<string>game.png</string>
+			<key>size</key>
+			<string>{430,102}</string>
 		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>430</integer>
+			<key>height</key>
+			<integer>102</integer>
+		</dict>
+	</dict>
 </plist>

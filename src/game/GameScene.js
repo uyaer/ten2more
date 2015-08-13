@@ -112,6 +112,7 @@ var GameScene = cc.Scene.extend({
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
+            this.topLayer.showAddTip(box.num);
             return true;
         }
         return false;
@@ -218,27 +219,34 @@ var GameScene = cc.Scene.extend({
                 break;
             }
         }
-        //if (isSameLen && num % 10 == 0) { //匹配成功
+        if (isSameLen && num % 10 == 0) { //匹配成功
             this.selectLen = this.selectBoxArr.length;
             this.selectWillAddScore = num * this.selectLen;
             var surroundBoxArr = this.checkNumIsSurround();
             if (surroundBoxArr.length > 0) { //围墙炸弹隔离消除
                 // 隔离消除
-                trace("隔离消除");
                 this.playSurroundAnimation(surroundBoxArr);
             } else { //普通消除
                 this.matchSuccessUnSelected();
             }
-        //} else { //匹配失败
-        //    this.matchFailUnSelected();
-        //}
+        } else { //匹配失败
+            this.matchFailUnSelected();
+        }
     },
+
+    /**
+     * 被围绕的box数组
+     * @type Array
+     */
+    beSurroundArr: null,
 
     /**
      * 播放围墙动画
      * @param beSurroundArr {Array} 被包围的box数组
      */
     playSurroundAnimation: function (beSurroundArr) {
+        this.beSurroundArr = beSurroundArr;
+
         var num = 0;
         this.selectLen = this.selectBoxArr.length;
         for (var i = 0; i < this.selectBoxArr.length; i++) {
@@ -247,6 +255,36 @@ var GameScene = cc.Scene.extend({
             box.playSurroundAnimation();
             num += box.length;
         }
+
+        setTimeout(this.__removeSurroundBoxArr.bind(this), 600);
+    },
+
+    /**
+     * 移除外围的墙
+     * @private
+     */
+    __removeSurroundBoxArr: function () {
+        for (var i = 0; i < this.selectBoxArr.length; i++) {
+            /** @type Box*/
+            var box = this.selectBoxArr[i];
+            this.cleanBoxPosition(box);
+            box.playRemoveAnimation();
+        }
+        //light
+        this.lightLine.runAction(cc.sequence(
+            cc.blink(0.5, 2),
+            cc.show(),
+            cc.callFunc(this.lightLine.drawSelectingLine, this.lightLine)
+        ));
+
+        for (var i = 0; i < this.beSurroundArr.length; i++) {
+            /** @type Box*/
+            var box = this.beSurroundArr[i];
+            this.cleanBoxPosition(box);
+            box.playExplodeAnimation();
+            this.showAddTip(this.selectWillAddScore + "\nx" + box.num, box.x, box.y, this.selectWillAddScore * box.num);
+        }
+        setTimeout(this.boxDown.bind(this), 700);
     },
 
     /**
@@ -342,7 +380,7 @@ var GameScene = cc.Scene.extend({
             // remove start ^_^ end
             nextBox.y = nextBox.baseY;
             nextBox.tintColor();
-            this.showAddTip(nextBox.num + "x" + this.selectLen, nextBox.x, nextBox.y);
+            this.showAddTip(nextBox.num + "x" + this.selectLen, nextBox.x, nextBox.y, this.selectWillAddScore);
             setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
         }
     },
@@ -461,12 +499,14 @@ var GameScene = cc.Scene.extend({
 
     /**
      * 显示增加的提示信息
-     * @param box {Box}
-     * @param nextBox {Box}
+     * @param txt 显示文字
+     * @param x 现在位置
+     * @param y 现在位置
+     * @param num 增加数量
      */
-    showAddTip: function (txt, x, y) {
-        var tf = new cc.TextFieldTTF(txt + "", cc.size(Const.BOX_SIZE, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
-        tf.setTextColor(hex2Color(0xffff44));
+    showAddTip: function (txt, x, y, num) {
+        var tf = new cc.TextFieldTTF(txt + "", cc.size(Const.BOX_SIZE, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+        tf.color = hex2Color(0xc07115);
         this.addChild(tf, 1000);
         tf.x = x;
         tf.y = y;
@@ -476,7 +516,7 @@ var GameScene = cc.Scene.extend({
             cc.fadeOut(0.15),
             cc.removeSelf(),
             cc.callFunc(function () {
-                GameManager.instance.score += this.selectWillAddScore;
+                GameManager.instance.score += num;
                 this.topLayer.updateScoreShow();
             }, this)
         ));

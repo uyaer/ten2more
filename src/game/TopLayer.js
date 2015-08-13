@@ -62,12 +62,12 @@ var TopLayer = cc.Layer.extend({
         //switch
         this.musicSwitch = new cc.ControlSwitch
         (
-            new cc.Sprite("#switch-mask.png"),
-            new cc.Sprite("#switch-on.png"),
-            new cc.Sprite("#switch-off.png"),
-            new cc.Sprite("#switch-thumb.png"),
-            new cc.LabelTTF("On", "Arial", 32),
-            new cc.LabelTTF("Off", "Arial", 32)
+            new cc.Sprite("#game/switch-mask.png"),
+            new cc.Sprite("#game/switch-on.png"),
+            new cc.Sprite("#game/switch-off.png"),
+            new cc.Sprite("res/switch-thumb.png"),
+            new cc.LabelTTF("开", "Arial", 32),
+            new cc.LabelTTF("关", "Arial", 32)
         );
         this.musicSwitch.anchorX = 0;
         this.musicSwitch.x = 120;
@@ -111,7 +111,7 @@ var TopLayer = cc.Layer.extend({
             /**@type cc.Size*/
             var size = sizeArr[i];
             //背景
-            var box = new cc.Scale9Sprite("radius_box.png", cc.rect(25, 25, 1, 1));
+            var box = new cc.Scale9Sprite("game/radius_box.png", cc.rect(25, 25, 1, 1));
             box.anchorX = 0;
             box.anchorY = 1;
             box.x = pos.x;
@@ -160,13 +160,12 @@ var TopLayer = cc.Layer.extend({
         var pos = cc.p(Const.WIN_W / 2, Const.WIN_H - Const.TOP_HEIGHT + 25);
         var size = cc.size(200, 100);
         //背景
-        var box = new cc.Scale9Sprite("radius_box.png", cc.rect(25, 25, 1, 1));
+        var box = new cc.Scale9Sprite("game/radius_box_yellow.png", cc.rect(25, 25, 1, 1));
         box.anchorX = 0.5;
         box.anchorY = 0.5;
         box.x = pos.x;
         box.y = pos.y;
         box.setContentSize(size);
-        box.color = hex2Color(0xffff00);
         this.addChild(box);
         //show num txt
         var tf = new cc.TextFieldTTF("0", cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
@@ -176,9 +175,11 @@ var TopLayer = cc.Layer.extend({
         tf.color = hex2Color(0xffffff);
         box.addChild(tf);
 
+        box.cascadeOpacity = true;
+        box.cascadeColor = true;
+        box.visible = false;
         this.addTipBox = box;
         this.addTipTF = tf;
-        box.visible = false;
     },
 
     updateScoreShow: function () {
@@ -197,6 +198,7 @@ var TopLayer = cc.Layer.extend({
      * @private
      */
     _playScoreShow: function (target, score) {
+        target.stopAllActions();
         target.runAction(cc.sequence(
             cc.blink(0.35, 2),
             cc.show(),
@@ -213,13 +215,17 @@ var TopLayer = cc.Layer.extend({
     showAddTip: function (num) {
         this.addTipTF.setString(num + "");
         this.addTipBox.visible = true;
-        this.addTipBox.opacity = 255;
+        this.addTipBox.scale = 1;
     },
 
     /**
      * 隐藏临时相加的数字
      */
     hideAddTip: function () {
-        this.addTipBox.runAction(cc.fadeOut(0.35));
+
+        this.addTipBox.runAction(cc.sequence(
+            cc.scaleTo(0.1,0.01),
+            cc.hide()
+        ))
     }
 });
