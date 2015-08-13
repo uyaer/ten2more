@@ -134,20 +134,26 @@ var Box = cc.Node.extend({
             cc.removeSelf(false)
         ));
     },
+    /**
+     * 播放移动到爆炸点的移除动画
+     *
+     */
+    playRemoveToExplodePotAnimation: function (x,y) {
+        this.runAction(cc.sequence(
+            cc.moveTo(0.5, x,y),
+            cc.removeSelf(false)
+        ));
+    },
 
     /**
      * 播放爆炸动画
      */
     playExplodeAnimation: function () {
-        this.runAction(cc.sequence(
-            cc.delayTime(0.45),
-            cc.removeSelf(false)
-        ));
         this.bg.runAction(cc.sequence(
-            cc.tintTo(0.125, 0, 0, 0),
-            cc.tintTo(0.125, 255, 255, 255),
-            cc.tintTo(0.125, 0, 0, 0),
-            cc.tintTo(0.125, 255, 255, 255)
+            cc.tintTo(0.12, 0, 0, 0),
+            cc.tintTo(0.12, 255, 255, 255),
+            cc.tintTo(0.12, 0, 0, 0),
+            cc.tintTo(0.12, 255, 255, 255)
         ));
     },
 

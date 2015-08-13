@@ -264,11 +264,18 @@ var GameScene = cc.Scene.extend({
      * @private
      */
     __removeSurroundBoxArr: function () {
+        var indexArr = randomArrayIndex(this.selectBoxArr.length, this.selectWillAddScore / this.selectLen / 10);
         for (var i = 0; i < this.selectBoxArr.length; i++) {
             /** @type Box*/
             var box = this.selectBoxArr[i];
-            this.cleanBoxPosition(box);
-            box.playRemoveAnimation();
+            if (!isElinArray(i, indexArr)) {
+                this.cleanBoxPosition(box);
+                var potBox = this.selectBoxArr[indexArr[randomInt(0, indexArr.length - 1)]];
+                box.playRemoveToExplodePotAnimation(potBox.x, potBox.y);
+            } else {
+                box.updateNum(10);
+                box.tintColor();
+            }
         }
         //light
         this.lightLine.runAction(cc.sequence(
@@ -280,8 +287,9 @@ var GameScene = cc.Scene.extend({
         for (var i = 0; i < this.beSurroundArr.length; i++) {
             /** @type Box*/
             var box = this.beSurroundArr[i];
-            this.cleanBoxPosition(box);
             box.playExplodeAnimation();
+            box.updateNum(box.num * 10);
+            box.tintColor();
             this.showAddTip(this.selectWillAddScore + "\nx" + box.num, box.x, box.y, this.selectWillAddScore * box.num);
         }
         setTimeout(this.boxDown.bind(this), 700);

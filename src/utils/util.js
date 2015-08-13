@@ -22,6 +22,24 @@ function payStr(id) {
 }
 
 /**
+ * 获取数组中的len个随机下表
+ * @param arrayLen
+ * @param len
+ */
+function randomArrayIndex(arrayLen,len){
+    if(len==0)return null;
+    if(len>arrayLen)return null;
+    var arr = [];
+    for(var i = 0 ; i < arrayLen;i++){
+        arr[i] = i;
+    }
+    arr.sort(function (a,b) {
+        return Math.random()<0.5;
+    });
+    return arr.splice(0,len);
+}
+
+/**
  * 返回Rect中x坐标的百分比
  * @param rect {cc.Rect}
  * @param percent {Number}
