@@ -122,6 +122,7 @@ var Box = cc.Node.extend({
             this.bg.color = this.baseColor;
             this.y = this.baseY;
         }
+        trace(cc.colorToHex(this.bg.color))
     },
 
     /**

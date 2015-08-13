@@ -117,6 +117,7 @@ var GameScene = cc.Scene.extend({
         }
         return false;
     },
+
     /**
      * 触摸事件
      * @param touch {cc.Touch}
@@ -124,14 +125,30 @@ var GameScene = cc.Scene.extend({
      */
     onTouchMovedHandler: function (touch, event) {
         var box = this.getBoxByPos(touch.getLocation());
-        if (box && !isElinArray(box, this.selectBoxArr) && this.checkBoxCanBeSelected(box)) {
-            box.setSelected(true);
-            this.selectBoxArr.push(box);
-            this.lastSelectBox = box;
-            this.lightLine.drawSelectingLine(this.selectBoxArr);
+        if (box && this.checkBoxCanBeSelected(box)) {
+            if (!isElinArray(box, this.selectBoxArr)) { //没有添加过
+                box.setSelected(true);
+                this.selectBoxArr.push(box);
+                this.lastSelectBox = box;
+                this.lightLine.drawSelectingLine(this.selectBoxArr);
 
-            var num = this.calBoxAddResult(this.selectBoxArr);
-            this.topLayer.showAddTip(num);
+                var num = this.calBoxAddResult(this.selectBoxArr);
+                this.topLayer.showAddTip(num);
+            } else { //添加过
+                var endBox = null;
+                if (this.selectBoxArr.length > 1) {
+                    endBox = this.selectBoxArr[this.selectBoxArr.length - 2];
+                }
+                if (box == endBox) {
+                    box = this.selectBoxArr.pop();
+                    box.setSelected(false);
+                    this.lastSelectBox = endBox;
+                    this.lightLine.drawSelectingLine(this.selectBoxArr);
+
+                    var num = this.calBoxAddResult(this.selectBoxArr);
+                    this.topLayer.showAddTip(num);
+                }
+            }
         }
     },
     /**
