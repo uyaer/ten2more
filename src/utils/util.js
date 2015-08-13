@@ -136,7 +136,7 @@ function showTip(str) {
     tf.x = Const.WIN_W * 0.5;
     tf.y = Const.WIN_H * 0.55;
     tf.setTextColor(hex2Color(0xff0000));
-    cc.director.getRunningScene().addChild(tf);
+    cc.director.getRunningScene().addChild(tf,1000);
     tf.runAction(cc.sequence(
         cc.moveBy(0.15, 0, -20).easing(cc.easeSineOut()),
         cc.delayTime(0.2),

@@ -233,10 +233,27 @@ var GameScene = cc.Scene.extend({
             //数字长度不统一，不能进行合并
             if (firstBox.num.toString().length != box.num.toString().length) {
                 isSameLen = false;
+                showTip("~位数不匹配~");
                 break;
             }
         }
-        if (isSameLen && num % 10 == 0) { //匹配成功
+        var isMatch = false;
+        if(isSameLen){
+            if(firstBox.num.toString().length==1){
+                if(num ==10){
+                    isMatch = true;
+                }else if(num % 10 == 0){
+                    showTip("~太长啦~");
+                }else{
+                    showTip("~数字＝10~");
+                }
+            }else if(num % 10 == 0){
+                isMatch = true;
+            }else{
+                showTip("~不能相加啦~");
+            }
+        }
+        if (isMatch) { //匹配成功
             this.selectLen = this.selectBoxArr.length;
             this.selectWillAddScore = num * this.selectLen;
             var surroundBoxArr = this.checkNumIsSurround();

@@ -116,13 +116,12 @@ var Box = cc.Node.extend({
      */
     setSelected: function (val) {
         if (val) {
-            this.bg.color = cc.color.RED;
             this.runAction(cc.moveBy(0.15, 0, 5));
+            this.bg.setColor(cc.color.RED);
         } else {
-            this.bg.color = this.baseColor;
             this.y = this.baseY;
+            this.bg.color = this.baseColor;
         }
-        trace(cc.colorToHex(this.bg.color))
     },
 
     /**

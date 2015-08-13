@@ -1635,9 +1635,9 @@ cc._initSys = function (config, CONFIG_KEY) {
 
     (function(sys, config){
         var userRenderMode = config[CONFIG_KEY.renderMode] - 0;
-        if(!sys.isMobile){
-            userRenderMode = 1;
-        }
+        //if(!sys.isMobile){
+        //    userRenderMode = 1;
+        //}
         if(isNaN(userRenderMode) || userRenderMode > 2 || userRenderMode < 0)
             userRenderMode = 0;
         var shieldOs = [sys.OS_ANDROID];
