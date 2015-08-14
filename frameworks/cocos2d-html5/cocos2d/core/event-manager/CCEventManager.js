@@ -103,7 +103,7 @@ cc.__getListenerID = function (event) {
  * @class
  * @name cc.eventManager
  */
-cc.eventManager = /** @lends cc.eventManager# */{
+cc.eventManager = {
     //Priority dirty flag
     DIRTY_NONE:0,
     DIRTY_FIXED_PRIORITY:1 <<0,

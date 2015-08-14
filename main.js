@@ -99,5 +99,22 @@ cc.game.onStart = function () {
 
         cc.director.runScene(new GameScene());
     }, this);
+
+
+    var delayResizeId = 0;
+    cc.view.setResizeCallback(function () {
+        clearTimeout(delayResizeId);
+        delayResizeId = setTimeout(onResize,200);
+    });
+
+    function onResize(){
+        if (cc.sys.isMobile) {
+            cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.FIXED_WIDTH);
+        }
+        Const.WIN_W = cc.winSize.width;
+        Const.WIN_H = cc.winSize.height;
+
+        cc.eventManager.dispatchCustomEvent(GameEvent.WIN_LAYOUT);
+    }
 };
 cc.game.run();

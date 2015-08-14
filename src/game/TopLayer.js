@@ -28,12 +28,14 @@ var TopLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
 
+        this.y = Const.WIN_H;
+
         this.makeMenu();
         this.makeInfo();
         this.makeHelp();
         this.makeAddTip();
 
-        this.scoreTF.setString("0");
+        this.scoreTF.setString(GameManager.instance.score + "");
         this.maxScoreTF.setString(GameManager.instance.maxScore + "");
         this.playCountTF.setString(GameManager.instance.playCount + "");
     },
@@ -43,7 +45,7 @@ var TopLayer = cc.Layer.extend({
      */
     makeMenu: function () {
         var colorBg = new cc.LayerColor(hex2Color(0xdf8c2c), Const.WIN_W, 70);
-        colorBg.y = Const.WIN_H - 70;
+        colorBg.y = -70;
         this.addChild(colorBg);
         var border = new cc.LayerColor(hex2Color(0xac6109), Const.WIN_W, 2);
         border.y = -1;
@@ -86,6 +88,21 @@ var TopLayer = cc.Layer.extend({
         tf.y = 0;
         tf.color = hex2Color(0xffffff);
         colorBg.addChild(tf);
+
+        //reset button
+        var box = new cc.Scale9Sprite("game/radius_box_yellow.png", cc.rect(25, 25, 1, 1));
+        //box.setContentSize(size);
+        var titleButton = new cc.LabelTTF("重新开始", "Arial", 30);
+        titleButton.color = cc.color.WHITE;
+        var btn = new cc.ControlButton(titleButton, box);
+        colorBg.addChild(btn);
+        btn.x = Const.WIN_W - 90;
+        btn.y = 35;
+        btn.addTargetWithActionForControlEvents(this, this.onResetBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
+    },
+
+    onResetBtnClickHandler: function () {
+        trace("--------")
     },
 
     onMusicValueChanged: function (sender, controlEvent) {
@@ -115,7 +132,7 @@ var TopLayer = cc.Layer.extend({
             box.anchorX = 0;
             box.anchorY = 1;
             box.x = pos.x;
-            box.y = Const.WIN_H - pos.y;
+            box.y = -pos.y;
             box.setContentSize(size);
             this.addChild(box);
             //text
@@ -125,7 +142,7 @@ var TopLayer = cc.Layer.extend({
             tf.anchorX = 1;
             tf.anchorY = 1;
             tf.x = pos.x - 10;
-            tf.y = Const.WIN_H - pos.y;
+            tf.y = -pos.y;
             tf.color = hex2Color(0x323231);
             this.addChild(tf);
             //show num txt
@@ -134,7 +151,7 @@ var TopLayer = cc.Layer.extend({
             tf.anchorX = 0;
             tf.anchorY = 1;
             tf.x = pos.x;
-            tf.y = Const.WIN_H - pos.y;
+            tf.y = -pos.y;
             tf.color = hex2Color(0xffffff);
             this.addChild(tf);
             i == 0 ? (this.maxScoreTF = tf) : i == 1 ? (this.playCountTF = tf) : (this.scoreTF = tf);
@@ -145,19 +162,19 @@ var TopLayer = cc.Layer.extend({
      * 产生帮助信息
      */
     makeHelp: function () {
-        var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字只能相加组合成10,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
+        var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
         var tf = new cc.TextFieldTTF(txt, cc.size(Const.WIN_W - 20, 100), cc.TEXT_ALIGNMENT_LEFT, "Arial", 22);
         tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.x = 10;
-        tf.y = Const.WIN_H - 325;
+        tf.y = -325;
         tf.color = hex2Color(0x323231);
         this.addChild(tf);
     },
 
     makeAddTip: function () {
-        var pos = cc.p(Const.WIN_W / 2, Const.WIN_H - Const.TOP_HEIGHT + 25);
+        var pos = cc.p(Const.WIN_W / 2, -Const.TOP_HEIGHT + 65);
         var size = cc.size(200, 100);
         //背景
         var box = new cc.Scale9Sprite("game/radius_box_yellow.png", cc.rect(25, 25, 1, 1));
@@ -167,6 +184,7 @@ var TopLayer = cc.Layer.extend({
         box.y = pos.y;
         box.setContentSize(size);
         this.addChild(box);
+        box.opacity = 200;
         //show num txt
         var tf = new cc.TextFieldTTF("0", cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
         tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
@@ -187,9 +205,10 @@ var TopLayer = cc.Layer.extend({
 
         if (GameManager.instance.maxScore < GameManager.instance.score) {
             GameManager.instance.maxScore = GameManager.instance.score;
-            GameManager.instance.saveData();
             this._playScoreShow(this.maxScoreTF, GameManager.instance.maxScore);
         }
+
+        GameManager.instance.saveData();
     },
 
     /**
@@ -224,7 +243,7 @@ var TopLayer = cc.Layer.extend({
     hideAddTip: function () {
 
         this.addTipBox.runAction(cc.sequence(
-            cc.scaleTo(0.1,0.01),
+            cc.scaleTo(0.1, 0.01),
             cc.hide()
         ))
     }

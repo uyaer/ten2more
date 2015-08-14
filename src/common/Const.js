@@ -18,7 +18,7 @@ var Const = {
     BOX_HALF:50,
     BOX_PADDING:120,
 
-    TOP_HEIGHT:300,
+    TOP_HEIGHT:320,
 
     /**
      * 验证码
@@ -28,7 +28,7 @@ var Const = {
     STORE_CFG_KEY:"com.uyaer.ten2more.cfg",
     STORE_KEY:"com.uyaer.ten2more.data",
 
-    VERSION:"v1.0.09"
+    VERSION:"v1.0.15"
 
 
 }

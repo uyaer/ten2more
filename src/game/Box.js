@@ -65,7 +65,7 @@ var Box = cc.Node.extend({
      * 重置Box
      */
     resetBox: function () {
-        this.updateNum(randomInt(1, 5));
+        this.updateNum(randomInt(1, 4));
         this.x = this.baseX;
         this.y = this.baseY;
         this.scale = 1;
@@ -138,9 +138,9 @@ var Box = cc.Node.extend({
      * 播放移动到爆炸点的移除动画
      *
      */
-    playRemoveToExplodePotAnimation: function (x,y) {
+    playRemoveToExplodePotAnimation: function (x, y) {
         this.runAction(cc.sequence(
-            cc.moveTo(0.5, x,y),
+            cc.moveTo(0.5, x, y),
             cc.removeSelf(false)
         ));
     },
@@ -184,7 +184,7 @@ var Box = cc.Node.extend({
     /**
      * 动画着色
      */
-    tintColor: function () {
+    tintColor: function (force) {
         //计算颜色
         var color = 0xffffff;
         if (this.num < 10) {
@@ -199,7 +199,11 @@ var Box = cc.Node.extend({
             color = 0xff0000;
         }
         this.baseColor = hex2Color(color);
-        this.bg.runAction(cc.tintTo(0.5, this.baseColor.r, this.baseColor.g, this.baseColor.b));
+        if (force) {
+            this.bg.color = this.baseColor;
+        } else {
+            this.bg.runAction(cc.tintTo(0.5, this.baseColor.r, this.baseColor.g, this.baseColor.b));
+        }
     },
 
     /**

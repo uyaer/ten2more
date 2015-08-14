@@ -14,6 +14,11 @@ GameManager.instance = {
      * 历史玩耍次数
      */
     playCount: 0,
+    /**
+     * 地图数据
+     * @typ Array
+     */
+    map:null,
 
     /**
      * init data
@@ -50,6 +55,7 @@ GameManager.instance = {
                 this.score = data["score"] || 0;
                 this.maxScore = data["maxScore"] || 0;
                 this.playCount = data["playCount"] || 0;
+                this.map = data["map"] || null;
             } else {
                 this.useInitFullData();
             }
@@ -82,7 +88,8 @@ GameManager.instance = {
         var data = {
             "score": this.score,
             "maxScore": this.maxScore,
-            "playCount": this.playCount
+            "playCount": this.playCount,
+            "map": this.map
         };
         var dataStr = JSON.stringify(data);
         var vertify = md5(dataStr, Const.VERTIFY_KEY);
@@ -100,6 +107,7 @@ GameManager.instance = {
         this.score = 0;
         this.maxScore = 0;
         this.playCount = 0;
+        this.map = null;
     }
 
 };

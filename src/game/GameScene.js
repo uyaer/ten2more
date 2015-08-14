@@ -1,5 +1,9 @@
 var GameScene = cc.Scene.extend({
     /**
+     * @type cc.LayerColor
+     */
+    colorBg: null,
+    /**
      * @type Array
      */
     boxArr: null,
@@ -53,6 +57,8 @@ var GameScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
+        cc.eventManager.addCustomListener(GameEvent.WIN_LAYOUT, this.onWinLayout.bind(this));
+
         //event
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -62,17 +68,40 @@ var GameScene = cc.Scene.extend({
         }, this);
     },
 
+    onExit: function () {
+        this._super();
+
+        cc.eventManager.removeCustomListeners(GameEvent.WIN_LAYOUT);
+    },
+
+    onWinLayout: function () {
+        this.colorBg.height = Const.WIN_H;
+        this.topLayer.y = Const.WIN_H;
+        for (var i = 0; i < Const.ROW; i++) {
+            for (var j = 0; j < Const.ROW; j++) {
+                /**@type Box*/
+                var box = this.boxArr[i][j];
+                box.calBasePos();
+                box.x = box.baseX;
+                box.y = box.baseY;
+            }
+        }
+    },
+
     /**
      *创建背景
      */
     makeBackground: function () {
         var colorBg = new cc.LayerColor(hex2Color(0xb8af9e), Const.WIN_W, Const.WIN_H);
         this.addChild(colorBg);
+        this.colorBg = colorBg;
         this.lightLine = new LightLine();
         this.addChild(this.lightLine, 1);
     },
 
     makeBox: function () {
+        /** @Type Array*/
+        var map = GameManager.instance.map;
         this.removeBoxArr = [];
         this.boxArr = [];
         var box;
@@ -82,10 +111,15 @@ var GameScene = cc.Scene.extend({
         for (var i = 0; i < Const.ROW; i++) {
             var line = [];
             this.boxArr.push(line);
-            for (var j = 0; j < Const.ROW; j++) {
+            for (var j = 0; j < Const.COL; j++) {
                 box = new Box(i, j);
                 line.push(box);
-                box.updateNum(randomInt(1, 5));
+                if (map) {
+                    box.updateNum(map[i * Const.COL + j]);
+                    box.tintColor(true);
+                } else {
+                    box.updateNum(randomInt(1, 4));
+                }
                 box.x = box.baseX;
                 box.y = box.baseY;
                 root.addChild(box);
@@ -221,6 +255,49 @@ var GameScene = cc.Scene.extend({
         return false;
     },
 
+    /**
+     * 是否是相同的数字
+     * @returns {boolean}
+     * @private
+     */
+    _isSameNumber: function () {
+        /**@type Box*/
+        var firstBox = this.selectBoxArr[0];
+        var num = firstBox.num;
+        var isSame = true;
+        for (var i = 1; i < this.selectBoxArr.length; i++) {
+            /**@type Box*/
+            var box = this.selectBoxArr[i];
+            num += box.num;
+            //数字长度不统一，不能进行合并
+            if (firstBox.num != box.num) {
+                isSame = false;
+                break;
+            }
+        }
+        return isSame;
+    },
+    /**
+     * 相加是否可以进位
+     * @private
+     */
+    _isAddMatchLen: function () {
+        /**@type Box*/
+        var firstBox = this.selectBoxArr[0];
+        var numLen = firstBox.num.toString().length;
+        var matchNum = Math.pow(10, numLen);
+        var num = 0;
+        for (var i = 0; i < this.selectBoxArr.length; i++) {
+            /**@type Box*/
+            var box = this.selectBoxArr[i];
+            num += box.num;
+        }
+        if (num == matchNum) {
+            return true;
+        }
+        return false;
+    },
+
     checkNumIsMatchTen: function () {
         /**@type Box*/
         var firstBox = this.selectBoxArr[0];
@@ -238,18 +315,16 @@ var GameScene = cc.Scene.extend({
             }
         }
         var isMatch = false;
-        if(isSameLen){
-            if(firstBox.num.toString().length==1){
-                if(num ==10){
+        if (isSameLen) {
+            if (firstBox.num.toString().length == 1) {
+                if (num % 10 == 0) {
                     isMatch = true;
-                }else if(num % 10 == 0){
-                    showTip("~太长啦~");
-                }else{
-                    showTip("~数字＝10~");
+                } else {
+                    showTip("~数字和为10的倍数~");
                 }
-            }else if(num % 10 == 0){
+            } else if (this._isSameNumber() || this._isAddMatchLen()) { //如果是相同的数字，或者相加刚刚能进位，则表示匹配成功
                 isMatch = true;
-            }else{
+            } else {
                 showTip("~不能相加啦~");
             }
         }
@@ -483,6 +558,11 @@ var GameScene = cc.Scene.extend({
                 }
             }
         }
+        var that = this;
+        setTimeout(function () {
+            GameManager.instance.state = GameState.PLAYING;
+            that.saveMapData();
+        }, 1000);
     },
 
     /**
@@ -498,9 +578,6 @@ var GameScene = cc.Scene.extend({
             that.boxRoot.addChild(box);
             box.moveToPot(row, col);
             that.boxArr[row][col] = box;
-            setTimeout(function () {
-                GameManager.instance.state = GameState.PLAYING;
-            }, 1000);
         }, 700);
     },
 
@@ -562,5 +639,23 @@ var GameScene = cc.Scene.extend({
                 this.topLayer.updateScoreShow();
             }, this)
         ));
+    },
+
+    /**
+     * 保存map的数据
+     */
+    saveMapData: function () {
+        if(!GameManager.instance.map){
+            GameManager.instance.map = [];
+        }
+        /**@type Box*/
+        var box;
+        for (var i = 0; i < Const.ROW; i++) {
+            for (var j = 0; j < Const.COL; j++) {
+                box = this.boxArr[i][j];
+                GameManager.instance.map[i * Const.COL + j] = box.num;
+            }
+        }
+        GameManager.instance.saveData();
     }
 })
