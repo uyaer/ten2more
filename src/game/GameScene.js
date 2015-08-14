@@ -52,8 +52,11 @@ var GameScene = cc.Scene.extend({
         }
 
         this.makeBackground();
-        this.makeBox();
+        //this.makeBox();
+        this.makeBox2();
         this.makeTopLayer();
+
+        this.checkGameCanMove();
 
 
         GameManager.instance.state = GameState.PLAYING;
@@ -104,6 +107,39 @@ var GameScene = cc.Scene.extend({
         this.addChild(this.lightLine, 1);
     },
 
+    makeBox2: function () {
+        var map = [
+            1, 2, 4, 4, 4, 4,
+            1, 2, 3, 4, 10, 10,
+            3, 10, 10, 10, 10, 10
+        ];
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j < 10; j++) {
+                map.push(Math.pow(10, i) * j);
+            }
+        }
+        this.removeBoxArr = [];
+        this.boxArr = [];
+        var box;
+        var root = new cc.Layer();
+        this.boxRoot = root;
+        this.addChild(root, 2);
+        for (var i = 0; i < Const.ROW; i++) {
+            var line = [];
+            this.boxArr.push(line);
+            for (var j = 0; j < Const.COL; j++) {
+                box = new Box(i, j);
+                line.push(box);
+                if (map) {
+                    box.updateNum(map[i * Const.COL + j]);
+                    box.tintColor(true);
+                }
+                box.x = box.baseX;
+                box.y = box.baseY;
+                root.addChild(box);
+            }
+        }
+    },
     makeBox: function () {
         /** @Type Array*/
         var map = GameManager.instance.map;
@@ -666,5 +702,192 @@ var GameScene = cc.Scene.extend({
             }
         }
         GameManager.instance.saveData();
+    },
+
+    /**
+     * 检测游戏是否还有可以移动的块
+     * @returns {boolean}
+     */
+    checkGameCanMove: function () {
+
+        var box = this.boxArr[0][0];
+        if (box.num < 10) {
+            if (this.checkLessThanTen(box)) {
+                trace("ok");
+            } else {
+                trace("fail.........");
+            }
+        }
+        return false;
+
+        //var isMatch = false;
+        //
+        ///**
+        // * 分成次判断，由于判断累加的函数比较耗时，所有将相同数字的判断提前，以便节省性能
+        // *
+        // * 判断相近2数是否相等
+        // */
+        //for (var i = 0; i < Const.ROW; i++) {
+        //    for (var j = 0; j < Const.COL; j++) {
+        //        if (isMatch)break;
+        //        var box = this.boxArr[i][j];
+        //        if (box.num >= 10) {
+        //            isMatch = this.checkMoreThanTenEq(box);
+        //            if (isMatch)break;
+        //        }
+        //    }
+        //}
+        ///**
+        // *判断累加
+        // */
+        //for (var i = 0; i < Const.ROW; i++) {
+        //    for (var j = 0; j < Const.COL; j++) {
+        //        var box = this.boxArr[i][j];
+        //        if (box.num < 10) {
+        //            isMatch = this.checkLessThanTen(box);
+        //        } else {
+        //            isMatch = this.checkMoreThanTen(box);
+        //        }
+        //    }
+        //}
+        //
+        //
+        //return isMatch;
+    },
+
+    /**
+     * 如果 数字大于10，使用这个检测
+     * 检测规则：周围数字有>=10的，周围是否有相同的
+     * @param box {Box}
+     */
+    checkMoreThanTenEq: function (box) {
+        var dir = [cc.p(-1, 0),
+            cc.p(1, 0),
+            cc.p(0, -1),
+            cc.p(0, 1)
+        ];
+
+        var isMatch = false;
+        for (var i = 0; i < dir.length; i++) {
+            var row = box.row + dir[i].x;
+            var col = box.col + dir[i].y;
+            if (row < 0 || row >= Const.ROW || col < 0 || col >= Const.COL) {
+                continue;
+            } else { //边界ok
+                var tempBox = this.boxArr[row][col];
+                if (tempBox.num == box.num) {
+                    isMatch = true;
+                    break;
+                }
+            }
+        }
+
+        return isMatch;
+    },
+    /**
+     * 如果 数字大于10，使用这个检测
+     * 检测规则：周围数字有>=10的，累加是否可以进位
+     * @param box {Box}
+     */
+    checkMoreThanTen: function (box) {
+        var dir = [cc.p(-1, 0),
+            cc.p(1, 0),
+            cc.p(0, -1),
+            cc.p(0, 1)
+        ];
+
+        var isMatch = false;
+        var num = 0;
+        var closeArr = [];
+        var openArr = [box];
+        while (openArr.length > 0) {
+            box = openArr.pop();
+            closeArr.push(box);
+            num += box.num;
+            if (num <= 100 && num % 10 == 0) {
+                isMatch = true;
+                break;
+            }
+            for (var i = 0; i < dir.length; i++) {
+                var row = box.row + dir[i].x;
+                var col = box.col + dir[i].y;
+                if (row < 0 || row >= Const.ROW || col < 0 || col >= Const.COL) {
+                    continue;
+                } else { //边界ok
+                    var tempBox = this.boxArr[row][col];
+                    if (tempBox.num < 10 && !isElinArray(tempBox, closeArr) && !isElinArray(tempBox, openArr)) {
+                        openArr.push(tempBox);
+                    }
+                }
+            }
+        }
+
+        return isMatch;
+    },
+    /**
+     * 如果 数字小于10，使用这个检测
+     * 检测规则：周围数字有<10的，并且连线可以组成10的整数，但是<100
+     * (需要使用深度优先算法)
+     * @param box {Box}
+     */
+    checkLessThanTen: function (box) {
+        var dir = [cc.p(-1, 0),
+            cc.p(1, 0),
+            cc.p(0, -1),
+            cc.p(0, 1)
+        ];
+
+        var isMatch = false;
+        var num = 0;
+        var closeArr = [];
+        var openArr = [];
+
+        var that = this;
+
+        check(box);
+
+        /**
+         * 检测
+         * @param box {Box}
+         */
+        function check(box) {
+            num += box.num;
+            openArr.push(cc.p(box.row, box.col));
+            closeArr.push(box);
+            if (num <= 100 && num % 10 == 0) {
+                isMatch = true;
+                return;
+            }
+            //if (num > 100) {
+            //    num -= box.num;
+            //    openArr.pop();
+            //    return;
+            //}
+            for (var i = 0; i < dir.length; i++) {
+                var row = box.row + dir[i].x;
+                var col = box.col + dir[i].y;
+                if (row < 0 || row >= Const.ROW || col < 0 || col >= Const.COL) {
+                    continue;
+                } else { //边界ok
+                    var tempBox = that.boxArr[row][col];
+                    if (tempBox.num < 10 && !isElinArray(tempBox, closeArr)) {
+                        check(tempBox);
+                        if (isMatch)return;
+                    }
+                }
+            }
+            num -= box.num;
+            openArr.pop();
+        }
+
+        if (isMatch) {
+            var str = "";
+            for (var i = 0; i < openArr.length; i++) {
+                str += openArr[i].x + "," + openArr[i].y + " | ";
+            }
+            trace(str);
+        }
+
+        return isMatch;
     }
 })
