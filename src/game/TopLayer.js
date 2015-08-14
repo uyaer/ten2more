@@ -102,7 +102,8 @@ var TopLayer = cc.Layer.extend({
     },
 
     onResetBtnClickHandler: function () {
-        trace("--------")
+        var alert = new ResetAlertPanel();
+        this.parent.addChild(alert, 100);
     },
 
     onMusicValueChanged: function (sender, controlEvent) {

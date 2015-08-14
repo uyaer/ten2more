@@ -47,9 +47,14 @@ var GameScene = cc.Scene.extend({
     ctor: function () {
         this._super();
 
+        if (!GameManager.instance.map) { //不存在代表玩耍新的一次
+            GameManager.instance.playCount++;
+        }
+
         this.makeBackground();
         this.makeBox();
         this.makeTopLayer();
+
 
         GameManager.instance.state = GameState.PLAYING;
     },
@@ -124,6 +129,10 @@ var GameScene = cc.Scene.extend({
                 box.y = box.baseY;
                 root.addChild(box);
             }
+        }
+
+        if (!map) { //如果不存在地图，代表新生成的地图，保存数据
+            this.saveMapData();
         }
     },
 
@@ -645,7 +654,7 @@ var GameScene = cc.Scene.extend({
      * 保存map的数据
      */
     saveMapData: function () {
-        if(!GameManager.instance.map){
+        if (!GameManager.instance.map) {
             GameManager.instance.map = [];
         }
         /**@type Box*/
