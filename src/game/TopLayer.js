@@ -90,7 +90,7 @@ var TopLayer = cc.Layer.extend({
         colorBg.addChild(tf);
 
         //reset button
-        var box = new cc.Scale9Sprite("game/radius_box_yellow.png", cc.rect(25, 25, 1, 1));
+        var box = new cc.Scale9Sprite("game/btn.png", cc.rect(35, 20, 1, 1));
         //box.setContentSize(size);
         var titleButton = new cc.LabelTTF("重新开始", "Arial", 30);
         titleButton.color = cc.color.WHITE;

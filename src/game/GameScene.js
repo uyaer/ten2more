@@ -52,11 +52,9 @@ var GameScene = cc.Scene.extend({
         }
 
         this.makeBackground();
-        //this.makeBox();
-        this.makeBox2();
+        this.makeBox();
+        //this.makeBox2();
         this.makeTopLayer();
-
-        this.checkGameCanMove();
 
 
         GameManager.instance.state = GameState.PLAYING;
@@ -109,9 +107,7 @@ var GameScene = cc.Scene.extend({
 
     makeBox2: function () {
         var map = [
-            1, 2, 4, 4, 4, 4,
-            1, 2, 3, 4, 10, 10,
-            3, 10, 10, 10, 10, 10
+            10,10,2,2,2,2
         ];
         for (var i = 1; i <= 4; i++) {
             for (var j = 1; j < 10; j++) {
@@ -605,8 +601,15 @@ var GameScene = cc.Scene.extend({
         }
         var that = this;
         setTimeout(function () {
-            GameManager.instance.state = GameState.PLAYING;
-            that.saveMapData();
+            //判断游戏是否结束
+            if(this.checkGameCanMove()){
+                //仍然有可以移动的目标
+                GameManager.instance.state = GameState.PLAYING;
+                that.saveMapData();
+            }else{
+                //TODO game over
+
+            }
         }, 1000);
     },
 
@@ -710,49 +713,41 @@ var GameScene = cc.Scene.extend({
      */
     checkGameCanMove: function () {
 
-        var box = this.boxArr[0][0];
-        if (box.num < 10) {
-            if (this.checkLessThanTen(box)) {
-                trace("ok");
-            } else {
-                trace("fail.........");
-            }
-        }
-        return false;
+        var isMatch = false;
 
-        //var isMatch = false;
-        //
-        ///**
-        // * 分成次判断，由于判断累加的函数比较耗时，所有将相同数字的判断提前，以便节省性能
-        // *
-        // * 判断相近2数是否相等
-        // */
-        //for (var i = 0; i < Const.ROW; i++) {
-        //    for (var j = 0; j < Const.COL; j++) {
-        //        if (isMatch)break;
-        //        var box = this.boxArr[i][j];
-        //        if (box.num >= 10) {
-        //            isMatch = this.checkMoreThanTenEq(box);
-        //            if (isMatch)break;
-        //        }
-        //    }
-        //}
-        ///**
-        // *判断累加
-        // */
-        //for (var i = 0; i < Const.ROW; i++) {
-        //    for (var j = 0; j < Const.COL; j++) {
-        //        var box = this.boxArr[i][j];
-        //        if (box.num < 10) {
-        //            isMatch = this.checkLessThanTen(box);
-        //        } else {
-        //            isMatch = this.checkMoreThanTen(box);
-        //        }
-        //    }
-        //}
-        //
-        //
-        //return isMatch;
+        /**
+         * 分成次判断，由于判断累加的函数比较耗时，所有将相同数字的判断提前，以便节省性能
+         *
+         * 判断相近2数是否相等
+         */
+        for (var i = 0; i < Const.ROW; i++) {
+            for (var j = 0; j < Const.COL; j++) {
+                if (isMatch)break;
+                var box = this.boxArr[i][j];
+                if (box.num >= 10) {
+                    isMatch = this.checkMoreThanTenEq(box);
+                    if (isMatch)break;
+                }
+            }
+            if (isMatch)break;
+        }
+        /**
+         *判断累加
+         */
+        for (var i = 0; i < Const.ROW; i++) {
+            for (var j = 0; j < Const.COL; j++) {
+                var box = this.boxArr[i][j];
+                if (box.num < 10) {
+                    isMatch = this.checkLessThanTen(box);
+                } else {
+                    isMatch = this.checkMoreThanTen(box);
+                }
+                if (isMatch)break;
+            }
+            if (isMatch)break;
+        }
+
+        return isMatch;
     },
 
     /**
@@ -799,14 +794,30 @@ var GameScene = cc.Scene.extend({
         var isMatch = false;
         var num = 0;
         var closeArr = [];
-        var openArr = [box];
-        while (openArr.length > 0) {
-            box = openArr.pop();
-            closeArr.push(box);
+        var openArr = [];
+        var numLen = box.num.toString().length;
+        var targetNum = Math.pow(10,numLen);
+
+        var that = this;
+
+        check(box);
+
+        /**
+         * 检测
+         * @param box {Box}
+         */
+        function check(box) {
             num += box.num;
-            if (num <= 100 && num % 10 == 0) {
+            openArr.push(cc.p(box.row, box.col));
+            closeArr.push(box);
+            if (num == targetNum) {
                 isMatch = true;
-                break;
+                return;
+            }
+            if (num > targetNum) {
+                num -= box.num;
+                openArr.pop();
+                return;
             }
             for (var i = 0; i < dir.length; i++) {
                 var row = box.row + dir[i].x;
@@ -814,12 +825,23 @@ var GameScene = cc.Scene.extend({
                 if (row < 0 || row >= Const.ROW || col < 0 || col >= Const.COL) {
                     continue;
                 } else { //边界ok
-                    var tempBox = this.boxArr[row][col];
-                    if (tempBox.num < 10 && !isElinArray(tempBox, closeArr) && !isElinArray(tempBox, openArr)) {
-                        openArr.push(tempBox);
+                    var tempBox = that.boxArr[row][col];
+                    if (tempBox.num.toString().length == numLen && !isElinArray(tempBox, closeArr)) {
+                        check(tempBox);
+                        if (isMatch)return;
                     }
                 }
             }
+            num -= box.num;
+            openArr.pop();
+        }
+
+        if (isMatch) {
+            var str = "";
+            for (var i = 0; i < openArr.length; i++) {
+                str += openArr[i].x + "," + openArr[i].y + " | ";
+            }
+            trace(str);
         }
 
         return isMatch;
@@ -858,11 +880,11 @@ var GameScene = cc.Scene.extend({
                 isMatch = true;
                 return;
             }
-            //if (num > 100) {
-            //    num -= box.num;
-            //    openArr.pop();
-            //    return;
-            //}
+            if (num > 100) {
+                num -= box.num;
+                openArr.pop();
+                return;
+            }
             for (var i = 0; i < dir.length; i++) {
                 var row = box.row + dir[i].x;
                 var col = box.col + dir[i].y;
@@ -879,14 +901,14 @@ var GameScene = cc.Scene.extend({
             num -= box.num;
             openArr.pop();
         }
-
-        if (isMatch) {
-            var str = "";
-            for (var i = 0; i < openArr.length; i++) {
-                str += openArr[i].x + "," + openArr[i].y + " | ";
-            }
-            trace(str);
-        }
+        // debug info
+        //if (isMatch) {
+        //    var str = "";
+        //    for (var i = 0; i < openArr.length; i++) {
+        //        str += openArr[i].x + "," + openArr[i].y + " | ";
+        //    }
+        //    trace(str);
+        //}
 
         return isMatch;
     }

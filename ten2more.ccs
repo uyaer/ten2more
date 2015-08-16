@@ -11,6 +11,7 @@
           <Image Name="switch-on.png" />
           <Image Name="switch-thumb.png" />
           <Image Name="radius_box_yellow.png" />
+          <Image Name="btn.png" />
         </Folder>
         <PlistInfo Name="game.csi" Type="Plist" />
       </RootFolder>

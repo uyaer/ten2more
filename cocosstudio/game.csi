@@ -9,6 +9,7 @@
       <FilePathData Path="game/switch-on.png" />
       <FilePathData Path="game/switch-thumb.png" />
       <FilePathData Path="game/radius_box_yellow.png" />
+      <FilePathData Path="game/btn.png" />
     </ImageFiles>
     <MaxSize Width="1024" Height="1024" />
   </Content>
