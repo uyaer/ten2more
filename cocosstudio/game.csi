@@ -10,6 +10,9 @@
       <FilePathData Path="game/switch-thumb.png" />
       <FilePathData Path="game/radius_box_yellow.png" />
       <FilePathData Path="game/btn.png" />
+      <FilePathData Path="game/p_eye.png" />
+      <FilePathData Path="game/p_face.png" />
+      <FilePathData Path="game/p_mouse.png" />
     </ImageFiles>
     <MaxSize Width="1024" Height="1024" />
   </Content>
