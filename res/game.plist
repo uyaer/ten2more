@@ -18,7 +18,7 @@
 			<key>game/radius_box.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{961,141},{50,51}}</string>
+				<string>{{946,103},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -26,54 +26,10 @@
 				<key>sourceSize</key>
 				<string>{50,51}</string>
 			</dict>
-			<key>game/switch-mask.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{874,103},{100,36}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{100,36}</string>
-			</dict>
-			<key>game/switch-off.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{874,141},{85,36}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{85,36}</string>
-			</dict>
-			<key>game/switch-on.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{723,152},{85,36}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{85,36}</string>
-			</dict>
-			<key>game/switch-thumb.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{862,179},{50,50}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{50,50}</string>
-			</dict>
 			<key>game/radius_box_yellow.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{810,152},{50,51}}</string>
+				<string>{{874,145},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -84,7 +40,7 @@
 			<key>game/btn.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{723,190},{70,40}}</string>
+				<string>{{874,103},{70,40}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -117,7 +73,7 @@
 			<key>game/p_mouse.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{914,194},{66,22}}</string>
+				<string>{{926,156},{66,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -128,7 +84,7 @@
 			<key>game/cloud.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{795,231},{177,103}}</string>
+				<string>{{723,270},{177,103}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -150,7 +106,7 @@
 			<key>game/start.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{723,336},{278,70}}</string>
+				<string>{{723,198},{278,70}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -179,12 +135,12 @@
 			<key>realTextureFileName</key>
 			<string>game.png</string>
 			<key>size</key>
-			<string>{1012,730}</string>
+			<string>{1007,730}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>1012</integer>
+			<integer>1007</integer>
 			<key>height</key>
 			<integer>730</integer>
 		</dict>
