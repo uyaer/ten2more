@@ -215,7 +215,7 @@ var GameScene = cc.Scene.extend({
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
-            this.topLayer.showAddTip(box.num);
+            this.topLayer.showAddTip(box.num,true);
             this.isTouching = true;
             return true;
         }
@@ -237,7 +237,8 @@ var GameScene = cc.Scene.extend({
                 this.lightLine.drawSelectingLine(this.selectBoxArr);
 
                 var num = this.calBoxAddResult(this.selectBoxArr);
-                this.topLayer.showAddTip(num);
+                var code = this.checkBoxAddIsMatchRule();
+                this.topLayer.showAddTip(num,code>0);
             } else { //添加过
                 var endBox = null;
                 if (this.selectBoxArr.length > 1) {
@@ -250,7 +251,8 @@ var GameScene = cc.Scene.extend({
                     this.lightLine.drawSelectingLine(this.selectBoxArr);
 
                     var num = this.calBoxAddResult(this.selectBoxArr);
-                    this.topLayer.showAddTip(num);
+                    var code = this.checkBoxAddIsMatchRule();
+                    this.topLayer.showAddTip(num,code>0);
                 }
             }
         }

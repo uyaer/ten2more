@@ -227,10 +227,11 @@ var TopLayer = cc.Layer.extend({
      * 显示临时相加的数字
      * @param num
      */
-    showAddTip: function (num) {
+    showAddTip: function (num,isOk) {
         this.addTipTF.setString(num + "");
         this.addTipBox.visible = true;
         this.addTipBox.scale = 1;
+        this.addTipTF.color = isOk?cc.color.WHITE:hex2Color(0x222222);
     },
 
     /**
