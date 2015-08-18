@@ -1,14 +1,14 @@
 var TopLayer = cc.Layer.extend({
     /**
-     * @type cc.TextFieldTTF
+     * @type cc.LabelTTF
      */
     maxScoreTF: null,
     /**
-     * @type cc.TextFieldTTF
+     * @type cc.LabelTTF
      */
     playCountTF: null,
     /**
-     * @type cc.TextFieldTTF
+     * @type cc.LabelTTF
      */
     scoreTF: null,
     /**
@@ -21,7 +21,7 @@ var TopLayer = cc.Layer.extend({
      */
     addTipBox: null,
     /**
-     * @type cc.TextFieldTTF
+     * @type cc.LabelTTF
      */
     addTipTF: null,
 
@@ -52,8 +52,7 @@ var TopLayer = cc.Layer.extend({
         colorBg.addChild(border);
 
         //music txt
-        var tf = new cc.TextFieldTTF("音乐", cc.size(100, 70), cc.TEXT_ALIGNMENT_RIGHT, "Arial", 32);
-        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF("音乐",  "Arial", 32,cc.size(100, 70), cc.TEXT_ALIGNMENT_RIGHT,cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 1;
         tf.anchorY = 0;
         tf.x = 100;
@@ -64,9 +63,9 @@ var TopLayer = cc.Layer.extend({
         //switch
         this.musicSwitch = new cc.ControlSwitch
         (
-            new cc.Sprite("#game/switch-mask.png"),
-            new cc.Sprite("#game/switch-on.png"),
-            new cc.Sprite("#game/switch-off.png"),
+            new cc.Sprite("res/switch-mask.png"),
+            new cc.Sprite("res/switch-on.png"),
+            new cc.Sprite("res/switch-off.png"),
             new cc.Sprite("res/switch-thumb.png"),
             new cc.LabelTTF("开", "Arial", 32),
             new cc.LabelTTF("关", "Arial", 32)
@@ -80,8 +79,7 @@ var TopLayer = cc.Layer.extend({
 
         //version tf
         //music txt
-        var tf = new cc.TextFieldTTF(Const.VERSION, cc.size(200, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 22);
-        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF(Const.VERSION, "Arial", 22,cc.size(200, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 0.5;
         tf.anchorY = 0;
         tf.x = Const.WIN_W / 2;
@@ -103,7 +101,7 @@ var TopLayer = cc.Layer.extend({
 
     onResetBtnClickHandler: function () {
         var alert = new ResetAlertPanel();
-        this.parent.addChild(alert, 100);
+        PopUpManager.add(alert);
     },
 
     onMusicValueChanged: function (sender, controlEvent) {
@@ -138,8 +136,7 @@ var TopLayer = cc.Layer.extend({
             this.addChild(box);
             //text
             var txtSize = limit(int(size.height / 65), 1, 2) == 1 ? 30 : 46;
-            var tf = new cc.TextFieldTTF(labelTxtArr[i], cc.size(120, size.height), cc.TEXT_ALIGNMENT_RIGHT, "Arial", txtSize);
-            tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+            var tf = new cc.LabelTTF(labelTxtArr[i], "Arial", txtSize, cc.size(120, size.height), cc.TEXT_ALIGNMENT_RIGHT,cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
             tf.anchorX = 1;
             tf.anchorY = 1;
             tf.x = pos.x - 10;
@@ -147,8 +144,7 @@ var TopLayer = cc.Layer.extend({
             tf.color = hex2Color(0x323231);
             this.addChild(tf);
             //show num txt
-            var tf = new cc.TextFieldTTF("0", cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER, "Arial", txtSize + 2);
-            tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+            var tf = new cc.LabelTTF("0",  "Arial", txtSize + 2,cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER,cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
             tf.anchorX = 0;
             tf.anchorY = 1;
             tf.x = pos.x;
@@ -164,8 +160,7 @@ var TopLayer = cc.Layer.extend({
      */
     makeHelp: function () {
         var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
-        var tf = new cc.TextFieldTTF(txt, cc.size(Const.WIN_W - 20, 100), cc.TEXT_ALIGNMENT_LEFT, "Arial", 22);
-        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP);
+        var tf = new cc.LabelTTF(txt,  "Arial", 22,cc.size(Const.WIN_W - 20, 100), cc.TEXT_ALIGNMENT_LEFT);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.x = 10;
@@ -187,8 +182,7 @@ var TopLayer = cc.Layer.extend({
         this.addChild(box);
         box.opacity = 200;
         //show num txt
-        var tf = new cc.TextFieldTTF("0", cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
-        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF("0", "Arial", 32, cc.size(size.width, size.height), cc.TEXT_ALIGNMENT_CENTER,cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.color = hex2Color(0xffffff);
@@ -214,7 +208,7 @@ var TopLayer = cc.Layer.extend({
 
     /**
      * 播放文本改变动画
-     * @param target {cc.TextFieldTTF}
+     * @param target {cc.LabelTTF}
      * @private
      */
     _playScoreShow: function (target, score) {

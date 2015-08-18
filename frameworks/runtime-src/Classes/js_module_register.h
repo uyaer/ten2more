@@ -1,6 +1,7 @@
 #ifndef __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
 #define __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
 
+
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_ui_auto.hpp"
@@ -47,62 +48,62 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_core);
     sc->addRegisterCallback(jsb_register_system);
-    
+
     // extension can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
-    
+
     // chipmunk can be commented out to reduce the package
-    sc->addRegisterCallback(jsb_register_chipmunk);
+    // sc->addRegisterCallback(jsb_register_chipmunk);
     // opengl can be commented out to reduce the package
     sc->addRegisterCallback(JSB_register_opengl);
-    
+
     // builder can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_builder);
-    sc->addRegisterCallback(register_CCBuilderReader);
-    
+    // sc->addRegisterCallback(register_all_cocos2dx_builder);
+    // sc->addRegisterCallback(register_CCBuilderReader);
+
     // ui can be commented out to reduce the package, attension studio need ui module
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-    
-    // studio can be commented out to reduce the package,
-    sc->addRegisterCallback(register_all_cocos2dx_studio);
-    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    
-    // spine can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_spine);
-    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
-    
-    // XmlHttpRequest can be commented out to reduce the package
-    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
-    // websocket can be commented out to reduce the package
-    sc->addRegisterCallback(register_jsb_websocket);
-    // sokcet io can be commented out to reduce the package
-    sc->addRegisterCallback(register_jsb_socketio);
 
-    // 3d can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_3d);
-    sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
-    
-    // 3d extension can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
-    
+    // studio can be commented out to reduce the package,
+    // sc->addRegisterCallback(register_all_cocos2dx_studio);
+    // sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    //
+    // // spine can be commented out to reduce the package
+    // sc->addRegisterCallback(register_all_cocos2dx_spine);
+    // sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+    //
+    // // XmlHttpRequest can be commented out to reduce the package
+    // sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    // // websocket can be commented out to reduce the package
+    // sc->addRegisterCallback(register_jsb_websocket);
+    // // sokcet io can be commented out to reduce the package
+    // sc->addRegisterCallback(register_jsb_socketio);
+    //
+    // // 3d can be commented out to reduce the package
+    // sc->addRegisterCallback(register_all_cocos2dx_3d);
+    // sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
+    //
+    // // 3d extension can be commented out to reduce the package
+    // sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
+
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     // Physics 3d can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
-    sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+    // sc->addRegisterCallback(register_all_cocos2dx_physics3d);
+    // sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
 #endif
 
 #if CC_USE_NAVMESH
-    sc->addRegisterCallback(register_all_cocos2dx_navmesh);
-    sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+    // sc->addRegisterCallback(register_all_cocos2dx_navmesh);
+    // sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
+    // sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    // sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+    // sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    // sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -114,4 +115,3 @@ int js_module_register()
 }
 
 #endif  // __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
-

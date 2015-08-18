@@ -131,11 +131,11 @@ function runScene(name) {
  */
 function showTip(str) {
     if (!cc.director.getRunningScene())return;
-    var tf = new cc.TextFieldTTF(str, cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+    var tf = new cc.LabelTTF(str, "Arial", 32,cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER);
     tf.setString(str);
     tf.x = Const.WIN_W * 0.5;
     tf.y = Const.WIN_H * 0.55;
-    tf.setTextColor(hex2Color(0xff0000));
+    tf.setColor(hex2Color(0xff0000));
     cc.director.getRunningScene().addChild(tf,1000);
     tf.runAction(cc.sequence(
         cc.moveBy(0.15, 0, -20).easing(cc.easeSineOut()),
@@ -152,7 +152,7 @@ function showTip(str) {
  * @param color {cc.Color | Number }0xffffff
  */
 function showTipAnyWhere(str, x, y, color) {
-    var tf = new cc.TextFieldTTF(str, "Arial", 32);
+    var tf = new cc.LabelTTF(str, "Arial", 32);
     tf.setString(str);
     tf.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
     tf.x = x;

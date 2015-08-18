@@ -77,12 +77,29 @@ var GameScene = cc.Scene.extend({
             onTouchMoved: this.onTouchMovedHandler.bind(this),
             onTouchEnded: this.onTouchEndedHandler.bind(this)
         }, this);
+        //event
+        if (cc.sys.isNative) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.KEYBOARD,
+                onKeyReleased: this.onKeyClicked.bind(this)
+            }, this);
+        }
     },
 
     onExit: function () {
         this._super();
 
         cc.eventManager.removeCustomListeners(GameEvent.WIN_LAYOUT);
+    },
+
+    onKeyClicked: function (code) {
+        if (code == cc.KEY.back) {
+            if (PopUpManager.popLength() > 0) {
+                PopUpManager.pop();
+            } else {
+                cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
+            }
+        }
     },
 
     onWinLayout: function () {
@@ -544,7 +561,7 @@ var GameScene = cc.Scene.extend({
             nextBox.y = nextBox.baseY;
             nextBox.tintColor();
             this.showAddTip(nextBox.num + "x" + this.selectLen, nextBox.x, nextBox.y, this.selectWillAddScore);
-            setTimeout(this.__removeStartSelectBoxEndHandler.bind(this, 500));
+            setTimeout(this.__removeStartSelectBoxEndHandler.bind(this), 500);
         }
     },
 
@@ -607,20 +624,20 @@ var GameScene = cc.Scene.extend({
         var that = this;
         setTimeout(function () {
             //判断目标是否达成
-            if(this.checkScoreIs10000()){
+            if (that.checkScoreIs10000()) {
                 //目标达成
                 GameManager.instance.state = GameState.OVER;
                 this.addChild(new SuccessPanel());
-            }else{
+            } else {
                 //判断游戏是否结束
-                if (this.checkGameCanMove()) {
+                if (that.checkGameCanMove()) {
                     //仍然有可以移动的目标
                     GameManager.instance.state = GameState.PLAYING;
                     that.saveMapData();
                 } else {
                     //TODO game over
                     GameManager.instance.state = GameState.OVER;
-
+                    that.addChild(new FailPanel());
                 }
             }
         }, 1000);
@@ -634,6 +651,8 @@ var GameScene = cc.Scene.extend({
         setTimeout(function () {
             /**@type Box*/
             var box = that.removeBoxArr.pop();
+            showTip(cc.sys.isObjectValid(box),"!!!");
+            box.release();
             box.updateRowCol(-1, col);
             box.resetBox();
             that.boxRoot.addChild(box);
@@ -673,7 +692,7 @@ var GameScene = cc.Scene.extend({
             this.boxArr[newRow][newCol] = box;
         } else {//否则就将其放入临时移除数组
             this.removeBoxArr.push(box);
-
+            box.retain();
         }
     },
 
@@ -685,7 +704,7 @@ var GameScene = cc.Scene.extend({
      * @param num 增加数量
      */
     showAddTip: function (txt, x, y, num) {
-        var tf = new cc.TextFieldTTF(txt + "", cc.size(Const.BOX_SIZE, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
+        var tf = new cc.LabelTTF(txt + "", "Arial", 32, cc.size(Const.BOX_SIZE, 70), cc.TEXT_ALIGNMENT_CENTER);
         tf.color = hex2Color(0xc07115);
         this.addChild(tf, 1000);
         tf.x = x;

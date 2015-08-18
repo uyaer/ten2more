@@ -30,7 +30,7 @@ var Box = cc.Node.extend({
      */
     bg: null,
     /**
-     * @type cc.TextFieldTTF
+     * @type cc.LabelTTF
      */
     numTF: null,
     /**
@@ -55,8 +55,7 @@ var Box = cc.Node.extend({
         this.bg = new cc.Sprite("#game/cir.png");
         this.addChild(this.bg);
 
-        this.numTF = new cc.TextFieldTTF("1", cc.size(100, 50), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
-        this.numTF.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        this.numTF = new cc.LabelTTF("1", "Arial", 32, cc.size(100, 50), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         this.addChild(this.numTF, 1);
 
     },

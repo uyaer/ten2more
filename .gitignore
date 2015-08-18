@@ -57,3 +57,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .idea
+frameworks/runtime-src/proj.android/assets/
+simulator/android/ten2more-debug.apk
+frameworks/runtime-src/proj.android/obj/
+frameworks/runtime-src/proj.android/local.properties

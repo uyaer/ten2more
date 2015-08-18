@@ -24,6 +24,7 @@
         "src/common/GameManager.js",
 
 
+        "src/game/PopUpManager.js",
         "src/game/IndexScene.js",
         "src/game/Box.js",
         "src/game/CirPerson.js",

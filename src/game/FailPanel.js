@@ -29,7 +29,7 @@ var FailPanel = cc.Layer.extend({
         person.showSad();
 
         //title
-        var tf = new cc.TextFieldTTF("十分遗憾\n失败了~_~", cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER, "Arial", 72);
+        var tf = new cc.LabelTTF("十分遗憾\n失败了~_~", "Arial", 72, cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER);
         tf.color = hex2Color(0xffffff);
         tf.anchorX = tf.anchorY = 0;
         tf.x = 50;
@@ -59,7 +59,7 @@ var FailPanel = cc.Layer.extend({
         titleButton.color = cc.color.WHITE;
         var btn = new cc.ControlButton(titleButton, box);
         btn.color = color;
-        btn.setMargins(48,12);
+        btn.setMargins(48, 12);
         btn.anchorX = 0.5;
         btn.x = x;
         btn.y = y;

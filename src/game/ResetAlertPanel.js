@@ -23,15 +23,14 @@ var ResetAlertPanel = cc.Layer.extend({
         this.addChild(box);
 
         //title
-        var tf = new cc.TextFieldTTF("提醒", cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 42);
+        var tf = new cc.LabelTTF("提醒", "Arial", 42, cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER);
         tf.color = hex2Color(0x630b0b);
         tf.anchorX = tf.anchorY = 0;
         tf.x = 0;
         tf.y = 220;
         box.addChild(tf);
         //txt
-        var tf = new cc.TextFieldTTF("重新开始会清除现在的数据！", cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, "Arial", 32);
-        tf.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF("重新开始会清除现在的数据！", "Arial", 32,cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.y = 150;
@@ -69,6 +68,8 @@ var ResetAlertPanel = cc.Layer.extend({
     },
 
     onOkBtnClickHandler: function () {
+        PopUpManager.remove(this);
+
         GameManager.instance.score = 0;
         GameManager.instance.map = null;
         GameManager.instance.saveData();
@@ -76,6 +77,6 @@ var ResetAlertPanel = cc.Layer.extend({
         cc.director.runScene(new GameScene());
     },
     onCancelBtnClickHandler: function () {
-        this.removeFromParent();
+        PopUpManager.remove(this);
     }
 });
