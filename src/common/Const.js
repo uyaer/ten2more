@@ -20,6 +20,10 @@ var Const = {
 
     TOP_HEIGHT:320,
 
+    ERR_LEN:-1,//位数不匹配
+    ERR_MOD10:-2,//数字和为10的倍数
+    ERR_CARRY:-3,//不能相加啦
+
     /**
      * 验证码
      */

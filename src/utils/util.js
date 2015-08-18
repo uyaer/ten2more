@@ -139,8 +139,8 @@ function showTip(str) {
     cc.director.getRunningScene().addChild(tf,1000);
     tf.runAction(cc.sequence(
         cc.moveBy(0.15, 0, -20).easing(cc.easeSineOut()),
-        cc.delayTime(0.2),
-        cc.moveBy(0.35, 0, 90),
+        cc.delayTime(0.4),
+        cc.moveBy(0.25, 0, 90),
         cc.removeSelf(true)
     ));
 }

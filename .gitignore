@@ -66,3 +66,5 @@ frameworks/runtime-src/proj.android/local.properties
 simulator/
 build
 debug
+
+frameworks/runtime-src/proj.android/gen/

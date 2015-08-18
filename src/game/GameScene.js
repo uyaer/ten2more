@@ -196,6 +196,11 @@ var GameScene = cc.Scene.extend({
     },
 
     /**
+     * 是否在touch中，防止2个以上的起点
+     */
+    isTouching: false,
+
+    /**
      * 触摸事件
      * @param touch {cc.Touch}
      * @param event {cc.Event}
@@ -204,12 +209,14 @@ var GameScene = cc.Scene.extend({
         if (GameManager.instance.state != GameState.PLAYING) {
             return false;
         }
+        if (this.isTouching)return false;
         var box = this.getBoxByPos(touch.getLocation());
         if (box) {
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
             this.topLayer.showAddTip(box.num);
+            this.isTouching = true;
             return true;
         }
         return false;
@@ -261,6 +268,7 @@ var GameScene = cc.Scene.extend({
         }
 
         this.topLayer.hideAddTip();
+        this.isTouching = false;
     },
 
     /**
@@ -275,6 +283,46 @@ var GameScene = cc.Scene.extend({
             num += box.num;
         }
         return num;
+    },
+    /**
+     * 检查box相加是否满足简单规则，用于选择的时候的提示使用
+     * @returns {number}
+     */
+    checkBoxAddIsMatchRule: function () {
+        var result = 1;
+        /**@type Box*/
+        var firstBox = this.selectBoxArr[0];
+        var num = firstBox.num;
+        var isSameLen = true;
+        for (var i = 1; i < this.selectBoxArr.length; i++) {
+            /**@type Box*/
+            var box = this.selectBoxArr[i];
+            num += box.num;
+            //数字长度不统一，不能进行合并
+            if (firstBox.num.toString().length != box.num.toString().length) {
+                isSameLen = false;
+                //showTip("~位数不匹配~");
+                result = Const.ERR_LEN;
+                break;
+            }
+        }
+
+        if (isSameLen) {
+            if (firstBox.num.toString().length == 1) {
+                if (num % 10 == 0) {
+                    result = 1;
+                } else {
+                    //showTip("~数字和为10的倍数~");
+                    result = Const.ERR_MOD10;
+                }
+            } else if (this._isSameNumber() || this._isAddMatchLen()) { //如果是相同的数字，或者相加刚刚能进位，则表示匹配成功
+                result = 1;
+            } else {
+                //showTip("~不能相加啦~");
+                result = Const.ERR_CARRY;
+            }
+        }
+        return result;
     },
 
     /**
@@ -362,36 +410,18 @@ var GameScene = cc.Scene.extend({
     },
 
     checkNumIsMatchTen: function () {
-        /**@type Box*/
-        var firstBox = this.selectBoxArr[0];
-        var num = firstBox.num;
-        var isSameLen = true;
-        for (var i = 1; i < this.selectBoxArr.length; i++) {
-            /**@type Box*/
-            var box = this.selectBoxArr[i];
-            num += box.num;
-            //数字长度不统一，不能进行合并
-            if (firstBox.num.toString().length != box.num.toString().length) {
-                isSameLen = false;
-                showTip("~位数不匹配~");
-                break;
-            }
+        var code = this.checkBoxAddIsMatchRule();
+        var isMatch = code > 0;
+        if(code==Const.ERR_LEN){
+            showTip("~位数不匹配~");
+        }else if(code == Const.ERR_MOD10){
+            showTip("~数字和为10的倍数~");
+        }else if(code == Const.ERR_CARRY){
+            showTip("~不能相加啦~");
         }
-        var isMatch = false;
-        if (isSameLen) {
-            if (firstBox.num.toString().length == 1) {
-                if (num % 10 == 0) {
-                    isMatch = true;
-                } else {
-                    showTip("~数字和为10的倍数~");
-                }
-            } else if (this._isSameNumber() || this._isAddMatchLen()) { //如果是相同的数字，或者相加刚刚能进位，则表示匹配成功
-                isMatch = true;
-            } else {
-                showTip("~不能相加啦~");
-            }
-        }
+
         if (isMatch) { //匹配成功
+            var num = this.calBoxAddResult(this.selectBoxArr);
             this.selectLen = this.selectBoxArr.length;
             this.selectWillAddScore = num * this.selectLen;
             var surroundBoxArr = this.checkNumIsSurround();
@@ -627,7 +657,7 @@ var GameScene = cc.Scene.extend({
             if (that.checkScoreIs10000()) {
                 //目标达成
                 GameManager.instance.state = GameState.OVER;
-                this.addChild(new SuccessPanel(),100);
+                this.addChild(new SuccessPanel(), 100);
             } else {
                 //判断游戏是否结束
                 if (that.checkGameCanMove()) {
@@ -637,7 +667,7 @@ var GameScene = cc.Scene.extend({
                 } else {
                     //TODO game over
                     GameManager.instance.state = GameState.OVER;
-                    that.addChild(new FailPanel(),100);
+                    that.addChild(new FailPanel(), 100);
                 }
             }
         }, 1000);
@@ -651,7 +681,6 @@ var GameScene = cc.Scene.extend({
         setTimeout(function () {
             /**@type Box*/
             var box = that.removeBoxArr.pop();
-            showTip(cc.sys.isObjectValid(box),"!!!");
             box.updateRowCol(-1, col);
             box.resetBox();
             that.boxRoot.addChild(box);
