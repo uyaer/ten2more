@@ -12,8 +12,6 @@
 
     "jsList" : [
         "src/resource.js",
-        "src/anysdkConst.js",
-        "src/app.js",
 
         "src/utils/md5.js",
         "src/utils/map.js",
