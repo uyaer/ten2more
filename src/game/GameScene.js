@@ -627,7 +627,7 @@ var GameScene = cc.Scene.extend({
             if (that.checkScoreIs10000()) {
                 //目标达成
                 GameManager.instance.state = GameState.OVER;
-                this.addChild(new SuccessPanel());
+                this.addChild(new SuccessPanel(),100);
             } else {
                 //判断游戏是否结束
                 if (that.checkGameCanMove()) {
@@ -637,7 +637,7 @@ var GameScene = cc.Scene.extend({
                 } else {
                     //TODO game over
                     GameManager.instance.state = GameState.OVER;
-                    that.addChild(new FailPanel());
+                    that.addChild(new FailPanel(),100);
                 }
             }
         }, 1000);
@@ -652,10 +652,10 @@ var GameScene = cc.Scene.extend({
             /**@type Box*/
             var box = that.removeBoxArr.pop();
             showTip(cc.sys.isObjectValid(box),"!!!");
-            box.release();
             box.updateRowCol(-1, col);
             box.resetBox();
             that.boxRoot.addChild(box);
+            box.release();
             box.moveToPot(row, col);
             that.boxArr[row][col] = box;
         }, 700);

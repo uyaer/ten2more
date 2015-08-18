@@ -62,3 +62,7 @@ simulator/android/ten2more-debug.apk
 frameworks/runtime-src/proj.android/obj/
 frameworks/runtime-src/proj.android/libs/armeabi/libcocos2djs.so
 frameworks/runtime-src/proj.android/local.properties
+
+simulator/
+build
+debug
