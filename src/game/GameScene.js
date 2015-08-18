@@ -62,8 +62,6 @@ var GameScene = cc.Scene.extend({
         //this.makeBox2();
         this.makeTopLayer();
 
-        this.addChild(new SuccessPanel(),100);
-
         GameManager.instance.state = GameState.PLAYING;
     },
 

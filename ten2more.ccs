@@ -15,6 +15,10 @@
           <Image Name="p_eye.png" />
           <Image Name="p_face.png" />
           <Image Name="p_mouse.png" />
+          <Image Name="cloud.png" />
+          <Image Name="index.png" />
+          <Image Name="start.png" />
+          <Image Name="title.png" />
         </Folder>
         <PlistInfo Name="game.csi" Type="Plist" />
       </RootFolder>

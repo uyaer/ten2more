@@ -32,7 +32,7 @@ var SuccessPanel = cc.Layer.extend({
         var tf = new cc.TextFieldTTF("目标达成\n十分万美", cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER, "Arial", 72);
         tf.color = hex2Color(0xffffff);
         tf.anchorX = tf.anchorY = 0;
-        tf.x = 0;
+        tf.x = 50;
         tf.y = 200;
         box.addChild(tf);
 

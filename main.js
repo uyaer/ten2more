@@ -97,17 +97,17 @@ cc.game.onStart = function () {
 
         cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
 
-        cc.director.runScene(new GameScene());
+        cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
     }, this);
 
 
     var delayResizeId = 0;
     cc.view.setResizeCallback(function () {
         clearTimeout(delayResizeId);
-        delayResizeId = setTimeout(onResize,200);
+        delayResizeId = setTimeout(onResize, 200);
     });
 
-    function onResize(){
+    function onResize() {
         if (cc.sys.isMobile) {
             cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.FIXED_WIDTH);
         }

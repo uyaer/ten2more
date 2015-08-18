@@ -26,13 +26,13 @@ var FailPanel = cc.Layer.extend({
         box.addChild(person);
         person.x = 100;
         person.y = 300;
-        person.showHappy();
+        person.showSad();
 
         //title
-        var tf = new cc.TextFieldTTF("失败了~_~", cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER, "Arial", 72);
+        var tf = new cc.TextFieldTTF("十分遗憾\n失败了~_~", cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER, "Arial", 72);
         tf.color = hex2Color(0xffffff);
         tf.anchorX = tf.anchorY = 0;
-        tf.x = 0;
+        tf.x = 50;
         tf.y = 200;
         box.addChild(tf);
 

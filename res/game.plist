@@ -7,7 +7,7 @@
 			<key>game/cir.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,152},{100,100}}</string>
+				<string>{{874,1},{100,100}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -18,7 +18,7 @@
 			<key>game/radius_box.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{103,194},{50,51}}</string>
+				<string>{{961,141},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -29,7 +29,7 @@
 			<key>game/switch-mask.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,254},{100,36}}</string>
+				<string>{{874,103},{100,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -40,7 +40,7 @@
 			<key>game/switch-off.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,292},{85,36}}</string>
+				<string>{{874,141},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -51,7 +51,7 @@
 			<key>game/switch-on.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{88,292},{85,36}}</string>
+				<string>{{723,152},{85,36}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -62,7 +62,7 @@
 			<key>game/switch-thumb.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{152,1},{50,50}}</string>
+				<string>{{862,179},{50,50}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -73,7 +73,7 @@
 			<key>game/radius_box_yellow.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{155,194},{50,51}}</string>
+				<string>{{810,152},{50,51}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -84,7 +84,7 @@
 			<key>game/btn.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{103,152},{70,40}}</string>
+				<string>{{723,190},{70,40}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -95,7 +95,7 @@
 			<key>game/p_eye.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{171,247},{30,30}}</string>
+				<string>{{976,1},{30,30}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -106,7 +106,7 @@
 			<key>game/p_face.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,1},{149,149}}</string>
+				<string>{{723,1},{149,149}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -117,13 +117,57 @@
 			<key>game/p_mouse.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{103,247},{66,22}}</string>
+				<string>{{914,194},{66,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
 				<string>{66,22}</string>
+			</dict>
+			<key>game/cloud.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{795,231},{177,103}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{177,103}</string>
+			</dict>
+			<key>game/index.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,1},{720,492}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{720,492}</string>
+			</dict>
+			<key>game/start.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{723,336},{278,70}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{278,70}</string>
+			</dict>
+			<key>game/title.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,495},{441,234}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{441,234}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>
@@ -135,14 +179,14 @@
 			<key>realTextureFileName</key>
 			<string>game.png</string>
 			<key>size</key>
-			<string>{206,329}</string>
+			<string>{1012,730}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>206</integer>
+			<integer>1012</integer>
 			<key>height</key>
-			<integer>329</integer>
+			<integer>730</integer>
 		</dict>
 	</dict>
 </plist>

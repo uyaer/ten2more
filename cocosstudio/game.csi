@@ -13,6 +13,10 @@
       <FilePathData Path="game/p_eye.png" />
       <FilePathData Path="game/p_face.png" />
       <FilePathData Path="game/p_mouse.png" />
+      <FilePathData Path="game/cloud.png" />
+      <FilePathData Path="game/index.png" />
+      <FilePathData Path="game/start.png" />
+      <FilePathData Path="game/title.png" />
     </ImageFiles>
     <MaxSize Width="1024" Height="1024" />
   </Content>

@@ -50,17 +50,47 @@ var CirPerson = cc.Node.extend({
             cc.delayTime(1)
         ).repeatForever());
 
-        //this.mouse.runAction(cc.sequence(
-        //    cc.scaleTo(0.15, 1, 0.1),
-        //    cc.delayTime(0.1),
-        //    cc.scaleTo(0.15, 1, 1),
-        //    cc.delayTime(1)
-        //).repeatForever());
-
         //跳跃
         this.runAction(cc.sequence(
             cc.delayTime(0.4),
             cc.jumpBy(0.4, 0, 0, 50, 1),
+            cc.delayTime(0.6)
+        ).repeatForever());
+    },
+    /**
+     * 显示悲伤的
+     */
+    showSad: function () {
+        this.leye.runAction(cc.sequence(
+            cc.moveBy(0.1, 0, 10),
+            cc.moveBy(0.2, 0, -20),
+            cc.moveBy(0.1, 0, 10),
+            cc.delayTime(1)
+        ).repeatForever());
+        this.reye.runAction(cc.sequence(
+            cc.moveBy(0.1, 0, 10),
+            cc.moveBy(0.2, 0, -20),
+            cc.moveBy(0.1, 0, 10),
+            cc.delayTime(1)
+        ).repeatForever());
+
+        this.mouse.flippedY = true;
+
+        //跳跃
+        this.runAction(cc.sequence(
+            cc.delayTime(0.4),
+            cc.spawn(
+                cc.moveBy(0.1, -10, 0),
+                cc.rotateBy(0.1, 25)
+            ),
+            cc.spawn(
+                cc.moveBy(0.2, 20, 0),
+                cc.rotateBy(0.2, -50)
+            ),
+            cc.spawn(
+                cc.moveBy(0.1, -10, 0),
+                cc.rotateBy(0.1, 25)
+            ),
             cc.delayTime(0.6)
         ).repeatForever());
     }

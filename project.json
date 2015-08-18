@@ -24,10 +24,12 @@
         "src/common/GameManager.js",
 
 
+        "src/game/IndexScene.js",
         "src/game/Box.js",
         "src/game/CirPerson.js",
         "src/game/ResetAlertPanel.js",
         "src/game/SuccessPanel.js",
+        "src/game/FailPanel.js",
         "src/game/TopLayer.js",
         "src/game/LightLine.js",
         "src/game/GameScene.js"

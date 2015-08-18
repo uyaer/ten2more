@@ -7,13 +7,5 @@
         <LastRunType Value="Windows" />
       </Value>
     </Item>
-    <Item Key="TabsParamsKey">
-      <Value ctype="TabsInfo">
-        <OpenedDocuments>
-          <FilePathData Path="game.csi" />
-        </OpenedDocuments>
-        <ActiveDocument Path="game.csi" />
-      </Value>
-    </Item>
   </Properties>
 </UserData>
