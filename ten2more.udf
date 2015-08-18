@@ -7,5 +7,28 @@
         <LastRunType Value="Windows" />
       </Value>
     </Item>
+    <Item Key="PackageParamsKey">
+      <Value ctype="PackageParams">
+        <LuaIsEncrypt Value="False" />
+        <LuaEncryptKey Value="" />
+        <LuaEncryptSign Value="" />
+        <Android_PackageName Value="org.cocos.ten2more" />
+        <AndroidkeyStore Value="" />
+        <AndroidVersion Value="android-18" />
+        <iOS_Target Value="ten2more-mobile" />
+        <iOS_BundleID Value="" />
+        <Platform Value="None" />
+        <RunPlatform Value="Windows" />
+        <FrameworkVersion Value="cocos2d-x-3.7" />
+        <IsDebugKeystore Value="True" />
+        <EnableSourceMap Value="False" />
+        <EnableHTML5Advanced Value="False" />
+      </Value>
+    </Item>
+    <Item Key="TabsParamsKey">
+      <Value ctype="TabsInfo">
+        <ActiveDocument />
+      </Value>
+    </Item>
   </Properties>
 </UserData>
