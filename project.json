@@ -33,6 +33,8 @@
         "src/game/FailPanel.js",
         "src/game/TopLayer.js",
         "src/game/LightLine.js",
-        "src/game/GameScene.js"
+        "src/game/GameScene.js",
+
+        "src/_logo/LogoScene.js"
     ]
 }
