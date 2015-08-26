@@ -91,13 +91,13 @@ cc.game.onStart = function () {
     Const.WIN_H = cc.winSize.height;
 
     //load resources
-    cc.LoaderScene.preload(g_logo, function () {
+    cc.LoaderScene.preload(g_resources, function () {
 
-        cc.director.runScene(new LogoScene(function () {
+        //cc.director.runScene(new LogoScene(function () {
             GameManager.instance.init();
             cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
             cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
-        }));
+        //}));
 
     }, this);
 

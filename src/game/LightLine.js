@@ -8,13 +8,16 @@ var LightLine = cc.Layer.extend({
 
         this.drawNode = new cc.DrawNode();
         this.addChild(this.drawNode);
+
     },
 
     /**
      * 根据选中的box绘制线条
-     * @param boxs
+     * @param boxs {Array}
+     * @param alpha 绘制线条的alpha
      */
-    drawSelectingLine: function (boxs) {
+    drawSelectingLine: function (boxs, alpha) {
+        alpha = alpha || 0.5;
         this.drawNode.clear();
         if (!boxs || boxs.length < 2)return;
         for (var i = 0; i < boxs.length - 1; i++) {
@@ -22,7 +25,7 @@ var LightLine = cc.Layer.extend({
             var box = boxs[i];
             /**@type Box*/
             var boxNext = boxs[i + 1];
-            this.drawNode.drawSegment(cc.p(box.baseX, box.baseY), cc.p(boxNext.baseX, boxNext.baseY), 5, cc.color(255, 255, 255, 128));
+            this.drawNode.drawSegment(cc.p(box.baseX, box.baseY), cc.p(boxNext.baseX, boxNext.baseY), 5, cc.color(255, 255, 255, int(255 * alpha)));
         }
     }
 })

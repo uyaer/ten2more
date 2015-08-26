@@ -1,5 +1,5 @@
 <Solution>
-  <PropertyGroup Name="ten2more" Version="2.3.1.2" Type="CocosStudio" />
+  <PropertyGroup Name="ten2more" Version="2.3.2.0" Type="CocosStudio" />
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
@@ -15,6 +15,8 @@
           <Image Name="index.png" />
           <Image Name="start.png" />
           <Image Name="title.png" />
+          <Image Name="mask1.png" />
+          <Image Name="mask2.png" />
         </Folder>
         <PlistInfo Name="game.csi" Type="Plist" />
       </RootFolder>

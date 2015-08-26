@@ -49,6 +49,10 @@ var GameScene = cc.Scene.extend({
      * @type Array
      */
     tipOpenBoxList: null,
+    /**
+     * 帮助玩家延迟操作
+     */
+    helpPlayerTimeId: 0,
 
     ctor: function () {
         this._super();
@@ -58,9 +62,16 @@ var GameScene = cc.Scene.extend({
         }
 
         this.makeBackground();
-        this.makeBox();
-        //this.makeBox2();
+        if (GameManager.instance.isGuided) {
+            this.makeBox();
+        } else {
+            this.makeBoxWithGuide();
+            this.addChild(new GuideLayer(),11);
+        }
         this.makeTopLayer();
+
+        this.checkGameCanMove();
+        this.helpPlayerTimeId = setTimeout(this.helpPlayerShowHint.bind(this), Const.HINT_TIME);
 
         GameManager.instance.state = GameState.PLAYING;
     },
@@ -126,16 +137,18 @@ var GameScene = cc.Scene.extend({
         this.lightLine = new LightLine();
         this.addChild(this.lightLine, 1);
     },
-
-    makeBox2: function () {
+    /**
+     * 创建guide模式下的地图
+     */
+    makeBoxWithGuide: function () {
         var map = [
-            10, 10, 2, 2, 2, 2
+            1, 2, 3, 4, 2, 2,
+            10, 10, 30, 30, 40,1,
+            10, 50, 40, 10, 10,1,
+            1, 1, 1, 1, 1, 1,
+            1, 2, 2, 1, 1, 1,
+            1, 1, 1, 1, 1, 1
         ];
-        for (var i = 1; i <= 4; i++) {
-            for (var j = 1; j < 10; j++) {
-                map.push(Math.pow(10, i) * j);
-            }
-        }
         this.removeBoxArr = [];
         this.boxArr = [];
         var box;
@@ -210,12 +223,13 @@ var GameScene = cc.Scene.extend({
             return false;
         }
         if (this.isTouching)return false;
+        this.stopPlayerHint();
         var box = this.getBoxByPos(touch.getLocation());
         if (box) {
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
-            this.topLayer.showAddTip(box.num,true);
+            this.topLayer.showAddTip(box.num, true);
             this.isTouching = true;
             return true;
         }
@@ -238,7 +252,7 @@ var GameScene = cc.Scene.extend({
 
                 var num = this.calBoxAddResult(this.selectBoxArr);
                 var code = this.checkBoxAddIsMatchRule();
-                this.topLayer.showAddTip(num,code>0);
+                this.topLayer.showAddTip(num, code > 0);
             } else { //添加过
                 var endBox = null;
                 if (this.selectBoxArr.length > 1) {
@@ -252,7 +266,7 @@ var GameScene = cc.Scene.extend({
 
                     var num = this.calBoxAddResult(this.selectBoxArr);
                     var code = this.checkBoxAddIsMatchRule();
-                    this.topLayer.showAddTip(num,code>0);
+                    this.topLayer.showAddTip(num, code > 0);
                 }
             }
         }
@@ -414,11 +428,11 @@ var GameScene = cc.Scene.extend({
     checkNumIsMatchTen: function () {
         var code = this.checkBoxAddIsMatchRule();
         var isMatch = code > 0;
-        if(code==Const.ERR_LEN){
+        if (code == Const.ERR_LEN) {
             showTip("~位数不匹配~");
-        }else if(code == Const.ERR_MOD10){
+        } else if (code == Const.ERR_MOD10) {
             showTip("~数字和为10的倍数~");
-        }else if(code == Const.ERR_CARRY){
+        } else if (code == Const.ERR_CARRY) {
             showTip("~不能相加啦~");
         }
 
@@ -630,6 +644,8 @@ var GameScene = cc.Scene.extend({
         } else {
             // remove end
             GameManager.instance.state = GameState.PLAYING;
+
+            this.helpPlayerTimeId = setTimeout(this.helpPlayerShowHint.bind(this), Const.HINT_TIME);
         }
     },
 
@@ -666,8 +682,10 @@ var GameScene = cc.Scene.extend({
                     //仍然有可以移动的目标
                     GameManager.instance.state = GameState.PLAYING;
                     that.saveMapData();
+                    //10s没有操作，进行提示操作
+                    that.helpPlayerTimeId = setTimeout(that.helpPlayerShowHint.bind(that), Const.HINT_TIME);
                 } else {
-                    //TODO game over
+                    // game over
                     GameManager.instance.state = GameState.OVER;
                     that.addChild(new FailPanel(), 100);
                 }
@@ -987,5 +1005,32 @@ var GameScene = cc.Scene.extend({
             }
         }
         return false;
+    },
+
+    /**
+     * 帮助玩家进行提示
+     */
+    helpPlayerShowHint: function () {
+        if (!this.tipOpenBoxList)return;
+
+        var arr = [];
+        var len = this.tipOpenBoxList.length;
+        for (var i = 0; i < len; i++) {
+            var pot = this.tipOpenBoxList[i];
+            /**@type Box*/
+            var box = this.boxArr[pot.x][pot.y];
+            arr.push(box);
+        }
+
+        this.lightLine.drawSelectingLine(arr, 0.2);
+        this.lightLine.runAction(cc.blink(1, 1).repeatForever());
+    },
+    /**
+     * 停止进行对玩家的提示
+     */
+    stopPlayerHint: function () {
+        clearTimeout(this.helpPlayerTimeId);
+        this.lightLine.stopAllActions();
+        this.lightLine.visible = true;
     }
 })

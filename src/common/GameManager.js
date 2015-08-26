@@ -19,6 +19,10 @@ GameManager.instance = {
      * @typ Array
      */
     map:null,
+    /**
+     * 是否进行过引导
+     */
+    isGuided:false,
 
     /**
      * init data
@@ -56,6 +60,7 @@ GameManager.instance = {
                 this.maxScore = data["maxScore"] || 0;
                 this.playCount = data["playCount"] || 0;
                 this.map = data["map"] || null;
+                this.isGuided = data["isGuided"] || false;
             } else {
                 this.useInitFullData();
             }
@@ -89,6 +94,7 @@ GameManager.instance = {
             "score": this.score,
             "maxScore": this.maxScore,
             "playCount": this.playCount,
+            "isGuided": this.isGuided,
             "map": this.map
         };
         var dataStr = JSON.stringify(data);
@@ -108,6 +114,7 @@ GameManager.instance = {
         this.maxScore = 0;
         this.playCount = 0;
         this.map = null;
+        this.isGuided = false;
     }
 
 };

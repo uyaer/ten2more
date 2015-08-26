@@ -25,6 +25,11 @@ var Const = {
     ERR_CARRY:-3,//不能相加啦
 
     /**
+     * 提示时间超时
+      */
+    HINT_TIME:10000,
+
+    /**
      * 验证码
      */
     VERTIFY_KEY: "com.uyaer.1111",

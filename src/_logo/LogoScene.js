@@ -198,7 +198,7 @@ var LogoScene = cc.Scene.extend({
                 animArr.push(cc.callFunc(this.showClickAnim, this, cc.p(490, 782)));
                 animArr.push(cc.scaleTo(0.1, 1));
                 animArr.push(cc.delayTime(2));
-                //animArr.push(cc.callFunc(this.callback));
+                animArr.push(cc.callFunc(this.callback));
             }
             c.runAction(cc.sequence(animArr));
         }
@@ -209,7 +209,6 @@ var LogoScene = cc.Scene.extend({
      */
     showClickAnim: function (target, pos) {
         pos = pos || target;
-        cc.log(pos);
         for (var i = 0; i < 3; i++) {
             var cir = new cc.Sprite(res.logo_cir);
             cir.setPosition(pos);

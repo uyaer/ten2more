@@ -1,7 +1,11 @@
 function trace(str) {
     var log = "";
     for (var i = 0; i < arguments.length; i++) {
-        log += arguments[i] + ",";
+        var obj = arguments[i];
+        if (cc.isObject(obj) || cc.isArray(obj)) {
+            obj = JSON.stringify(obj);
+        }
+        log += +",";
     }
     cc.error(log);
 }
@@ -26,17 +30,17 @@ function payStr(id) {
  * @param arrayLen
  * @param len
  */
-function randomArrayIndex(arrayLen,len){
-    if(len==0)return null;
-    if(len>arrayLen)return null;
+function randomArrayIndex(arrayLen, len) {
+    if (len == 0)return null;
+    if (len > arrayLen)return null;
     var arr = [];
-    for(var i = 0 ; i < arrayLen;i++){
+    for (var i = 0; i < arrayLen; i++) {
         arr[i] = i;
     }
-    arr.sort(function (a,b) {
-        return Math.random()<0.5;
+    arr.sort(function (a, b) {
+        return Math.random() < 0.5;
     });
-    return arr.splice(0,len);
+    return arr.splice(0, len);
 }
 
 /**
@@ -131,12 +135,12 @@ function runScene(name) {
  */
 function showTip(str) {
     if (!cc.director.getRunningScene())return;
-    var tf = new cc.LabelTTF(str, "Arial", 32,cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER);
+    var tf = new cc.LabelTTF(str, "Arial", 32, cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER);
     tf.setString(str);
     tf.x = Const.WIN_W * 0.5;
     tf.y = Const.WIN_H * 0.55;
     tf.setColor(hex2Color(0xff0000));
-    cc.director.getRunningScene().addChild(tf,1000);
+    cc.director.getRunningScene().addChild(tf, 1000);
     tf.runAction(cc.sequence(
         cc.moveBy(0.15, 0, -20).easing(cc.easeSineOut()),
         cc.delayTime(0.4),
