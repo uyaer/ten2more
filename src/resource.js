@@ -16,7 +16,8 @@ var res = {
     logo_font_fnt: "res/logo/logo_font.fnt",
     logo_leaf: "res/logo/logo_leaf.png",
     logo_line: "res/logo/logo_line.png",
-    logo_url: "res/logo/logo_url.png"
+    logo_url: "res/logo/logo_url.png",
+    logo_cir: "res/logo/logo_cir.png"
 
 };
 
@@ -27,6 +28,7 @@ var g_logo = [
     res.logo_font_fnt,
     res.logo_leaf,
     res.logo_line,
+    res.logo_cir,
     res.logo_url
 ];
 
