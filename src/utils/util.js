@@ -5,7 +5,7 @@ function trace(str) {
         if (cc.isObject(obj) || cc.isArray(obj)) {
             obj = JSON.stringify(obj);
         }
-        log += +",";
+        log += obj+",";
     }
     cc.error(log);
 }
@@ -133,9 +133,10 @@ function runScene(name) {
  * 显示提示信息
  * @param str
  */
-function showTip(str) {
+function showTip(str,time) {
+    time = time || 0.4;
     if (!cc.director.getRunningScene())return;
-    var tf = new cc.LabelTTF(str, "Arial", 32, cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER);
+    var tf = new cc.LabelTTF(str, "Arial", 36, cc.size(Const.WIN_W, 50), cc.TEXT_ALIGNMENT_CENTER);
     tf.setString(str);
     tf.x = Const.WIN_W * 0.5;
     tf.y = Const.WIN_H * 0.55;
@@ -143,7 +144,7 @@ function showTip(str) {
     cc.director.getRunningScene().addChild(tf, 1000);
     tf.runAction(cc.sequence(
         cc.moveBy(0.15, 0, -20).easing(cc.easeSineOut()),
-        cc.delayTime(0.4),
+        cc.delayTime(time),
         cc.moveBy(0.25, 0, 90),
         cc.removeSelf(true)
     ));

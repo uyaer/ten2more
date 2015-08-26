@@ -53,6 +53,14 @@ var GameScene = cc.Scene.extend({
      * 帮助玩家延迟操作
      */
     helpPlayerTimeId: 0,
+    /**
+     * @type GuideLayer
+     */
+    guideLayer: null,
+    /**
+     * 是否在引导中
+     */
+    isGuiding: false,
 
     ctor: function () {
         this._super();
@@ -66,7 +74,12 @@ var GameScene = cc.Scene.extend({
             this.makeBox();
         } else {
             this.makeBoxWithGuide();
-            this.addChild(new GuideLayer(),11);
+            this.guideLayer = new GuideLayer();
+            this.addChild(this.guideLayer, 11);
+            this.guideLayer.nextStep();
+            this.isGuiding = true;
+            GameManager.instance.score = 0;
+            GameManager.instance.saveData();
         }
         this.makeTopLayer();
 
@@ -143,11 +156,11 @@ var GameScene = cc.Scene.extend({
     makeBoxWithGuide: function () {
         var map = [
             1, 2, 3, 4, 2, 2,
-            10, 10, 30, 30, 40,1,
-            10, 50, 40, 10, 10,1,
-            1, 1, 1, 1, 1, 1,
-            1, 2, 2, 1, 1, 1,
-            1, 1, 1, 1, 1, 1
+            10, 10, 2, 3, 2, 1,
+            10, 50, 40, 4, 1, 1,
+            1, 1, 1, 1, 2, 1,
+            1, 2, 2, 1, 1, 2,
+            1, 1, 1, 1, 3, 2
         ];
         this.removeBoxArr = [];
         this.boxArr = [];
@@ -226,6 +239,10 @@ var GameScene = cc.Scene.extend({
         this.stopPlayerHint();
         var box = this.getBoxByPos(touch.getLocation());
         if (box) {
+            //guiding
+            if (this.isGuiding && !this.guideLayer.checkBoxCanSelect(box)) {
+                return false;
+            }
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
@@ -244,6 +261,10 @@ var GameScene = cc.Scene.extend({
     onTouchMovedHandler: function (touch, event) {
         var box = this.getBoxByPos(touch.getLocation());
         if (box && this.checkBoxCanBeSelected(box)) {
+            //guiding
+            if (this.isGuiding && !this.guideLayer.checkBoxCanSelect(box)) {
+                return false;
+            }
             if (!isElinArray(box, this.selectBoxArr)) { //没有添加过
                 box.setSelected(true);
                 this.selectBoxArr.push(box);
@@ -446,6 +467,14 @@ var GameScene = cc.Scene.extend({
                 this.playSurroundAnimation(surroundBoxArr);
             } else { //普通消除
                 this.matchSuccessUnSelected();
+            }
+            //guiding
+            if (this.isGuiding) {
+                this.guideLayer.stepEnd();
+                if (this.guideLayer.isGuideOver) {
+                    this.isGuiding = false;
+                    this.guideLayer = null;
+                }
             }
         } else { //匹配失败
             this.matchFailUnSelected();
@@ -684,6 +713,11 @@ var GameScene = cc.Scene.extend({
                     that.saveMapData();
                     //10s没有操作，进行提示操作
                     that.helpPlayerTimeId = setTimeout(that.helpPlayerShowHint.bind(that), Const.HINT_TIME);
+
+                    //guiding
+                    if (that.isGuiding) {
+                        that.guideLayer.nextStep();
+                    }
                 } else {
                     // game over
                     GameManager.instance.state = GameState.OVER;
@@ -1012,6 +1046,7 @@ var GameScene = cc.Scene.extend({
      */
     helpPlayerShowHint: function () {
         if (!this.tipOpenBoxList)return;
+        if (this.isGuiding) return;
 
         var arr = [];
         var len = this.tipOpenBoxList.length;
