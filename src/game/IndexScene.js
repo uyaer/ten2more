@@ -37,6 +37,24 @@ var IndexScene = cc.Scene.extend({
         this.makeStartButton();
     },
 
+    onEnter: function () {
+      this._super();
+
+        //event
+        if (cc.sys.isNative) {
+            cc.eventManager.addListener({
+                event: cc.EventListener.KEYBOARD,
+                onKeyReleased: this.onKeyClicked.bind(this)
+            }, this);
+        }
+    },
+
+    onKeyClicked: function (code) {
+        if (code == cc.KEY.back) {
+            App.showConfirmClose();
+        }
+    },
+
     makeStartButton: function () {
         //start button
         this.startBtn = this.createButton("开始游戏",Const.WIN_H*0.475,cc.color.WHITE);
