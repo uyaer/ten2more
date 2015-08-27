@@ -36,6 +36,6 @@
         "src/game/GuideLayer.js",
         "src/game/GameScene.js",
 
-        "src/_logo/LogoScene.js"
+        "src/logo/LogoScene.js"
     ]
 }
