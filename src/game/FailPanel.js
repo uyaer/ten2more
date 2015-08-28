@@ -29,7 +29,7 @@ var FailPanel = cc.Layer.extend({
         person.showSad();
 
         //title
-        var tf = new cc.LabelTTF("十分遗憾\n失败了~_~", "Arial", 72, cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF(Lang.i18n(1), "Arial", 72, cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER);//"十分遗憾\n失败了~_~"
         tf.color = hex2Color(0xffffff);
         tf.anchorX = tf.anchorY = 0;
         tf.x = 50;
@@ -37,8 +37,8 @@ var FailPanel = cc.Layer.extend({
         box.addChild(tf);
 
         //btn
-        var tryBtn = this.makeButton("再试一次", 180, 100, cc.color.WHITE);
-        var shareBtn = this.makeButton("请求援助", 450, 100, cc.color.GREEN);
+        var tryBtn = this.makeButton(Lang.i18n(2), 180, 100, cc.color.WHITE);
+        var shareBtn = this.makeButton(Lang.i18n(3), 450, 100, cc.color.GREEN);
         box.addChild(tryBtn);
         box.addChild(shareBtn);
         tryBtn.addTargetWithActionForControlEvents(this, this.onTryBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
@@ -74,6 +74,7 @@ var FailPanel = cc.Layer.extend({
         cc.director.runScene(new GameScene());
     },
     onShareBtnClickHandler: function () {
-        //TODO Share
+        // Share
+        App.showShare();
     }
 });

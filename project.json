@@ -23,6 +23,8 @@
         "src/common/GameEvent.js",
         "src/common/GameManager.js",
 
+        "src/i18n/Lang.js",
+
 
         "src/game/PopUpManager.js",
         "src/game/IndexScene.js",

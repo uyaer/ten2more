@@ -97,6 +97,7 @@ cc.game.onStart = function () {
 
         cc.director.runScene(new LogoScene(function () {
             GameManager.instance.init();
+            Lang.init();
             cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
             cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
         }));

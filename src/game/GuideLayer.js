@@ -78,17 +78,17 @@ var GuideLayer = cc.Layer.extend({
             "1": {
                 "pots": [cc.p(0, 0), cc.p(0, 1), cc.p(0, 2), cc.p(0, 3)],
                 "rect": cc.rect(0, Const.BOX_PADDING, Const.BOX_PADDING * 4, Const.BOX_PADDING),
-                "txt": "个位数相加组成10的倍数"
+                "txt": Lang.i18n(7) //"个位数相加组成10的倍数"
             },
             "2": {
                 "pots": [cc.p(1, 0), cc.p(1, 1)],
                 "rect": cc.rect(0, Const.BOX_PADDING * 2, Const.BOX_PADDING * 2, Const.BOX_PADDING),
-                "txt": "相同的数字可以相加"
+                "txt": Lang.i18n(8)//"相同的数字可以相加"
             },
             "3": {
                 "pots": [cc.p(2, 0), cc.p(2, 1), cc.p(2, 2)],
                 "rect": cc.rect(0, Const.BOX_PADDING * 3, Const.BOX_PADDING * 3, Const.BOX_PADDING),
-                "txt": "不同数字相加可以进位"
+                "txt": Lang.i18n(9)//"不同数字相加可以进位"
             },
             "4": {
                 "multi": true, //是否多行
@@ -97,7 +97,7 @@ var GuideLayer = cc.Layer.extend({
                     cc.p(5, 0), cc.p(5, 1), cc.p(5, 2), cc.p(5, 3)
                 ],
                 "rect": cc.rect(0, Const.BOX_PADDING * 6, Const.BOX_PADDING * 4, Const.BOX_PADDING * 3),
-                "txt": "数字围成圈可以有彩蛋哦"
+                "txt": Lang.i18n(10)//"数字围成圈可以有彩蛋哦"
             }
         }
     },

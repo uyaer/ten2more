@@ -52,7 +52,8 @@ var TopLayer = cc.Layer.extend({
         colorBg.addChild(border);
 
         //music txt
-        var tf = new cc.LabelTTF("音乐", "Arial", 32, cc.size(100, 70), cc.TEXT_ALIGNMENT_RIGHT, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        //音乐
+        var tf = new cc.LabelTTF(Lang.i18n(19), "Arial", 32, cc.size(100, 70), cc.TEXT_ALIGNMENT_RIGHT, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 1;
         tf.anchorY = 0;
         tf.x = 100;
@@ -67,8 +68,8 @@ var TopLayer = cc.Layer.extend({
             new cc.Sprite("res/switch-on.png"),
             new cc.Sprite("res/switch-off.png"),
             new cc.Sprite("res/switch-thumb.png"),
-            new cc.LabelTTF("开", "Arial", 32),
-            new cc.LabelTTF("关", "Arial", 32)
+            new cc.LabelTTF(Lang.i18n(20), "Arial", 32),//"开"
+            new cc.LabelTTF(Lang.i18n(21), "Arial", 32)//"关"
         );
         this.musicSwitch.anchorX = 0;
         this.musicSwitch.x = 120;
@@ -90,7 +91,7 @@ var TopLayer = cc.Layer.extend({
         //reset button
         var box = new cc.Scale9Sprite("game/btn.png", cc.rect(35, 20, 1, 1));
         //box.setContentSize(size);
-        var titleButton = new cc.LabelTTF("重新开始", "Arial", 30);
+        var titleButton = new cc.LabelTTF(Lang.i18n(22), "Arial", 30);//重新开始
         titleButton.color = cc.color.WHITE;
         var btn = new cc.ControlButton(titleButton, box);
         btn.setMargins(28, 12);
@@ -120,7 +121,8 @@ var TopLayer = cc.Layer.extend({
     makeInfo: function () {
         var posArr = [cc.p(150, 10), cc.p(150, 80), cc.p(480, 10)];
         var sizeArr = [cc.size(200, 65), cc.size(200, 65), cc.size(220, 135)];
-        var labelTxtArr = ["最高分数", "挑战次数", "当前分数"];
+        //var labelTxtArr = ["最高分数", "挑战次数", "当前分数"];
+        var labelTxtArr = [Lang.i18n(23),Lang.i18n(24),Lang.i18n(25)];
 
         for (var i = 0; i < posArr.length; i++) {
             /**@type cc.Point*/
@@ -160,7 +162,8 @@ var TopLayer = cc.Layer.extend({
      * 产生帮助信息
      */
     makeHelp: function () {
-        var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
+        //var txt = "将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！";
+        var txt = Lang.i18n(26);
         var tf = new cc.LabelTTF(txt, "Arial", 22, cc.size(Const.WIN_W - 20, 100), cc.TEXT_ALIGNMENT_LEFT);
         tf.anchorX = 0;
         tf.anchorY = 0;

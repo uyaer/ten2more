@@ -9,6 +9,8 @@ var res = {
 
     eff_remove: "res/remove_eff.plist",
 
+    data: "res/data.json",
+
 
     logo: "res/logo/logo.png",
     logo_bg: "res/logo/logo_bg.png",

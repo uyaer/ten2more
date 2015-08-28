@@ -23,14 +23,15 @@ var ResetAlertPanel = cc.Layer.extend({
         this.addChild(box);
 
         //title
-        var tf = new cc.LabelTTF("提醒", "Arial", 42, cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF(Lang.i18n(13), "Arial", 42, cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER);//提醒
         tf.color = hex2Color(0x630b0b);
         tf.anchorX = tf.anchorY = 0;
         tf.x = 0;
         tf.y = 220;
         box.addChild(tf);
         //txt
-        var tf = new cc.LabelTTF("重新开始会清除现在的数据！", "Arial", 32,cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        //重新开始会清除现在的数据！
+        var tf = new cc.LabelTTF(Lang.i18n(14), "Arial", 32,cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.y = 150;
@@ -38,8 +39,8 @@ var ResetAlertPanel = cc.Layer.extend({
         box.addChild(tf);
 
         //btn
-        var okBtn = this.makeButton("确定", 150, 70, cc.color.RED);
-        var cancelBtn = this.makeButton("取消", 350, 70, cc.color.WHITE);
+        var okBtn = this.makeButton(Lang.i18n(15), 150, 70, cc.color.RED);//确定
+        var cancelBtn = this.makeButton(Lang.i18n(16), 350, 70, cc.color.WHITE);//取消
         box.addChild(okBtn);
         box.addChild(cancelBtn);
         okBtn.addTargetWithActionForControlEvents(this, this.onOkBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);

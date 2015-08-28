@@ -29,7 +29,8 @@ var SuccessPanel = cc.Layer.extend({
         person.showHappy();
 
         //title
-        var tf = new cc.LabelTTF("目标达成\n十分万美", "Arial", 72, cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER);
+        //目标达成\n十分万美
+        var tf = new cc.LabelTTF(Lang.i18n(17), "Arial", 72, cc.size(620, 200), cc.TEXT_ALIGNMENT_CENTER);
         tf.color = hex2Color(0xffffff);
         tf.anchorX = tf.anchorY = 0;
         tf.x = 50;
@@ -37,8 +38,8 @@ var SuccessPanel = cc.Layer.extend({
         box.addChild(tf);
 
         //btn
-        var tryBtn = this.makeButton("再试一次", 180, 100, cc.color.WHITE);
-        var shareBtn = this.makeButton("炫耀成绩", 450, 100, cc.color.GREEN);
+        var tryBtn = this.makeButton(Lang.i18n(2), 180, 100, cc.color.WHITE);//再试一次
+        var shareBtn = this.makeButton(Lang.i18n(18), 450, 100, cc.color.GREEN); //炫耀成绩
         box.addChild(tryBtn);
         box.addChild(shareBtn);
         tryBtn.addTargetWithActionForControlEvents(this, this.onTryBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);

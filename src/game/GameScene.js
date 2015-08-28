@@ -450,11 +450,11 @@ var GameScene = cc.Scene.extend({
         var code = this.checkBoxAddIsMatchRule();
         var isMatch = code > 0;
         if (code == Const.ERR_LEN) {
-            showTip("~位数不匹配~");
+            showTip(Lang.i18n(4));//"~位数不匹配~"
         } else if (code == Const.ERR_MOD10) {
-            showTip("~数字和为10的倍数~");
+            showTip(Lang.i18n(5));//~数字和为10的倍数~
         } else if (code == Const.ERR_CARRY) {
-            showTip("~不能相加啦~");
+            showTip(Lang.i18n(6));//不符合规则
         }
 
         if (isMatch) { //匹配成功
