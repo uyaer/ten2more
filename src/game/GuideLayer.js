@@ -118,7 +118,7 @@ var GuideLayer = cc.Layer.extend({
         GameManager.instance.saveData();
         this.isGuideOver = true;
         this.removeFromParent();
-        showTip("引导结束，为了10000，继续努力吧!",2);
+        showTip(Lang.i18n(27),2);//"引导结束，为了10000，继续努力吧!"
     },
 
     /**
