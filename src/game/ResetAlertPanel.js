@@ -31,7 +31,7 @@ var ResetAlertPanel = cc.Layer.extend({
         box.addChild(tf);
         //txt
         //重新开始会清除现在的数据！
-        var tf = new cc.LabelTTF(Lang.i18n(14), "Arial", 32,cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+        var tf = new cc.LabelTTF(Lang.i18n(14), "Arial", 32, cc.size(500, 70), cc.TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
         tf.anchorX = 0;
         tf.anchorY = 0;
         tf.y = 150;
@@ -39,8 +39,8 @@ var ResetAlertPanel = cc.Layer.extend({
         box.addChild(tf);
 
         //btn
-        var okBtn = this.makeButton(Lang.i18n(15), 150, 70, cc.color.RED);//确定
-        var cancelBtn = this.makeButton(Lang.i18n(16), 350, 70, cc.color.WHITE);//取消
+        var okBtn = this.makeButton(Lang.i18n(15), 140, 70, cc.color.RED, 186);//确定
+        var cancelBtn = this.makeButton(Lang.i18n(16), 370, 70, cc.color.WHITE, 186);//取消
         box.addChild(okBtn);
         box.addChild(cancelBtn);
         okBtn.addTargetWithActionForControlEvents(this, this.onOkBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
@@ -55,13 +55,13 @@ var ResetAlertPanel = cc.Layer.extend({
      * @param color 按钮颜色
      * @returns {cc.ControlButton}
      */
-    makeButton: function (txt, x, y, color) {
+    makeButton: function (txt, x, y, color, w) {
         var box = new cc.Scale9Sprite("game/btn.png", cc.rect(35, 20, 1, 1));
         var titleButton = new cc.LabelTTF(txt, "Arial", 30);
         titleButton.color = cc.color.WHITE;
         var btn = new cc.ControlButton(titleButton, box);
         btn.color = color;
-        btn.setMargins(48,12);
+        btn.setMargins((w - titleButton.width) / 2, 12);
         btn.anchorX = 0.5;
         btn.x = x;
         btn.y = y;

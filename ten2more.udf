@@ -4,7 +4,7 @@
       <Value ctype="CocosRecentOperation">
         <LastPublishType Value="Resource" />
         <IsLastPublish Value="True" />
-        <LastRunType Value="Mac" />
+        <LastRunType Value="Android" />
       </Value>
     </Item>
     <Item Key="PackageParamsKey">
@@ -12,15 +12,18 @@
         <LuaIsEncrypt Value="False" />
         <LuaEncryptKey Value="" />
         <LuaEncryptSign Value="" />
-        <Android_PackageName Value="org.cocos.ten2more" />
-        <AndroidkeyStore Value="" />
-        <AndroidVersion Value="android-18" />
+        <Android_PackageName Value="com.uyaer.ten2more" />
+        <AndroidkeyStore Value="G:\android_p12.keystore" />
+        <AndroidVersion Value="android-19" />
         <iOS_Target Value="ten2more-mobile" />
         <iOS_BundleID Value="" />
         <Platform Value="None" />
-        <RunPlatform Value="Mac" />
+        <RunPlatform Value="Android" />
         <FrameworkVersion Value="cocos2d-x-3.7" />
-        <IsDebugKeystore Value="True" />
+        <IsDebugKeystore Value="False" />
+        <KeystorePassword Value="uyaer1234567890" />
+        <KeystoreAliasName Value="uyaer" />
+        <KeystoreAliasPassword Value="uyaer1234567890" />
         <EnableSourceMap Value="False" />
         <EnableHTML5Advanced Value="False" />
       </Value>

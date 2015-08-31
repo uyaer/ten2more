@@ -119,7 +119,7 @@ var TopLayer = cc.Layer.extend({
      * 创建信息相关的
      */
     makeInfo: function () {
-        var posArr = [cc.p(150, 10), cc.p(150, 80), cc.p(480, 10)];
+        var posArr = [cc.p(160, 10), cc.p(160, 80), cc.p(490, 10)];
         var sizeArr = [cc.size(200, 65), cc.size(200, 65), cc.size(220, 135)];
         //var labelTxtArr = ["最高分数", "挑战次数", "当前分数"];
         var labelTxtArr = [Lang.i18n(23),Lang.i18n(24),Lang.i18n(25)];
@@ -139,7 +139,7 @@ var TopLayer = cc.Layer.extend({
             this.addChild(box);
             //text
             var txtSize = limit(int(size.height / 65), 1, 2) == 1 ? 30 : 46;
-            var tf = new cc.LabelTTF(labelTxtArr[i], "Arial", txtSize, cc.size(120, size.height), cc.TEXT_ALIGNMENT_RIGHT, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
+            var tf = new cc.LabelTTF(labelTxtArr[i], "Arial", txtSize, cc.size(200, size.height), cc.TEXT_ALIGNMENT_RIGHT, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
             tf.anchorX = 1;
             tf.anchorY = 1;
             tf.x = pos.x - 10;
