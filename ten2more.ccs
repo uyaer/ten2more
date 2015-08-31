@@ -17,6 +17,7 @@
           <Image Name="title.png" />
           <Image Name="mask1.png" />
           <Image Name="mask2.png" />
+          <Image Name="title_en.png" />
         </Folder>
         <PlistInfo Name="game.csi" Type="Plist" />
       </RootFolder>

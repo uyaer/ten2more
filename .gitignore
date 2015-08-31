@@ -68,3 +68,5 @@ build
 debug
 
 frameworks/runtime-src/proj.android/gen/
+
+package/ten2more-release-signed.apk
