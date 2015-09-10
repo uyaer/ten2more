@@ -81,7 +81,8 @@ var IndexScene = cc.Scene.extend({
     },
 
     onShareBtnClickHandler: function () {
-        //TODO Share
+        // Share
+        App.showShare();
     },
 
     makeTitle: function () {

@@ -75,6 +75,7 @@ var SuccessPanel = cc.Layer.extend({
         cc.director.runScene(new GameScene());
     },
     onShareBtnClickHandler: function () {
-        //TODO Share
+        // Share
+        App.showShare();
     }
 });

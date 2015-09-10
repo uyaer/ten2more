@@ -1,9 +1,8 @@
-
 //////////////////////////////////////
 ///////////////  plus ///////////////////////
 ////////////////         //////////////////////
 /////////////////             /////////////////////
-var App = App || {};
+var App = {};
 App.__android_class = "org/cocos2dx/javascript/AppActivity";
 
 /**
@@ -16,44 +15,25 @@ App.showConfirmClose = function () {
  * 关闭应用
  */
 App.closeApp = function () {
-    anysdk.AgentManager.end();
     cc.director.end();
 }
-/////////////////////////////////////////////////////
-/////anysdk
-App.adPlugin = null;
-App.initAnySdk = function () {
-    if (!cc.sys.isNative)return;
-    //注意：这里appKey, appSecret, privateKey，要替换成自己打包工具里面的值(登录打包工具，游戏管理界面上显示的那三个参数)。
-    var appKey = "05F78A7B-AE83-4935-170E-2F8396B4DB23";
-    var appSecret = "0eb5d6906bfa41581885fa4bcd315be0";
-    var privateKey = "29FC92F8EFD8C342AB9D960E981C0F8A";
-    var oauthLoginServer = "";
-    var agent = anysdk.AgentManager.getInstance();
-    //init
-    agent.init(appKey, appSecret, privateKey, oauthLoginServer);
-    //load
-    agent.loadAllPlugins();
-    App.adPlugin = agent.getAdsPlugin();
-    App.preloadCpAd();
-}
 
-/**
- * 显示插屏广告
- */
-App.showCpAd = function () {
-    App.adPlugin.showAds(AdsType.AD_TYPE_FULLSCREEN);
+App.showShare = function () {
+    var lang = "en";
+    if (cc.sys.language != cc.sys.LANGUAGE_CHINESE) {
+        lang = "zh"
+    }
+    var url = "http://uyaer.qiniudn.com/share.html?lang=" + lang +
+        "&icon=_games/ten2more/icon512.png" +
+        "&name=" + (lang == "zh" ? "十分完美" : "ten%20dots") +
+        "&pic=http://uyaer.qiniudn.com/images/7.png" +
+        "&title=" + (lang == "zh" ? "很好玩的游戏" : "A fun game with you!") +
+        "&desc=" + (lang == "zh" ? "喜欢2048吗？玩过两点一线吗？那一定要来试一试这款游戏，非常好玩哦！" : "2048 like it? and two dots? It must be to try this game, very fun oh!") +
+        "&r=" + Date.now() +
+        "&url=http://uyaer.qiniudn.com/?v" + Date.now() + "#game-7";
+    if (cc.sys.isNative) {
+        jsb.reflection.callStaticMethod(App.__android_class, "showShare", "(Ljava/lang/String;)V", url);
+    } else {
+        window.open(url);
+    }
 }
-/**
- * 隐藏插屏广告
- */
-App.hideCpAd = function () {
-    App.adPlugin.hideAds(AdsType.AD_TYPE_FULLSCREEN);
-}
-/**
- * 预加载插屏广告
- */
-App.preloadCpAd = function () {
-    App.adPlugin.preloadAds(AdsType.AD_TYPE_FULLSCREEN)
-}
-
