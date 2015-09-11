@@ -92,15 +92,23 @@ cc.game.onStart = function () {
 
     cc.director.setProjection(cc.Director.PROJECTION_2D);
 
+    if(cc.sys.language == cc.sys.LANGUAGE_CHINESE){
+        Const.LANG = "zh";
+    }else{
+        Const.LANG = "en";
+    }
+    //启动时间计时器
+    TimerTicker.stepTimeRun();
+
     //获取userid
     gameStepVo.userId = GameManager.instance.getUserId();
     //init bmob
     Bmob.initialize("d4f5e54e80c0b1b34c7cdb47d8da877d", "2a9cf99acd19dc67a301ff9f0b4b694a");
 
     //load resources
-    cc.LoaderScene.preload(g_logo, function () {
+    cc.LoaderScene.preload(g_resources, function () {
 
-        cc.director.runScene(new LogoScene(function () {
+        //cc.director.runScene(new LogoScene(function () {
             GameManager.instance.init();
             Lang.init();
             cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
@@ -110,7 +118,7 @@ cc.game.onStart = function () {
 
 
             cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
-        }));
+        //}));
 
     }, this);
 

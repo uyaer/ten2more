@@ -1,5 +1,5 @@
 <PlistInfoProjectFile>
-  <PropertyGroup Type="Plist" Name="game" ID="e2fd7b52-8932-4384-b2a3-fc1b3a326b85" Version="2.3.2.2" />
+  <PropertyGroup Type="Plist" Name="game" ID="e2fd7b52-8932-4384-b2a3-fc1b3a326b85" Version="2.3.2.3" />
   <Content ExportType="Png" SortAlgorithm="MaxRects" PicturePadding="1" AllowRotation="False" AllowAnySize="True" AllowTrim="True" ctype="PlistInfoData">
     <ImageFiles>
       <FilePathData Path="game/cir.png" />
@@ -11,11 +11,12 @@
       <FilePathData Path="game/p_mouse.png" />
       <FilePathData Path="game/cloud.png" />
       <FilePathData Path="game/index.png" />
-      <FilePathData Path="game/start.png" />
       <FilePathData Path="game/title.png" />
       <FilePathData Path="game/mask1.png" />
       <FilePathData Path="game/mask2.png" />
       <FilePathData Path="game/title_en.png" />
+      <FilePathData Path="game/start.png" />
+      <FilePathData Path="game/arrow_btn.png" />
     </ImageFiles>
     <MaxSize Width="1024" Height="1024" />
   </Content>

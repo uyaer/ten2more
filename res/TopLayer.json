@@ -1,0 +1,143 @@
+{
+  "ID": "0391bb3a-476f-44ac-bc0b-5ab58419bcb9",
+  "Version": "2.3.2.3",
+  "Name": "TopLayer",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Tag": 7,
+        "Children": [
+          {
+            "FontSize": 30,
+            "LabelText": "100/100  (恢复时间0:25)",
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "AnchorPoint": {},
+            "Position": {
+              "X": 12.9851,
+              "Y": 1228.0016
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.018,
+              "Y": 0.9594
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "LeftMargin": 12.9851,
+            "RightMargin": 599.0149,
+            "TopMargin": 17.9984,
+            "BottomMargin": 1228.0016,
+            "Tag": 12,
+            "ActionTag": 696724718,
+            "Size": {
+              "X": 323.0,
+              "Y": 34.0
+            },
+            "Name": "stepTF",
+            "ctype": "TextObjectData"
+          },
+          {
+            "FontSize": 14,
+            "ButtonText": "",
+            "TextColor": {
+              "R": 65,
+              "G": 65,
+              "B": 70
+            },
+            "NormalFileData": {
+              "Type": "MarkedSubImage",
+              "Path": "game/arrow_btn.png",
+              "Plist": "game.plist"
+            },
+            "Scale9OriginX": 15,
+            "Scale9OriginY": 11,
+            "Scale9Width": 42,
+            "Scale9Height": 50,
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "TouchEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 680.9576,
+              "Y": 1245.0016
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.9458,
+              "Y": 0.9727
+            },
+            "PreSize": {
+              "X": 0.0833,
+              "Y": 0.0469
+            },
+            "LeftMargin": 650.9576,
+            "RightMargin": 9.0424,
+            "TopMargin": 4.9984,
+            "BottomMargin": 1215.0016,
+            "Tag": 13,
+            "ActionTag": -830635225,
+            "Size": {
+              "X": 60.0,
+              "Y": 60.0
+            },
+            "Name": "menuBtn",
+            "ctype": "ButtonObjectData"
+          }
+        ],
+        "Size": {
+          "X": 720.0,
+          "Y": 1280.0
+        },
+        "Name": "Layer",
+        "ctype": "LayerObjectData"
+      },
+      "UsedResources": [
+        "game.plist",
+        "game.png"
+      ],
+      "ctype": "GameProjectData"
+    }
+  },
+  "Type": "Layer"
+}

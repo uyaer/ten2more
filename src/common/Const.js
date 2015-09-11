@@ -18,7 +18,7 @@ var Const = {
     BOX_HALF:50,
     BOX_PADDING:120,
 
-    TOP_HEIGHT:320,
+    TOP_HEIGHT:270,
 
     ERR_LEN:-1,//位数不匹配
     ERR_MOD10:-2,//数字和为10的倍数
@@ -28,6 +28,8 @@ var Const = {
      * 提示时间超时
       */
     HINT_TIME:10000,
+
+    LANG : "zh",
 
     /**
      * 验证码

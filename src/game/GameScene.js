@@ -1,9 +1,5 @@
 var GameScene = cc.Scene.extend({
     /**
-     * @type cc.LayerColor
-     */
-    colorBg: null,
-    /**
      * @type Array
      */
     boxArr: null,
@@ -35,6 +31,10 @@ var GameScene = cc.Scene.extend({
      * @type TopLayer
      */
     topLayer: null,
+    /**
+     * @type InfoLayer
+     */
+    infoLayer: null,
     /**
      * 选择的会消除分数
      */
@@ -70,6 +70,7 @@ var GameScene = cc.Scene.extend({
         }
 
         this.makeBackground();
+
         if (GameManager.instance.isGuided) {
             this.makeBox();
         } else {
@@ -82,6 +83,7 @@ var GameScene = cc.Scene.extend({
             GameManager.instance.saveData();
         }
         this.makeTopLayer();
+        this.makeInfoLayer();
 
         this.checkGameCanMove();
         this.helpPlayerTimeId = setTimeout(this.helpPlayerShowHint.bind(this), Const.HINT_TIME);
@@ -92,7 +94,8 @@ var GameScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        cc.eventManager.addCustomListener(GameEvent.WIN_LAYOUT, this.onWinLayout.bind(this));
+        cc.eventManager.addCustomListener(GameEvent.SHOW_MENU,this.onShowMenuEvent.bind(this));
+        cc.eventManager.addCustomListener(GameEvent.HIDE_MENU,this.onHideMenuEvent.bind(this));
 
         //event
         cc.eventManager.addListener({
@@ -113,7 +116,17 @@ var GameScene = cc.Scene.extend({
     onExit: function () {
         this._super();
 
-        cc.eventManager.removeCustomListeners(GameEvent.WIN_LAYOUT);
+        cc.eventManager.removeCustomListeners(GameEvent.SHOW_MENU);
+        cc.eventManager.removeCustomListeners(GameEvent.HIDE_MENU);
+    },
+
+    onShowMenuEvent: function () {
+        this.addChild(new MenuLayer(),20);
+        this.boxRoot.runAction(cc.moveTo(0.5,-Const.WIN_W*0.34,0));
+    },
+
+    onHideMenuEvent: function () {
+        this.boxRoot.runAction(cc.moveTo(0.5,0,0));
     },
 
     onKeyClicked: function (code) {
@@ -126,30 +139,17 @@ var GameScene = cc.Scene.extend({
         }
     },
 
-    onWinLayout: function () {
-        this.colorBg.height = Const.WIN_H;
-        this.topLayer.y = Const.WIN_H;
-        for (var i = 0; i < Const.ROW; i++) {
-            for (var j = 0; j < Const.ROW; j++) {
-                /**@type Box*/
-                var box = this.boxArr[i][j];
-                box.calBasePos();
-                box.x = box.baseX;
-                box.y = box.baseY;
-            }
-        }
-    },
-
     /**
      *创建背景
      */
     makeBackground: function () {
-        var colorBg = new cc.LayerColor(hex2Color(0xb8af9e), Const.WIN_W, Const.WIN_H);
-        this.addChild(colorBg);
-        this.colorBg = colorBg;
+        var bg = new cc.LayerColor(hex2Color(0xb8af9e), Const.WIN_W, Const.WIN_H);
+        this.addChild(bg);
+
         this.lightLine = new LightLine();
         this.addChild(this.lightLine, 1);
     },
+
     /**
      * 创建guide模式下的地图
      */
@@ -221,6 +221,11 @@ var GameScene = cc.Scene.extend({
         this.addChild(this.topLayer, 10);
     },
 
+    makeInfoLayer: function () {
+        this.infoLayer = new InfoLayer();
+        this.addChild(this.infoLayer, 10);
+    },
+
     /**
      * 是否在touch中，防止2个以上的起点
      */
@@ -246,7 +251,7 @@ var GameScene = cc.Scene.extend({
             box.setSelected(true);
             this.selectBoxArr = [box];
             this.lastSelectBox = box;
-            this.topLayer.showAddTip(box.num, true);
+            this.infoLayer.showAddTip(box.num, true);
             this.isTouching = true;
             return true;
         }
@@ -273,7 +278,7 @@ var GameScene = cc.Scene.extend({
 
                 var num = this.calBoxAddResult(this.selectBoxArr);
                 var code = this.checkBoxAddIsMatchRule();
-                this.topLayer.showAddTip(num, code > 0);
+                this.infoLayer.showAddTip(num, code > 0);
             } else { //添加过
                 var endBox = null;
                 if (this.selectBoxArr.length > 1) {
@@ -287,7 +292,7 @@ var GameScene = cc.Scene.extend({
 
                     var num = this.calBoxAddResult(this.selectBoxArr);
                     var code = this.checkBoxAddIsMatchRule();
-                    this.topLayer.showAddTip(num, code > 0);
+                    this.infoLayer.showAddTip(num, code > 0);
                 }
             }
         }
@@ -304,7 +309,7 @@ var GameScene = cc.Scene.extend({
             this.matchFailUnSelected();
         }
 
-        this.topLayer.hideAddTip();
+        this.infoLayer.hideAddTip();
         this.isTouching = false;
     },
 
@@ -799,7 +804,7 @@ var GameScene = cc.Scene.extend({
             cc.removeSelf(),
             cc.callFunc(function () {
                 GameManager.instance.score += num;
-                this.topLayer.updateScoreShow();
+                this.infoLayer.updateScoreShow();
             }, this)
         ));
     },

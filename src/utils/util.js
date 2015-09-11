@@ -21,10 +21,6 @@ function rad2ang(val) {
     return 180 * val / Math.PI;
 }
 
-function payStr(id) {
-    return id < 10 ? "0" + id : "" + id;
-}
-
 /**
  * 获取数组中的len个随机下表
  * @param arrayLen
@@ -119,14 +115,6 @@ function isSameElTowArray(arr1, arr2) {
         if (flag)return true;
     }
     return false;
-}
-
-function runScene(name) {
-    if (cc.sys.isNative || !cc.sys.isMobile) {
-        flax.replaceScene(name, cc.TransitionSlideInR, 0.5);
-    } else {
-        flax.replaceScene(name);
-    }
 }
 
 /**

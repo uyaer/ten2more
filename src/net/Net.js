@@ -15,12 +15,12 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
      * 当前步数
      * @type {number}
      */
-    step: 50,
+    step: 100,
     /**
      * 最大步数
      * @type {number}
      */
-    maxStep: 50,
+    maxStep: 100,
     /**
      * 上一次恢复时间
      * @type {number}
@@ -30,7 +30,7 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
      * 多少毫秒回复一步
      * @type {number}
      */
-    perUpdate: 6000,
+    perUpdate: 60000,
     /**
      * 远程保存数据
      */
@@ -40,6 +40,13 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
             "step": this.step,
             "maxStep": this.maxStep,
             "lastUpdateTime": this.lastUpdateTime
+        },{
+            success: function(gameScore) {
+                trace("==========>>>save data success")
+            },
+            error: function(gameScore, error) {
+                trace("!!!!!>>>save data fail")
+            }
         });
     },
     /**
@@ -71,7 +78,9 @@ Net.loadGameStep = function () {
     query.first({
         success: function (object) {
             // 查询成功
-            gameStepVo.bindData(object);
+            if(object){
+                gameStepVo.bindData(object);
+            }
         },
         error: function (error) {
             gameStepVo.lastUpdateTime = Date.now();

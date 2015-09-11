@@ -25,7 +25,7 @@ var IndexScene = cc.Scene.extend({
         this.colorbg = new cc.LayerColor(hex2Color(0xa1edf8), Const.WIN_W, Const.WIN_H);
         this.addChild(this.colorbg);
 
-        this.bottomSp = new cc.Sprite("#game/index.png");
+        this.bottomSp = new cc.Sprite(Const.LANG=="zh"?"#game/index.png":"#game/index_en.png");
         this.bottomSp.anchorX = 0;
         this.bottomSp.anchorY = 0;
         this.addChild(this.bottomSp);
@@ -57,19 +57,19 @@ var IndexScene = cc.Scene.extend({
 
     makeStartButton: function () {
         //start button
-        this.startBtn = this.createButton(Lang.i18n(11), Const.WIN_H * 0.475, cc.color.WHITE,358); //"开始游戏"
+        this.startBtn = this.createButton(Lang.i18n(11), Const.WIN_H * 0.475, hex2Color(0xa24806), 358); //"开始游戏"
         this.startBtn.addTargetWithActionForControlEvents(this, this.onStartBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
-        this.shareBtn = this.createButton(Lang.i18n(12), Const.WIN_H * 0.45 - 86, cc.color.GREEN,358);//分享快乐
+        this.shareBtn = this.createButton(Lang.i18n(12), Const.WIN_H * 0.45 - 86, hex2Color(0x366e09), 358);//分享快乐
         this.shareBtn.addTargetWithActionForControlEvents(this, this.onShareBtnClickHandler, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
     },
 
-    createButton: function (txt, y, color,w) {
+    createButton: function (txt, y, color, w) {
         var box = new cc.Scale9Sprite("game/start.png", cc.rect(138, 35, 1, 1));
         box.color = color;
         var titleButton = new cc.LabelTTF(txt, "Arial", 40);
         titleButton.color = cc.color.WHITE;
         var btn = new cc.ControlButton(titleButton, box);
-        btn.setMargins((w-titleButton.width)/2, 12);
+        btn.setMargins((w - titleButton.width) / 2, 12);
         this.addChild(btn);
         btn.x = Const.WIN_W * 0.5;
         btn.y = y;

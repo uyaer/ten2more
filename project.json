@@ -8,7 +8,7 @@
     "renderMode" : 0,
     "engineDir":"frameworks/cocos2d-html5",
 
-    "modules" : ["cocos2d", "gui"],
+    "modules" : ["cocos2d", "cocostudio","gui"],
 
     "jsList" : [
         "src/resource.js",
@@ -23,23 +23,26 @@
 
         "src/common/Const.js",
         "src/common/AudioManager.js",
+        "src/common/TimerTicker.js",
         "src/common/GameState.js",
         "src/common/GameEvent.js",
         "src/common/GameManager.js",
 
         "src/i18n/Lang.js",
 
+        "src/game/ui/PopUpManager.js",
+        "src/game/ui/CirPerson.js",
+        "src/game/ui/ResetAlertPanel.js",
+        "src/game/ui/SuccessPanel.js",
+        "src/game/ui/FailPanel.js",
+        "src/game/ui/TopLayer.js",
+        "src/game/ui/GuideLayer.js",
+        "src/game/ui/InfoLayer.js",
+        "src/game/ui/MenuLayer.js",
 
-        "src/game/PopUpManager.js",
-        "src/game/IndexScene.js",
         "src/game/Box.js",
-        "src/game/CirPerson.js",
-        "src/game/ResetAlertPanel.js",
-        "src/game/SuccessPanel.js",
-        "src/game/FailPanel.js",
-        "src/game/TopLayer.js",
+        "src/game/IndexScene.js",
         "src/game/LightLine.js",
-        "src/game/GuideLayer.js",
         "src/game/GameScene.js",
 
         "src/logo/LogoScene.js"

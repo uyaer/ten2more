@@ -12,6 +12,7 @@ var res = {
     data: "res/data.json",
 
     layer_menu:"res/MenuLayer.json",
+    layer_top:"res/TopLayer.json",
 
     logo: "res/logo/logo.png",
     logo_bg: "res/logo/logo_bg.png",
