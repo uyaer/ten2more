@@ -1428,7 +1428,7 @@
         hexOctet() + "-" +
         hexOctet() + "-" +
         hexOctet() + hexOctet() + hexOctet());
-      //cc.sys.localStorage.setItem(path, Bmob._installationId);
+      cc.sys.localStorage.setItem(path, Bmob._installationId);
     }
 
     return Bmob._installationId;

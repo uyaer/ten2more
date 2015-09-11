@@ -22,6 +22,9 @@ TimerTicker._update = function () {
         TimerTicker.__hasUseTime -= gameStepVo.perUpdate;
         gameStepVo.step++;
         gameStepVo.step = limit(gameStepVo.step, 0, gameStepVo.maxStep);
+        gameStepVo.lastUpdateTime = now;
+        //远程同步
+        gameStepVo.saveToRemote();
     }
 }
 

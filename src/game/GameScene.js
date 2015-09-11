@@ -94,8 +94,8 @@ var GameScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        cc.eventManager.addCustomListener(GameEvent.SHOW_MENU,this.onShowMenuEvent.bind(this));
-        cc.eventManager.addCustomListener(GameEvent.HIDE_MENU,this.onHideMenuEvent.bind(this));
+        cc.eventManager.addCustomListener(GameEvent.SHOW_MENU, this.onShowMenuEvent.bind(this));
+        cc.eventManager.addCustomListener(GameEvent.HIDE_MENU, this.onHideMenuEvent.bind(this));
 
         //event
         cc.eventManager.addListener({
@@ -121,12 +121,12 @@ var GameScene = cc.Scene.extend({
     },
 
     onShowMenuEvent: function () {
-        this.addChild(new MenuLayer(),20);
-        this.boxRoot.runAction(cc.moveTo(0.5,-Const.WIN_W*0.34,0));
+        this.addChild(new MenuLayer(), 20);
+        this.boxRoot.runAction(cc.moveTo(0.5, -Const.WIN_W * 0.34, 0));
     },
 
     onHideMenuEvent: function () {
-        this.boxRoot.runAction(cc.moveTo(0.5,0,0));
+        this.boxRoot.runAction(cc.moveTo(0.5, 0, 0));
     },
 
     onKeyClicked: function (code) {
@@ -303,9 +303,14 @@ var GameScene = cc.Scene.extend({
      * @param event {cc.Event}
      */
     onTouchEndedHandler: function (touch, event) {
-        if (this.selectBoxArr.length > 1) { //2个以上才进行检查
-            this.checkNumIsMatchTen();
-        } else {
+        if(gameStepVo.step>0){
+            if (this.selectBoxArr.length > 1 ) { //2个以上才进行检查
+                this.checkNumIsMatchTen();
+            } else {
+                this.matchFailUnSelected();
+            }
+        }else{
+            showTip(Lang.i18n(31));//步数不足，无法操作，请等待恢复
             this.matchFailUnSelected();
         }
 
@@ -463,6 +468,8 @@ var GameScene = cc.Scene.extend({
         }
 
         if (isMatch) { //匹配成功
+            gameStepVo.step--;
+
             var num = this.calBoxAddResult(this.selectBoxArr);
             this.selectLen = this.selectBoxArr.length;
             this.selectWillAddScore = num * this.selectLen;

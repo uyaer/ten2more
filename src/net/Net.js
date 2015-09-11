@@ -57,6 +57,17 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
         this.step = obj.get("step");
         this.maxStep = obj.get("maxStep");
         this.lastUpdateTime = obj.get("lastUpdateTime");
+
+        //计算时间差
+        var now = Date.now();
+        var dt = now - this.lastUpdateTime;
+        var count = int(dt/this.perUpdate);
+        this.step += count;
+        this.step = limit(this.step,0,this.maxStep);
+        this.lastUpdateTime = now;
+        if(count>=1){
+            this.saveToRemote();
+        }
     }
 });
 
@@ -80,6 +91,9 @@ Net.loadGameStep = function () {
             // 查询成功
             if(object){
                 gameStepVo.bindData(object);
+            }else{
+                gameStepVo.lastUpdateTime = Date.now();
+                gameStepVo.saveToRemote();
             }
         },
         error: function (error) {
