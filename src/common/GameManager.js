@@ -115,6 +115,19 @@ GameManager.instance = {
         this.playCount = 0;
         this.map = null;
         this.isGuided = false;
+    },
+
+    /**
+     * 获取用户id
+     * @returns {String}
+     */
+    getUserId: function () {
+        var id = cc.sys.localStorage.getItem(Const.STORE_USER_KEY);
+        if(!id){
+            id = uuid();
+            cc.sys.localStorage.setItem(Const.STORE_USER_KEY,id);
+        }
+        return id;
     }
 
 };

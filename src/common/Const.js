@@ -36,6 +36,7 @@ var Const = {
 
     STORE_CFG_KEY:"com.uyaer.ten2more.cfg",
     STORE_KEY:"com.uyaer.ten2more.data",
+    STORE_USER_KEY:"com.uyaer.ten2more.user",
 
     VERSION:"v1.0.20"
 

@@ -1067,5 +1067,6 @@ var GameScene = cc.Scene.extend({
         clearTimeout(this.helpPlayerTimeId);
         this.lightLine.stopAllActions();
         this.lightLine.visible = true;
+        this.lightLine.drawSelectingLine(null);
     }
 })

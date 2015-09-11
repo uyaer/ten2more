@@ -92,6 +92,11 @@ cc.game.onStart = function () {
 
     cc.director.setProjection(cc.Director.PROJECTION_2D);
 
+    //获取userid
+    gameStepVo.userId = GameManager.instance.getUserId();
+    //init bmob
+    Bmob.initialize("d4f5e54e80c0b1b34c7cdb47d8da877d", "2a9cf99acd19dc67a301ff9f0b4b694a");
+
     //load resources
     cc.LoaderScene.preload(g_logo, function () {
 
@@ -99,11 +104,15 @@ cc.game.onStart = function () {
             GameManager.instance.init();
             Lang.init();
             cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
+
+            //获取数据
+            Net.loadGameStep();
+
+
             cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
         }));
 
     }, this);
-
 
     var delayResizeId = 0;
     cc.view.setResizeCallback(function () {
