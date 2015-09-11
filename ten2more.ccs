@@ -1,5 +1,5 @@
 <Solution>
-  <PropertyGroup Name="ten2more" Version="2.3.2.0" Type="CocosStudio" />
+  <PropertyGroup Name="ten2more" Version="2.3.2.2" Type="CocosStudio" />
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
@@ -18,8 +18,10 @@
           <Image Name="mask1.png" />
           <Image Name="mask2.png" />
           <Image Name="title_en.png" />
+          <Image Name="arrow_btn.png" />
         </Folder>
         <PlistInfo Name="game.csi" Type="Plist" />
+        <Project Name="MenuLayer.csd" Type="Layer" />
       </RootFolder>
     </Group>
   </SolutionFolder>

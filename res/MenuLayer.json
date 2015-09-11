@@ -1,0 +1,338 @@
+{
+  "ID": "f3d51f60-cb2e-4630-9ae6-621dc51032c5",
+  "Version": "2.3.2.2",
+  "Name": "MenuLayer",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Children": [
+          {
+            "FontSize": 60,
+            "LabelText": "设置",
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 476.85,
+              "Y": 1068.7339
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {
+              "R": 26,
+              "G": 26,
+              "B": 26
+            },
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.6623,
+              "Y": 0.8349
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "LeftMargin": 416.85,
+            "RightMargin": 183.15,
+            "TopMargin": 181.2661,
+            "BottomMargin": 1038.7339,
+            "Tag": 2,
+            "ActionTag": -1408964066,
+            "Size": {
+              "X": 120.0,
+              "Y": 60.0
+            },
+            "Name": "Text_1",
+            "ctype": "TextObjectData"
+          },
+          {
+            "FlipX": true,
+            "FontSize": 14,
+            "ButtonText": "",
+            "TextColor": {
+              "R": 65,
+              "G": 65,
+              "B": 70
+            },
+            "NormalFileData": {
+              "Type": "Normal",
+              "Path": "game/arrow_btn.png",
+              "Plist": ""
+            },
+            "Scale9OriginX": 15,
+            "Scale9OriginY": 11,
+            "Scale9Width": 50,
+            "Scale9Height": 58,
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "TouchEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 301.5818,
+              "Y": 1220.1528
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.4189,
+              "Y": 0.9532
+            },
+            "PreSize": {
+              "X": 0.1111,
+              "Y": 0.0625
+            },
+            "LeftMargin": 261.5818,
+            "RightMargin": 378.4182,
+            "TopMargin": 19.8472,
+            "BottomMargin": 1180.1528,
+            "Tag": 4,
+            "ActionTag": 638218692,
+            "Size": {
+              "X": 80.0,
+              "Y": 80.0
+            },
+            "Name": "backBtn",
+            "ctype": "ButtonObjectData"
+          },
+          {
+            "IsCustomSize": true,
+            "FontSize": 24,
+            "LabelText": "将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！",
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "AnchorPoint": {
+              "ScaleY": 1.0
+            },
+            "Position": {
+              "X": 289.4563,
+              "Y": 547.0436
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {
+              "R": 26,
+              "G": 26,
+              "B": 26
+            },
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.402,
+              "Y": 0.4274
+            },
+            "PreSize": {
+              "X": 0.5556,
+              "Y": 0.3125
+            },
+            "LeftMargin": 289.4563,
+            "RightMargin": 30.5437,
+            "TopMargin": 732.9564,
+            "BottomMargin": 147.0436,
+            "Tag": 5,
+            "ActionTag": 1511941279,
+            "Size": {
+              "X": 400.0,
+              "Y": 400.0
+            },
+            "Name": "ruleTF",
+            "ctype": "TextObjectData"
+          },
+          {
+            "FontSize": 30,
+            "ButtonText": "重新开始",
+            "TextColor": {
+              "R": 26,
+              "G": 26,
+              "B": 26
+            },
+            "NormalFileData": {
+              "Type": "MarkedSubImage",
+              "Path": "game/start.png",
+              "Plist": "game.plist"
+            },
+            "Scale9Enable": true,
+            "Scale9OriginX": 15,
+            "Scale9OriginY": 11,
+            "Scale9Width": 248,
+            "Scale9Height": 48,
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "TouchEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 479.7367,
+              "Y": 745.9216
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.6663,
+              "Y": 0.5828
+            },
+            "PreSize": {
+              "X": 0.3861,
+              "Y": 0.0547
+            },
+            "LeftMargin": 340.7367,
+            "RightMargin": 101.2633,
+            "TopMargin": 499.0784,
+            "BottomMargin": 710.9216,
+            "Tag": 6,
+            "ActionTag": 1907265290,
+            "Size": {
+              "X": 278.0,
+              "Y": 70.0
+            },
+            "Name": "restartBtn",
+            "ctype": "ButtonObjectData"
+          },
+          {
+            "FontSize": 30,
+            "ButtonText": "打开音乐",
+            "TextColor": {
+              "R": 26,
+              "G": 26,
+              "B": 26
+            },
+            "NormalFileData": {
+              "Type": "MarkedSubImage",
+              "Path": "game/start.png",
+              "Plist": "game.plist"
+            },
+            "Scale9Enable": true,
+            "Scale9OriginX": 15,
+            "Scale9OriginY": 11,
+            "Scale9Width": 248,
+            "Scale9Height": 48,
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "TouchEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 479.7367,
+              "Y": 891.4504
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {
+              "R": 167,
+              "G": 182,
+              "B": 29
+            },
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.6663,
+              "Y": 0.6964
+            },
+            "PreSize": {
+              "X": 0.3861,
+              "Y": 0.0547
+            },
+            "LeftMargin": 340.7367,
+            "RightMargin": 101.2633,
+            "TopMargin": 353.5496,
+            "BottomMargin": 856.4504,
+            "Tag": 7,
+            "ActionTag": 315539351,
+            "Size": {
+              "X": 278.0,
+              "Y": 70.0
+            },
+            "Name": "musicBtn",
+            "ctype": "ButtonObjectData"
+          }
+        ],
+        "Size": {
+          "X": 720.0,
+          "Y": 1280.0
+        },
+        "Name": "Layer",
+        "ctype": "LayerObjectData"
+      },
+      "UsedResources": [
+        "game.plist",
+        "game.png",
+        "game/arrow_btn.png"
+      ],
+      "ctype": "GameProjectData"
+    }
+  },
+  "Type": "Layer"
+}

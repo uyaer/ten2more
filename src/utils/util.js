@@ -347,6 +347,25 @@ function uuid() {
     return uuid;
 }
 
+/**
+ * 屏蔽触摸事件
+ * @param node {cc.Node}
+ */
+function maskTouchEvent(node){
+    cc.eventManager.addListener({
+       event:cc.EventListener.TOUCH_ONE_BY_ONE,
+        swallowTouches:true,
+        /**
+         * @param touch {cc.Touch}
+         * @param event {cc.Event}
+         */
+        onTouchBegan: function (touch, event) {
+            event.stopPropagation();
+            return true;
+        }
+    },node);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////     文字工具    ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////

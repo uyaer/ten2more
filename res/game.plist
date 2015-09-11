@@ -147,6 +147,17 @@
 				<key>sourceSize</key>
 				<string>{192,186}</string>
 			</dict>
+			<key>game/title_en.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{444,537},{430,210}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{430,210}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>
@@ -157,14 +168,14 @@
 			<key>realTextureFileName</key>
 			<string>game.png</string>
 			<key>size</key>
-			<string>{1020,730}</string>
+			<string>{1020,748}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
 			<integer>1020</integer>
 			<key>height</key>
-			<integer>730</integer>
+			<integer>748</integer>
 		</dict>
 	</dict>
 </plist>
