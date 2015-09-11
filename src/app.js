@@ -20,7 +20,7 @@ App.closeApp = function () {
 
 App.showShare = function () {
     var lang = "en";
-    if (cc.sys.language != cc.sys.LANGUAGE_CHINESE) {
+    if (cc.sys.language == cc.sys.LANGUAGE_CHINESE) {
         lang = "zh"
     }
     var url = "http://uyaer.qiniudn.com/share.html?lang=" + lang +

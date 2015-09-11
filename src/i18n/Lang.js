@@ -5,7 +5,7 @@ Lang.init = function () {
     var arr = data["i18n"];
     for(var i = 0 ; i < arr.length;i ++){
         var obj = arr[i];
-        if (cc.sys.language != cc.sys.LANGUAGE_CHINESE) {
+        if (cc.sys.language == cc.sys.LANGUAGE_CHINESE) {
             Lang._data[obj.id]=obj["zh"];
         } else {
             Lang._data[obj.id]=obj["en"];
