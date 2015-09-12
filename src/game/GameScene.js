@@ -469,6 +469,7 @@ var GameScene = cc.Scene.extend({
 
         if (isMatch) { //匹配成功
             gameStepVo.step--;
+            gameStepVo.saveToRemote();
 
             var num = this.calBoxAddResult(this.selectBoxArr);
             this.selectLen = this.selectBoxArr.length;

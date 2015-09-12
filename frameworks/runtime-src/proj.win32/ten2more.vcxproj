@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -212,7 +212,6 @@ xcopy /Y /Q "$(COCOS_FRAMEWORKS)\cocos2d-x-3.7\prebuilt\win32\*.*" "$(OutDir)"
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
-  
   <ItemGroup>
     <Image Include="res\game.ico" />
   </ItemGroup>

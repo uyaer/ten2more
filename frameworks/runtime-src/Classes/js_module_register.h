@@ -67,15 +67,15 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
 
     // studio can be commented out to reduce the package,
-    // sc->addRegisterCallback(register_all_cocos2dx_studio);
-    // sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_studio);
+    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     //
     // // spine can be commented out to reduce the package
     // sc->addRegisterCallback(register_all_cocos2dx_spine);
     // sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     //
     // // XmlHttpRequest can be commented out to reduce the package
-    // sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     // // websocket can be commented out to reduce the package
     // sc->addRegisterCallback(register_jsb_websocket);
     // // sokcet io can be commented out to reduce the package

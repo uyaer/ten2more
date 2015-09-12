@@ -1,4 +1,4 @@
-<UserData Version="2.3.2.3">
+<UserData Version="2.3.2.2">
   <Properties>
     <Item Key="CocosRecentOperation">
       <Value ctype="CocosRecentOperation">
@@ -13,7 +13,7 @@
         <LuaEncryptKey Value="" />
         <LuaEncryptSign Value="" />
         <Android_PackageName Value="com.uyaer.ten2more" />
-        <AndroidkeyStore Value="/Users/hc/android_p12.keystore" />
+        <AndroidkeyStore Value="G:\android_p12.keystore" />
         <AndroidVersion Value="android-19" />
         <iOS_Target Value="ten2more-mobile" />
         <iOS_BundleID Value="" />
