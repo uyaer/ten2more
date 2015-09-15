@@ -12,7 +12,7 @@ Lang.init = function () {
 Lang.i18n = function (id) {
     var str = Lang._data[id];
     if (str) {
-        return str;
+        return str.replace("\\n","\n");
     } else {
         trace("lang no id: " + id)
         return "";

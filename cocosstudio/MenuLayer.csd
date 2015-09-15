@@ -30,7 +30,7 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ruleTF" ActionTag="1511941279" Tag="5" IconVisible="False" LeftMargin="289.4563" RightMargin="30.5437" TopMargin="732.9564" BottomMargin="147.0436" IsCustomSize="True" FontSize="24" LabelText="将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+          <AbstractNodeData Name="ruleTF" ActionTag="1511941279" Tag="5" IconVisible="False" LeftMargin="289.4563" RightMargin="30.5437" TopMargin="732.9564" BottomMargin="147.0436" IsCustomSize="True" FontSize="28" LabelText="将相同位数的任意数字连在一起组成新的数字，10以内的数字能相加组合成10的倍数，其数字需要相等或者相加能进位才能连接,围成圆圈可以产生超级炸弹,还有更多隐藏规则哦！" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
             <Size X="400.0000" Y="400.0000" />
             <AnchorPoint ScaleY="1.0000" />
             <Position X="289.4563" Y="547.0436" />

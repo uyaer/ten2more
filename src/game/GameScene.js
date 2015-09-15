@@ -649,7 +649,7 @@ var GameScene = cc.Scene.extend({
             nextBox.y = nextBox.baseY;
             nextBox.tintColor();
             this.showAddTip(nextBox.num + "x" + this.selectLen, nextBox.x, nextBox.y, this.selectWillAddScore);
-            setTimeout(this.__removeStartSelectBoxEndHandler.bind(this), 500);
+            setTimeout(this.__removeStartSelectBoxEndHandler.bind(this), 200);
         }
     },
 
@@ -717,7 +717,7 @@ var GameScene = cc.Scene.extend({
             if (that.checkScoreIs10000()) {
                 //目标达成
                 GameManager.instance.state = GameState.OVER;
-                this.addChild(new SuccessPanel(), 100);
+                that.addChild(new SuccessPanel(), 100);
             } else {
                 //判断游戏是否结束
                 if (that.checkGameCanMove()) {

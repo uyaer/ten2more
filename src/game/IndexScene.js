@@ -25,7 +25,7 @@ var IndexScene = cc.Scene.extend({
         this.colorbg = new cc.LayerColor(hex2Color(0xa1edf8), Const.WIN_W, Const.WIN_H);
         this.addChild(this.colorbg);
 
-        this.bottomSp = new cc.Sprite(Const.LANG=="zh"?"#game/index.png":"#game/index_en.png");
+        this.bottomSp = new cc.Sprite("#game/index.png");
         this.bottomSp.anchorX = 0;
         this.bottomSp.anchorY = 0;
         this.addChild(this.bottomSp);
@@ -86,7 +86,7 @@ var IndexScene = cc.Scene.extend({
     },
 
     makeTitle: function () {
-        this.titleSp = new cc.Sprite("#game/title.png");
+        this.titleSp = new cc.Sprite(Const.LANG == "zh"?"#game/title.png":"#game/title_en.png");
         this.titleSp.x = Const.WIN_W / 2;
         this.titleSp.y = Const.WIN_H * 0.675;
         this.addChild(this.titleSp);

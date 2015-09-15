@@ -19,10 +19,8 @@ App.closeApp = function () {
 }
 
 App.showShare = function () {
-    var lang = "en";
-    if (cc.sys.language == cc.sys.LANGUAGE_CHINESE) {
-        lang = "zh"
-    }
+    var lang = Const.LANG;
+
     var url = "http://uyaer.qiniudn.com/share.html?lang=" + lang +
         "&icon=_games/ten2more/icon512.png" +
         "&name=" + (lang == "zh" ? "十分完美" : "ten%20dots") +

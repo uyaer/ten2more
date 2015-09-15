@@ -29,7 +29,7 @@ var Const = {
       */
     HINT_TIME:10000,
 
-    LANG : "zh",
+    LANG : "en",
 
     /**
      * 验证码

@@ -63,7 +63,7 @@ var InfoLayer = cc.Layer.extend({
             //text
             var txtSize = limit(int(size.height / 65), 1, 2) == 1 ? 30 : 46;
             var labelW = 200;
-            if(i ==2 && cc.sys.language == cc.sys.LANGUAGE_CHINESE){
+            if(i ==2 && Const.LANG == "zh"){
                 labelW = 100;
             }
             var tf = new cc.LabelTTF(labelTxtArr[i], "Arial", txtSize, cc.size(labelW, size.height), cc.TEXT_ALIGNMENT_RIGHT, cc.VERTICAL_TEXT_ALIGNMENT_CENTER);
