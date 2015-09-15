@@ -63,7 +63,7 @@ var MenuLayer = cc.LayerColor.extend({
         this._super();
 
         this.x = Const.WIN_W * 0.66;
-        this.runAction(cc.moveTo(0.5, 0, 0));
+        this.runAction(cc.moveTo(0.35, 0, 0));
     },
 
     /**
@@ -103,7 +103,7 @@ var MenuLayer = cc.LayerColor.extend({
         cc.eventManager.dispatchCustomEvent(GameEvent.HIDE_MENU);
 
         this.runAction(cc.sequence(
-            cc.moveTo(0.5, Const.WIN_W * 0.66, 0),
+            cc.moveTo(0.35, Const.WIN_W * 0.66, 0),
             cc.removeSelf()
         ));
     },

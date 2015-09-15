@@ -58,6 +58,10 @@ var GameScene = cc.Scene.extend({
      */
     guideLayer: null,
     /**
+     * @type MenuLayer
+     */
+    menuLayer: null,
+    /**
      * 是否在引导中
      */
     isGuiding: false,
@@ -121,18 +125,24 @@ var GameScene = cc.Scene.extend({
     },
 
     onShowMenuEvent: function () {
-        this.addChild(new MenuLayer(), 20);
-        this.boxRoot.runAction(cc.moveTo(0.5, -Const.WIN_W * 0.34, 0));
+        this.menuLayer = new MenuLayer();
+        this.addChild(this.menuLayer, 20);
+        this.boxRoot.runAction(cc.moveTo(0.35, -Const.WIN_W * 0.34, 0));
+        this.infoLayer.runAction(cc.moveBy(0.35, -Const.WIN_W * 0.34, 0));
     },
 
     onHideMenuEvent: function () {
-        this.boxRoot.runAction(cc.moveTo(0.5, 0, 0));
+        this.menuLayer = null;
+        this.boxRoot.runAction(cc.moveTo(0.35, 0, 0));
+        this.infoLayer.runAction(cc.moveBy(0.35, Const.WIN_W * 0.34, 0));
     },
 
     onKeyClicked: function (code) {
         if (code == cc.KEY.back) {
             if (PopUpManager.popLength() > 0) {
                 PopUpManager.pop();
+            }else if(this.menuLayer){
+                this.menuLayer.onBackBtnClick();
             } else {
                 cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
             }
