@@ -39,13 +39,23 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.uyaer.ten2more.R;
 
 // The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
 // You can use "System.loadLibrary()" to load other .so files.
 
 public class AppActivity extends Cocos2dxActivity {
 	private static AppActivity app = null;
+	private AdView adView;
 
 	static String hostIPAdress = "0.0.0.0";
 
@@ -68,6 +78,43 @@ public class AppActivity extends Cocos2dxActivity {
 
 		app = this;
 
+		// 创建adView。
+		adView = new AdView(this);
+		adView.setAdUnitId("ca-app-pub-7430856253637281/7605528259");
+		adView.setAdSize(AdSize.BANNER);
+
+		View layout = View.inflate(this, R.layout.ad_layout, null);
+		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		params.gravity = Gravity.CENTER;
+		this.addContentView(layout, params);
+
+		LinearLayout adCon = (LinearLayout) layout.findViewById(R.id.adCon);
+		adCon.addView(adView);
+
+		// 启动一般性请求。
+		AdRequest adRequest = new AdRequest.Builder().build();
+
+		// 在adView中加载广告请求。
+		adView.loadAd(adRequest);
+	}
+
+	@Override
+	public void onPause() {
+		adView.pause();
+		super.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		adView.resume();
+	}
+
+	@Override
+	public void onDestroy() {
+		adView.destroy();
+		super.onDestroy();
 	}
 
 	@Override
