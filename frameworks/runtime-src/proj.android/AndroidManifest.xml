@@ -21,6 +21,14 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!-- umeng -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55e40a4c67e58efeda000a33" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="google play" />
 
         <activity
             android:name="org.cocos2dx.javascript.AppActivity"

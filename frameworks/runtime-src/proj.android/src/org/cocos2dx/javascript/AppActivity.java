@@ -48,6 +48,7 @@ import android.widget.LinearLayout.LayoutParams;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.umeng.analytics.MobclickAgent;
 import com.uyaer.ten2more.R;
 
 // The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
@@ -97,18 +98,24 @@ public class AppActivity extends Cocos2dxActivity {
 
 		// 在adView中加载广告请求。
 		adView.loadAd(adRequest);
+
+//		MobclickAgent.setDebugMode(true);
 	}
 
 	@Override
 	public void onPause() {
 		adView.pause();
 		super.onPause();
+
+		MobclickAgent.onPause(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		adView.resume();
+
+		MobclickAgent.onResume(this);
 	}
 
 	@Override
