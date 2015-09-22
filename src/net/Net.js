@@ -48,10 +48,12 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
             success: function (vo) {
                 that.bindData(vo);
                 GameManager.instance.saveUserId(that.id);
-                trace("==========>>>create step data success")
+                trace("==========>>>create step data success");
+                Net.subCount();
             },
             error: function (gameScore, error) {
-                trace("!!!!!>>>create step data fail")
+                trace("!!!!!>>>create step data fail");
+                Net.subCount();
             }
         });
     },
@@ -85,6 +87,8 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
         if (count >= 1) {
             this.saveToRemote();
         }
+
+        Net.subCount();
     }
 });
 
@@ -126,10 +130,12 @@ var GameDataVo = Bmob.Object.extend("GameData", {
             success: function (vo) {
                 that.bindData(vo);
                 GameManager.instance.saveGameDataId(that.id);
-                trace("==========>>>create game data success")
+                trace("==========>>>create game data success");
+                Net.subCount();
             },
             error: function (gameScore, error) {
-                trace("!!!!!>>>create game data fail")
+                trace("!!!!!>>>create game data fail");
+                Net.subCount();
             }
         });
     },
@@ -149,6 +155,8 @@ var GameDataVo = Bmob.Object.extend("GameData", {
         this.id = obj.id;
         this.dataStr = obj.get("dataStr");
         GameManager.instance.loadData(this.dataStr);
+
+        Net.subCount();
     }
 });
 /**
@@ -161,9 +169,24 @@ var gameDataVo = new GameDataVo();
  * ==============Bmob Object==============
  * =======================================
  */
-var Net = {};
+var Net = {
+    /**
+     * 同时请求的网络次数
+     */
+    count:0,
+    /**
+     * 减少次数
+     */
+    subCount: function () {
+        if(this.count<=0){
+            this.count=0;
+            //LoadingGif.hide();
+        }
+    }
+};
 
 Net.loadGameStep = function () {
+    this.count++;
     var query = new Bmob.Query(GameStepVo);
     if (gameStepVo.id) {
         query.get(gameStepVo.id, {
@@ -188,6 +211,7 @@ Net.loadGameStep = function () {
 }
 
 Net.loadGameData = function () {
+    this.count++;
     var query = new Bmob.Query(GameDataVo);
     if (gameDataVo.id) {
         query.get(gameDataVo.id, {

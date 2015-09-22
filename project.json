@@ -28,6 +28,9 @@
         "src/common/GameEvent.js",
         "src/common/GameManager.js",
 
+        "src/logo/LogoScene.js",
+        "src/logo/LoadingGif.js",
+
         "src/i18n/Lang.js",
 
         "src/game/ui/PopUpManager.js",
@@ -43,8 +46,8 @@
         "src/game/Box.js",
         "src/game/IndexScene.js",
         "src/game/LightLine.js",
-        "src/game/GameScene.js",
+        "src/game/GameScene.js"
 
-        "src/logo/LogoScene.js"
+
     ]
 }

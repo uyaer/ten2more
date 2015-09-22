@@ -22,6 +22,11 @@ var IndexScene = cc.Scene.extend({
     ctor: function () {
         this._super();
 
+        if (IndexScene.isFirstEnter && Net.count > 0) {
+            LoadingGif.show(this);
+            IndexScene.isFirstEnter = false;
+        }
+
         this.colorbg = new cc.LayerColor(hex2Color(0xa1edf8), Const.WIN_W, Const.WIN_H);
         this.addChild(this.colorbg);
 
@@ -88,7 +93,7 @@ var IndexScene = cc.Scene.extend({
     },
 
     makeTitle: function () {
-        this.titleSp = new cc.Sprite(Const.LANG == "zh"?"#game/title.png":"#game/title_en.png");
+        this.titleSp = new cc.Sprite(Const.LANG == "zh" ? "#game/title.png" : "#game/title_en.png");
         this.titleSp.x = Const.WIN_W / 2;
         this.titleSp.y = Const.WIN_H * 0.675;
         this.addChild(this.titleSp);
@@ -110,3 +115,5 @@ var IndexScene = cc.Scene.extend({
         }
     }
 });
+
+IndexScene.isFirstEnter = true;
