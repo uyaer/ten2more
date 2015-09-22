@@ -101,7 +101,8 @@ cc.game.onStart = function () {
     TimerTicker.stepTimeRun();
 
     //获取userid
-    gameStepVo.userId = GameManager.instance.getUserId();
+    gameStepVo.id = GameManager.instance.getUserId();
+    gameDataVo.id = GameManager.instance.getGameDataId();
     //init bmob
     Bmob.initialize("d4f5e54e80c0b1b34c7cdb47d8da877d", "2a9cf99acd19dc67a301ff9f0b4b694a");
 
@@ -115,6 +116,7 @@ cc.game.onStart = function () {
 
             //获取数据
             Net.loadGameStep();
+            Net.loadGameData();
 
 
             cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));

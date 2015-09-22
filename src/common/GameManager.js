@@ -18,11 +18,11 @@ GameManager.instance = {
      * 地图数据
      * @typ Array
      */
-    map:null,
+    map: null,
     /**
      * 是否进行过引导
      */
-    isGuided:false,
+    isGuided: false,
 
     /**
      * init data
@@ -47,23 +47,14 @@ GameManager.instance = {
     },
 
 
-    loadData: function () {
-        var str = cc.sys.localStorage.getItem(Const.STORE_KEY);
+    loadData: function (str) {
         if (str) {
-            var json = JSON.parse(str);
-            var vertify1 = json["vertify"];
-            var data = json["data"];
-            str = JSON.stringify(data);
-            var vertify2 = md5(str, Const.VERTIFY_KEY);
-            if (vertify1 == vertify2) {
-                this.score = data["score"] || 0;
-                this.maxScore = data["maxScore"] || 0;
-                this.playCount = data["playCount"] || 0;
-                this.map = data["map"] || null;
-                this.isGuided = data["isGuided"] || false;
-            } else {
-                this.useInitFullData();
-            }
+            var data = JSON.parse(str);
+            this.score = data["score"] || 0;
+            this.maxScore = data["maxScore"] || 0;
+            this.playCount = data["playCount"] || 0;
+            this.map = data["map"] || null;
+            this.isGuided = data["isGuided"] || false;
         } else {
             this.useInitFullData();
         }
@@ -90,6 +81,11 @@ GameManager.instance = {
 
     _saveDataDelay: function () {
         this._saveCfgDelayCount = 0;
+        var dataStr = this.getSaveDataStr();
+        Net.saveGameData(dataStr);
+    },
+
+    getSaveDataStr: function () {
         var data = {
             "score": this.score,
             "maxScore": this.maxScore,
@@ -98,12 +94,7 @@ GameManager.instance = {
             "map": this.map
         };
         var dataStr = JSON.stringify(data);
-        var vertify = md5(dataStr, Const.VERTIFY_KEY);
-        var game_data = {
-            "vertify": vertify,
-            "data": data
-        }
-        cc.sys.localStorage.setItem(Const.STORE_KEY, JSON.stringify(game_data));
+        return dataStr;
     },
 
     /**
@@ -123,11 +114,21 @@ GameManager.instance = {
      */
     getUserId: function () {
         var id = cc.sys.localStorage.getItem(Const.STORE_USER_KEY);
-        if(!id){
-            id = uuid();
-            cc.sys.localStorage.setItem(Const.STORE_USER_KEY,id);
-        }
         return id;
+    },
+    saveUserId: function (id) {
+        cc.sys.localStorage.setItem(Const.STORE_USER_KEY, id);
+    },
+    /**
+     * 获取用户数据id
+     * @returns {String}
+     */
+    getGameDataId: function () {
+        var id = cc.sys.localStorage.getItem(Const.STORE_GAME_DATA_ID_KEY);
+        return id;
+    },
+    saveGameDataId: function (id) {
+        cc.sys.localStorage.setItem(Const.STORE_GAME_DATA_ID_KEY, id);
     }
 
 };

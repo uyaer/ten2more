@@ -35,6 +35,8 @@ var IndexScene = cc.Scene.extend({
         this.makeTitle();
 
         this.makeStartButton();
+
+        AudioManager.instance.playBgSound();
     },
 
     onEnter: function () {

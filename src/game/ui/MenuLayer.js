@@ -94,6 +94,7 @@ var MenuLayer = cc.LayerColor.extend({
         this.musicSwitch.y = this.backBtn.y;
         this.mainNode.addChild(this.musicSwitch);
         this.musicSwitch.addTargetWithActionForControlEvents(this, this.onMusicValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+        this.musicSwitch.setOn(AudioManager.instance.getIsAudio());
         this.onMusicValueChanged(this.musicSwitch);
     },
 
@@ -119,11 +120,11 @@ var MenuLayer = cc.LayerColor.extend({
 
     onMusicValueChanged: function (sender, controlEvent) {
         if (sender.isOn()) {
-            //this._displayValueLabel.setString("On");
+            AudioManager.instance.setIsAudio(true);
         }
         else {
-            //this._displayValueLabel.setString("Off");
+            AudioManager.instance.setIsAudio(false);
         }
-    },
+    }
 
 });
