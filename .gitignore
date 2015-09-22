@@ -74,3 +74,4 @@ package/ten2more-release-signed.apk
 frameworks/runtime-src/Classes/js_module_register.h
 ten2more.udf
 frameworks/runtime-src/proj.android/ant.properties
+frameworks/runtime-src/proj.android/project.properties
