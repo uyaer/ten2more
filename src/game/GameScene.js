@@ -93,6 +93,8 @@ var GameScene = cc.Scene.extend({
         this.helpPlayerTimeId = setTimeout(this.helpPlayerShowHint.bind(this), Const.HINT_TIME);
 
         GameManager.instance.state = GameState.PLAYING;
+
+        AudioManager.instance.playBgSound();
     },
 
     onEnter: function () {
@@ -141,7 +143,7 @@ var GameScene = cc.Scene.extend({
         if (code == cc.KEY.back) {
             if (PopUpManager.popLength() > 0) {
                 PopUpManager.pop();
-            }else if(this.menuLayer){
+            } else if (this.menuLayer) {
                 this.menuLayer.onBackBtnClick();
             } else {
                 cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
@@ -313,19 +315,20 @@ var GameScene = cc.Scene.extend({
      * @param event {cc.Event}
      */
     onTouchEndedHandler: function (touch, event) {
-        if(gameStepVo.step>0){
-            if (this.selectBoxArr.length > 1 ) { //2个以上才进行检查
+        if (gameStepVo.step > 0) {
+            if (this.selectBoxArr.length > 1) { //2个以上才进行检查
                 this.checkNumIsMatchTen();
             } else {
                 this.matchFailUnSelected();
             }
-        }else{
+        } else {
             showTip(Lang.i18n(31));//步数不足，无法操作，请等待恢复
             this.matchFailUnSelected();
         }
 
         this.infoLayer.hideAddTip();
         this.isTouching = false;
+        AudioManager.instance.selectEffectIndex = 0;
     },
 
     /**

@@ -7,14 +7,14 @@
  */
 var GameStepVo = Bmob.Object.extend("GameStep", {
     /**
+     * 远程绑定对象
+     * @type Bmob.Object
+     */
+    remoteBindVo: null,
+    /**
      * 数据库中的id
      */
     id: "",
-    /**
-     * 用户id
-     * @type {string}
-     */
-    userId: "",
     /**
      * 当前步数
      * @type {number}
@@ -39,17 +39,19 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
      * 创建数据
      */
     createToRemote: function () {
+        var that = this;
         this.save({
-            "userId": this.userId,
             "step": this.step,
             "maxStep": this.maxStep,
             "lastUpdateTime": this.lastUpdateTime
         }, {
-            success: function (gameScore) {
-                trace("==========>>>create data success")
+            success: function (vo) {
+                that.bindData(vo);
+                GameManager.instance.saveUserId(that.id);
+                trace("==========>>>create step data success")
             },
             error: function (gameScore, error) {
-                trace("!!!!!>>>create data fail")
+                trace("!!!!!>>>create step data fail")
             }
         });
     },
@@ -57,27 +59,18 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
      * 远程保存数据
      */
     saveToRemote: function () {
-        var that = this;
-        var query = new Bmob.Query(GameStepVo);
-        query.get(this.id, {
-            success: function (vo) {
-                vo.set("step",that.step);
-                vo.set("maxStep",that.maxStep);
-                vo.set("lastUpdateTime",that.lastUpdateTime);
-                vo.save();
-                trace("save data....")
-            },
-            error: function (object, error) {
-                trace("load fail...")
-            }
-        });
+        var vo = this.remoteBindVo;
+        vo.set("step", this.step);
+        vo.set("maxStep", this.maxStep);
+        vo.set("lastUpdateTime", this.lastUpdateTime);
+        vo.save();
     },
     /**
      * 将远程数据绑定到本地
      */
     bindData: function (obj) {
+        this.remoteBindVo = obj;
         this.id = obj.id;
-        this.userId = obj.get("userId");
         this.step = obj.get("step");
         this.maxStep = obj.get("maxStep");
         this.lastUpdateTime = obj.get("lastUpdateTime");
@@ -100,6 +93,69 @@ var GameStepVo = Bmob.Object.extend("GameStep", {
  */
 var gameStepVo = new GameStepVo();
 
+
+/**
+ * =======================================
+ * ==============  游戏数据  ==============
+ * =======================================
+ */
+var GameDataVo = Bmob.Object.extend("GameData", {
+    /**
+     * 远程绑定对象
+     * @type Bmob.Object
+     */
+    remoteBindVo: null,
+    /**
+     * 数据库中的id
+     */
+    id: "",
+    /**
+     * 当前步数
+     * @type {string}
+     */
+    dataStr: "",
+
+    /**
+     * 创建数据
+     */
+    createToRemote: function () {
+        var that = this;
+        this.save({
+            "dataStr": GameManager.instance.getSaveDataStr()
+        }, {
+            success: function (vo) {
+                that.bindData(vo);
+                GameManager.instance.saveGameDataId(that.id);
+                trace("==========>>>create game data success")
+            },
+            error: function (gameScore, error) {
+                trace("!!!!!>>>create game data fail")
+            }
+        });
+    },
+    /**
+     * 远程保存数据
+     */
+    saveToRemote: function () {
+        var vo = this.remoteBindVo;
+        vo.set("dataStr", this.dataStr);
+        vo.save();
+    },
+    /**
+     * 将远程数据绑定到本地
+     */
+    bindData: function (obj) {
+        this.remoteBindVo = obj;
+        this.id = obj.id;
+        this.dataStr = obj.get("dataStr");
+        GameManager.instance.loadData(this.dataStr);
+    }
+});
+/**
+ * @type GameDataVo
+ */
+var gameDataVo = new GameDataVo();
+
 /**
  * =======================================
  * ==============Bmob Object==============
@@ -109,21 +165,52 @@ var Net = {};
 
 Net.loadGameStep = function () {
     var query = new Bmob.Query(GameStepVo);
-    query.equalTo("userId", gameStepVo.userId);
-    query.first({
-        success: function (object) {
-            // 查询成功
-            if (object) {
-                gameStepVo.bindData(object);
-            } else {
+    if (gameStepVo.id) {
+        query.get(gameStepVo.id, {
+            success: function (object) {
+                // 查询成功
+                if (object) {
+                    gameStepVo.bindData(object);
+                } else {
+                    gameStepVo.lastUpdateTime = Date.now();
+                    gameStepVo.createToRemote();
+                }
+            },
+            error: function () { //没有找到
                 gameStepVo.lastUpdateTime = Date.now();
                 gameStepVo.createToRemote();
             }
-        },
-        error: function (error) {
-            gameStepVo.lastUpdateTime = Date.now();
-            gameStepVo.createToRemote();
-        }
-    });
+        });
+    } else {
+        gameStepVo.lastUpdateTime = Date.now();
+        gameStepVo.createToRemote();
+    }
 }
 
+Net.loadGameData = function () {
+    var query = new Bmob.Query(GameDataVo);
+    if (gameDataVo.id) {
+        query.get(gameDataVo.id, {
+            success: function (object) {
+                // 查询成功
+                if (object) {
+                    gameDataVo.bindData(object);
+                } else {
+                    gameDataVo.createToRemote();
+                }
+            },
+            error: function () { //没有找到
+                gameDataVo.createToRemote();
+            }
+        });
+    } else {
+        gameDataVo.createToRemote();
+    }
+}
+
+Net.saveGameData = function (dataStr) {
+    if (gameDataVo.id) {
+        gameDataVo.dataStr = dataStr;
+        gameDataVo.saveToRemote();
+    }
+}

@@ -117,9 +117,13 @@ var Box = cc.Node.extend({
         if (val) {
             this.runAction(cc.moveBy(0.15, 0, 5));
             this.bg.setColor(cc.color.RED);
+            AudioManager.instance.playEffectOneByOne();
         } else {
             this.y = this.baseY;
             this.bg.color = this.baseColor;
+            if (AudioManager.instance.selectEffectIndex > 0) {
+                AudioManager.instance.selectEffectIndex--;
+            }
         }
     },
 
