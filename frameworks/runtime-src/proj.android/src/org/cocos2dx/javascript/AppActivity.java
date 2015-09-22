@@ -149,4 +149,11 @@ public class AppActivity extends Cocos2dxActivity {
 			}
 		});
 	}
+
+	/**
+	 * 获取游戏包名称
+	 */
+	public static String getPackageURI() {
+		return app.getPackageName();
+	}
 }

@@ -6,6 +6,22 @@ var App = {};
 App.__android_class = "org/cocos2dx/javascript/AppActivity";
 
 /**
+ * 检查签名是否被篡改
+ * @returns {boolean}
+ */
+App.checkAppVertify = function () {
+    if (cc.sys.isNative) {
+        var uri = jsb.reflection.callStaticMethod(App.__android_class, "getPackageURI", "()Ljava/lang/String;");
+        if (uri == "com.uyaer.ten2more") {
+            return true;
+        }
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/**
  * 向android端发送请求关闭
  */
 App.showConfirmClose = function () {
