@@ -761,6 +761,7 @@ var GameScene = cc.Scene.extend({
         setTimeout(function () {
             /**@type Box*/
             var box = that.removeBoxArr.pop();
+            box.stopAllActions();
             box.updateRowCol(-1, col);
             box.resetBox();
             that.boxRoot.addChild(box);
@@ -1073,6 +1074,7 @@ var GameScene = cc.Scene.extend({
     helpPlayerShowHint: function () {
         if (!this.tipOpenBoxList)return;
         if (this.isGuiding) return;
+        if (this.isTouching) return;
 
         var arr = [];
         var len = this.tipOpenBoxList.length;

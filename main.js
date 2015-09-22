@@ -92,9 +92,9 @@ cc.game.onStart = function () {
 
     cc.director.setProjection(cc.Director.PROJECTION_2D);
 
-    if(cc.sys.language == cc.sys.LANGUAGE_CHINESE){
+    if (cc.sys.language == cc.sys.LANGUAGE_CHINESE) {
         Const.LANG = "zh";
-    }else{
+    } else {
         Const.LANG = "en";
     }
     //启动时间计时器
@@ -103,13 +103,15 @@ cc.game.onStart = function () {
     //获取userid
     gameStepVo.id = GameManager.instance.getUserId();
     gameDataVo.id = GameManager.instance.getGameDataId();
+    if (gameStepVo.id.length > 16)gameStepVo.id = null;
+    if (gameDataVo.id.length > 16)gameDataVo.id = null;
     //init bmob
     Bmob.initialize("d4f5e54e80c0b1b34c7cdb47d8da877d", "2a9cf99acd19dc67a301ff9f0b4b694a");
 
     //load resources
     cc.LoaderScene.preload(g_logo, function () {
         cc.director.runScene(new LogoScene(function () {
-            if(!App.checkAppVertify()){
+            if (!App.checkAppVertify()) {
                 return;
             }
 
@@ -117,12 +119,11 @@ cc.game.onStart = function () {
             Lang.init();
             cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
 
+            cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
+
             //获取数据
             Net.loadGameStep();
             Net.loadGameData();
-
-
-            cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
         }));
 
     }, this);
