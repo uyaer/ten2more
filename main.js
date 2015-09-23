@@ -109,24 +109,36 @@ cc.game.onStart = function () {
     Bmob.initialize("d4f5e54e80c0b1b34c7cdb47d8da877d", "2a9cf99acd19dc67a301ff9f0b4b694a");
 
     //load resources
-    cc.LoaderScene.preload(g_logo, function () {
-        cc.director.runScene(new LogoScene(function () {
-            if (!App.checkAppVertify()) {
-                return;
-            }
+    if (!cc.sys.isMobile && !cc.sys.isNative) {
+        cc.LoaderScene.preload(g_resources, function () {
+            gameStart();
+        }, this);
+    } else {
+        cc.LoaderScene.preload(g_logo, function () {
+            cc.director.runScene(new LogoScene(function () {
+                gameStart();
+            }));
+        }, this);
+    }
 
-            GameManager.instance.init();
-            Lang.init();
-            cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
+    function gameStart() {
+        if (!App.checkAppVertify()) {
+            return;
+        }
 
-            cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
+        //获取数据
+        Net.loadGameStep();
+        Net.loadGameData();
 
-            //获取数据
-            Net.loadGameStep();
-            Net.loadGameData();
-        }));
+        GameManager.instance.init();
+        Lang.init();
+        cc.spriteFrameCache.addSpriteFrames(res.game_plist, res.game_png);
 
-    }, this);
+        cc.director.runScene(new cc.TransitionFade(0.5, new IndexScene(), hex2Color(0xa1edf8)));
+
+
+    }
+
 
     var delayResizeId = 0;
     cc.view.setResizeCallback(function () {

@@ -22,8 +22,10 @@ var IndexScene = cc.Scene.extend({
     ctor: function () {
         this._super();
 
-        if (IndexScene.isFirstEnter && Net.count > 0) {
-            LoadingGif.show(this);
+        if (IndexScene.isFirstEnter) {
+            if (Net.count > 0) {
+                LoadingGif.show(this);
+            }
             IndexScene.isFirstEnter = false;
         }
 

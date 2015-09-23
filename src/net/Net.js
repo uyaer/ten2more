@@ -173,14 +173,15 @@ var Net = {
     /**
      * 同时请求的网络次数
      */
-    count:0,
+    count: 0,
     /**
      * 减少次数
      */
     subCount: function () {
-        if(this.count<=0){
-            this.count=0;
-            //LoadingGif.hide();
+        this.count--;
+        if (this.count <= 0) {
+            this.count = 0;
+            LoadingGif.hide();
         }
     }
 };
