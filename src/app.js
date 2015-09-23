@@ -44,7 +44,7 @@ App.showShare = function () {
         "&title=" + (lang == "zh" ? "很好玩的游戏" : "A fun game with you!") +
         "&desc=" + (lang == "zh" ? "喜欢2048吗？玩过两点一线吗？那一定要来试一试这款游戏，非常好玩哦！" : "2048 like it? and two dots? It must be to try this game, very fun oh!") +
         "&r=" + Date.now() +
-        "&url=http://uyaer.qiniudn.com/?v" + Date.now() + "#game-7";
+        "&url=http://uyaer.qiniudn.com/?v" + Date.now() + (lang == "zh" ? "#game-7" : "#game-8");
     if (cc.sys.isNative) {
         jsb.reflection.callStaticMethod(App.__android_class, "showShare", "(Ljava/lang/String;)V", url);
     } else {
