@@ -130,12 +130,14 @@ var GameScene = cc.Scene.extend({
         this.menuLayer = new MenuLayer();
         this.addChild(this.menuLayer, 20);
         this.boxRoot.runAction(cc.moveTo(0.35, -Const.WIN_W * 0.34, 0));
+        this.lightLine.runAction(cc.moveTo(0.35, -Const.WIN_W * 0.34, 0));
         this.infoLayer.runAction(cc.moveBy(0.35, -Const.WIN_W * 0.34, 0));
     },
 
     onHideMenuEvent: function () {
         this.menuLayer = null;
         this.boxRoot.runAction(cc.moveTo(0.35, 0, 0));
+        this.lightLine.runAction(cc.moveTo(0.35, 0, 0));
         this.infoLayer.runAction(cc.moveBy(0.35, Const.WIN_W * 0.34, 0));
     },
 
